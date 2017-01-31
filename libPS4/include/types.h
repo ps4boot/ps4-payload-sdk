@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define offsetof(a, b) ((size_t)(((void *)&((a *)NULL)->b) - NULL))
+//#define offsetof(a, b) ((size_t)(((void *)&((a *)NULL)->b) - NULL))
 
 #ifndef NULL
 #define NULL 0

@@ -5,10 +5,22 @@
 
 int libKernelHandle;
 
+int** __stack_chk_guard;
+void (*__stack_chk_fail)(void);
+int* (*__error)();
+
+int (*sceKernelError)(int);
+
 int (*sceKernelLoadStartModule)(const char *name, size_t argc, const void *argv, unsigned int flags, int, int);
 
 int (*sceKernelAllocateDirectMemory)(off_t searchStart, off_t searchEnd, size_t length, size_t alignment, int type, off_t *physicalAddressDestination);
 int (*sceKernelMapDirectMemory)(void **addr, size_t length, int protection, int flags, off_t start, size_t alignment);
+
+int (*sceKernelStat)(const char *path, void* buf);
+int (*sceKernelOpen)(const char *path, int flags, int mode);
+int (*sceKernelRead)(int fd, void *buf, size_t nbyte);
+int (*sceKernelLseek)(int fd, off_t offset, int whence);
+int (*sceKernelClose)(int fd);
 
 unsigned int (*sceKernelSleep)(unsigned int seconds);
 int (*sceKernelUsleep)(unsigned int microseconds);
@@ -38,18 +50,31 @@ int (*setgid)(int gid);
 int (*setreuid)(int ruid, int euid);
 int (*setregid)(int rgid, int egid);
 
-
 SYSCALL(kill, 37);
 SYSCALL(ioctl, 54);
 
 void initKernel(void) {
+	__error = NULL;
+
 	loadModule("libkernel.sprx", &libKernelHandle);
-	
+
+	RESOLVE(libKernelHandle, __stack_chk_guard);
+	RESOLVE(libKernelHandle, __stack_chk_fail);
+	RESOLVE(libKernelHandle, __error);
+
+	RESOLVE(libKernelHandle, sceKernelError);
+
 	RESOLVE(libKernelHandle, sceKernelLoadStartModule);
-	
+
 	RESOLVE(libKernelHandle, sceKernelAllocateDirectMemory);
 	RESOLVE(libKernelHandle, sceKernelMapDirectMemory);
-	
+
+	RESOLVE(libKernelHandle, sceKernelStat);
+	RESOLVE(libKernelHandle, sceKernelOpen);
+	RESOLVE(libKernelHandle, sceKernelRead);
+	RESOLVE(libKernelHandle, sceKernelLseek);
+	RESOLVE(libKernelHandle, sceKernelClose);
+
 	RESOLVE(libKernelHandle, sceKernelSleep);
 	RESOLVE(libKernelHandle, sceKernelUsleep);
 	RESOLVE(libKernelHandle, sceKernelGettimeofday);

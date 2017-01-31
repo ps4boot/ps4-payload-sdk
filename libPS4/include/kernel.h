@@ -7,10 +7,23 @@ typedef uint64_t SceKernelEqueue;
 
 extern int libKernelHandle;
 
+extern int **__stack_chk_guard;
+extern void (*__stack_chk_fail)(void);
+extern int *(*__error)();
+#define errno (* __error())
+
+extern int (*sceKernelError)(int);
+
 extern int (*sceKernelLoadStartModule)(const char *name, size_t argc, const void *argv, unsigned int flags, int, int);
 
 extern int (*sceKernelAllocateDirectMemory)(off_t searchStart, off_t searchEnd, size_t length, size_t alignment, int type, off_t *physicalAddressDestination);
 extern int (*sceKernelMapDirectMemory)(void **addr, size_t length, int protection, int flags, off_t start, size_t alignment);
+
+extern int (*sceKernelStat)(const char *path, void* buf);
+extern int (*sceKernelOpen)(const char *path, int flags, int mode);
+extern int (*sceKernelRead)(int fd, void *buf, size_t nbyte);
+extern int (*sceKernelLseek)(int fd, off_t offset, int whence);
+extern int (*sceKernelClose)(int fd);
 
 extern unsigned int (*sceKernelSleep)(unsigned int seconds);
 extern int (*sceKernelUsleep)(unsigned int microseconds);
