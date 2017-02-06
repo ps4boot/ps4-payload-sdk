@@ -3,7 +3,7 @@
 .extern __error
 
 #If your assembler complains about the following uncommented line change it to:
-#.section .sc_rop,w
+#.section .sc_rop,"w"
 .section .sc_rop,"wb"
   syscall_rop: .quad 0
 
