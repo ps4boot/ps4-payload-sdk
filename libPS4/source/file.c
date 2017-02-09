@@ -19,6 +19,7 @@ SYSCALL(stat, 188);
 SYSCALL(fstat, 189);
 SYSCALL(getdents, 272);
 SYSCALL(lseek, 478);
+SYSCALL(fstatat, 493);
 
 int getSandboxDirectory(char *destination, int *length) {
   return syscall(602, 0, destination, length);

@@ -43,7 +43,7 @@ char *(*asctime_r)(const struct tm *tm, char *buf);
 char *(*ctime)(const time_t *timep);
 char *(*ctime_r)(const time_t *timep, char *buf);
 struct tm *(*gmtime)(const time_t *timep);
-struct tm *(*gmtime_r)(const time_t *timep, struct tm *result);
+struct tm *(*gmtime_s)(const time_t *timep, struct tm *result);
 struct tm *(*localtime)(const time_t *timep);
 struct tm *(*localtime_r)(const time_t *timep, struct tm *result);
 time_t (*mktime)(struct tm *tm);
@@ -108,7 +108,7 @@ void initLibc(void) {
 	RESOLVE(libc, ctime);
 	RESOLVE(libc, ctime_r);
 	RESOLVE(libc, gmtime);
-	RESOLVE(libc, gmtime_r);
+	RESOLVE(libc, gmtime_s);
 	RESOLVE(libc, localtime);
 	RESOLVE(libc, localtime_r);
 	RESOLVE(libc, mktime);

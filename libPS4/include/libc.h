@@ -51,7 +51,7 @@ extern char *(*asctime_r)(const struct tm *tm, char *buf);
 extern char *(*ctime)(const time_t *timep);
 extern char *(*ctime_r)(const time_t *timep, char *buf);
 extern struct tm *(*gmtime)(const time_t *timep);
-extern struct tm *(*gmtime_r)(const time_t *timep, struct tm *result);
+extern struct tm *(*gmtime_s)(const time_t *timep, struct tm *result);
 extern struct tm *(*localtime)(const time_t *timep);
 extern struct tm *(*localtime_r)(const time_t *timep, struct tm *result);
 extern time_t (*mktime)(struct tm *tm);
