@@ -69,6 +69,7 @@ ssize_t write(int fd, const void *buf, size_t count);
 int open(const char *path, int flags, int mode);
 int close(int fd);
 int unlink(const char *pathname);
+int readlink(const char *path,	char *buf, int bufsiz);
 int mount(const char *type, const char	*dir, int flags, void *data);
 int nmount(struct iovec *iov, uint32_t niov, int flags);
 int unmount(const char *dir, int flags);

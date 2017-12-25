@@ -7,6 +7,7 @@ SYSCALL(write, 4);
 SYSCALL(open, 5);
 SYSCALL(close, 6);
 SYSCALL(unlink, 10);
+SYSCALL(readlink, 58);
 SYSCALL(mount, 21);
 SYSCALL(nmount, 378);
 SYSCALL(unmount, 22);
