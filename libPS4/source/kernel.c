@@ -56,7 +56,9 @@ SYSCALL(ioctl, 54);
 void initKernel(void) {
 	__error = NULL;
 
-	loadModule("libkernel.sprx", &libKernelHandle);
+	if (loadModule("libkernel.sprx", &libKernelHandle))
+		if (loadModule("libkernel_web.sprx", &libKernelHandle))
+			loadModule("libkernel_sys.sprx", &libKernelHandle);
 
 	RESOLVE(libKernelHandle, __stack_chk_guard);
 	RESOLVE(libKernelHandle, __stack_chk_fail);
