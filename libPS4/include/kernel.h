@@ -57,3 +57,5 @@ extern int (*setregid)(int rgid, int egid);
 int kill(int pid, int signum);
 
 void initKernel(void);
+
+int kexec(void* func, void* user_arg);
