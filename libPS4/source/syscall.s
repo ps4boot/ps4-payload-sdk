@@ -2,12 +2,6 @@
 
 .extern __error
 
-#If your assembler complains about the following uncommented line change it to:
-#.section .sc_rop,"wb"
-.section .sc_rop,"w"
-syscall_rop:
-	.quad 0
-
 .text
 
 .globl syscall
@@ -16,7 +10,8 @@ syscall:
 
 .globl syscall_macro
 syscall_macro:
-	call syscall_rop[rip]
+	mov r10, rcx
+	syscall
 	jb _error
 	ret
 

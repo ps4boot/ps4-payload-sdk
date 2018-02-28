@@ -29,7 +29,4 @@ SECTIONS
 	. = 0x926300000;
 	.data : { *(.data) } : data_seg
 	.bss  : { *(.bss) }  : data_seg
-
-	. = 0x9263ffff8;
-	.sc_rop : { *(.sc_rop) } : data_seg
 }
