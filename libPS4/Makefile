@@ -1,6 +1,6 @@
-CC		:=	gcc
-AS		:=	gcc
-AR		:=	ar
+CC	:=	gcc
+AS	:=	gcc
+AR	:=	ar
 OBJCOPY	:=	objcopy
 ODIR	:=	build
 SDIR	:=	source
@@ -10,7 +10,7 @@ CFLAGS	:=	-I$(IDIR) -O2 -std=c11 -fno-builtin -nostartfiles -nostdlib -Wall -mas
 SFLAGS	:=	-nostartfiles -nostdlib -march=btver2 -mtune=btver2
 CFILES	:=	$(wildcard $(SDIR)/*.c)
 SFILES	:=	$(wildcard $(SDIR)/*.s)
-OBJS	:= $(patsubst $(SDIR)/%.c, build/%.o, $(CFILES)) $(patsubst $(SDIR)/%.s, build/%.o, $(SFILES))
+OBJS	:=	$(patsubst $(SDIR)/%.c, build/%.o, $(CFILES)) $(patsubst $(SDIR)/%.s, build/%.o, $(SFILES))
 
 TARGET = $(shell basename $(CURDIR)).a
 

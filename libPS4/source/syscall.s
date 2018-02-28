@@ -3,9 +3,10 @@
 .extern __error
 
 #If your assembler complains about the following uncommented line change it to:
-#.section .sc_rop,"w"
-.section .sc_rop,"wb"
-  syscall_rop: .quad 0
+#.section .sc_rop,"wb"
+.section .sc_rop,"w"
+syscall_rop:
+	.quad 0
 
 .text
 
@@ -20,14 +21,14 @@ syscall_macro:
 	ret
 
 _error:
-  cmp qword ptr __error[rip], 0
-  jz _end
-  push rax
-  call __error[rip]
-  pop rcx
-  mov [rax], ecx
-  movq rax, -1
-  movq rdx, -1
+	cmp qword ptr __error[rip], 0
+	jz _end
+	push rax
+	call __error[rip]
+	pop rcx
+	mov [rax], ecx
+	movq rax, -1
+	movq rdx, -1
 
 _end:
-  ret
+	ret

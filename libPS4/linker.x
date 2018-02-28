@@ -5,12 +5,18 @@ ENTRY(_start)
 
 PHDRS
 {
-   code_seg PT_LOAD;
-   data_seg PT_LOAD;
+	code_seg PT_LOAD;
+	data_seg PT_LOAD;
 }
 
 SECTIONS
 {
+	/DISCARD/ : {
+		*(.comment)
+		*(.note.GNU-stack)
+		*(.eh_frame)
+	}
+	
 	/* Code segment */
 	. = 0x926200000;
 	.text : {
