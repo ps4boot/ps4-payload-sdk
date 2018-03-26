@@ -68,8 +68,10 @@ ssize_t read(int fd, void *buf, size_t nbyte);
 ssize_t write(int fd, const void *buf, size_t count);
 int open(const char *path, int flags, int mode);
 int close(int fd);
+int link(const char *path, const char *link);
 int unlink(const char *pathname);
 int readlink(const char *path,	char *buf, int bufsiz);
+int symlink(const char *path, const char *link);
 int mount(const char *type, const char	*dir, int flags, void *data);
 int nmount(struct iovec *iov, uint32_t niov, int flags);
 int unmount(const char *dir, int flags);
@@ -81,6 +83,7 @@ int rmdir(const char *path);
 int stat(const char *path, struct stat *sb);
 int fstat(int fd, struct stat *sb);
 int fstatat(int fd, const char *path, struct stat *buf, int flag);
+int lstat(const char *path, struct stat *buf);
 int getdents(int fd, char *buf, int count);
 off_t lseek(int fildes, off_t offset, int whence);
 
