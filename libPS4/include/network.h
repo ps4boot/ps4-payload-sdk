@@ -153,3 +153,8 @@ extern void (*sceNetCtlTerm)(void);
 extern int (*sceNetCtlGetInfo)(int code, SceNetCtlInfo *info);
 
 void initNetwork(void);
+int SckConnect(char* hostIP,int hostPort);
+void SckClose(int socket);
+void SckSend(int socket, char* sdata, int length);
+char *SckRecv(int socket);
+void SckRecvf(int socket, char* destfile);

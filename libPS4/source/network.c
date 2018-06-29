@@ -1,6 +1,6 @@
 #include "kernel.h"
 #include "module.h"
-
+#include "file.h"
 #include "network.h"
 
 int (*sceNetSocket)(const char *, int, int, int);
@@ -64,4 +64,57 @@ void initNetwork(void) {
 	RESOLVE(libNetCtl, sceNetCtlInit);
 	RESOLVE(libNetCtl, sceNetCtlTerm);
 	RESOLVE(libNetCtl, sceNetCtlGetInfo);
+}
+
+int SckConnect(char* hostIP,int hostPort)
+{
+	struct in_addr ip_addr;
+	sceNetInetPton(AF_INET, hostIP, &ip_addr);
+	struct sockaddr_in sk;
+	sk.sin_len = sizeof(sk);
+	sk.sin_family = AF_INET;
+	sk.sin_addr = ip_addr;
+	sk.sin_port = sceNetHtons(hostPort);
+	memset(sk.sin_zero, 0, sizeof(sk.sin_zero));
+	char socketName[] = "psocket";
+    int sck = sceNetSocket(socketName, AF_INET, SOCK_STREAM, 0);
+    sceNetConnect(sck, (struct sockaddr *)&sk, sizeof(sk));
+	return sck;
+} 
+
+void SckClose(int socket)
+{
+    sceNetSocketClose(socket);
+}
+
+void SckSend(int socket, char* sdata, int length)
+{
+    sceNetSend(socket, sdata, length, 0);
+} 
+		
+char *SckRecv(int socket) {
+	char rbuf[4096], *retval = malloc(sizeof(char)*1);
+	int plen, length = 0, i;
+	while((plen = sceNetRecv(socket, rbuf, sizeof(rbuf), 0)) > 0) 
+	{
+	    retval = (char*)realloc(retval, sizeof(char)*(length + plen)+1);
+		for (i = 0; i < plen; i++) 
+		{
+			retval[length] = rbuf[i];
+			length++;
+		}	
+		memset(rbuf, 0, sizeof rbuf);
+	}
+	return retval;
+}
+
+void SckRecvf(int socket, char* destfile) {
+	char rbuf[4096];
+	int plen, fid = open(destfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	while((plen = sceNetRecv(socket, rbuf, sizeof(rbuf), 0)) > 0) 
+	{
+		write(fid, rbuf, plen);
+		memset(rbuf, 0, sizeof rbuf);
+	}
+	close(fid);
 }
