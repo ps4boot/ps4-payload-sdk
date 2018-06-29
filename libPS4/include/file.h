@@ -1,12 +1,7 @@
 #pragma once
 
 #include "types.h"
-
-enum {
-	SEEK_SET,
-	SEEK_CUR,
-	SEEK_END
-};
+#include "libc.h"
 
 #define O_RDONLY  0x0000
 #define O_WRONLY  0x0001
@@ -86,5 +81,22 @@ int fstatat(int fd, const char *path, struct stat *buf, int flag);
 int lstat(const char *path, struct stat *buf);
 int getdents(int fd, char *buf, int count);
 off_t lseek(int fildes, off_t offset, int whence);
-
 int getSandboxDirectory(char *destination, int *length);
+int file_exists(char *fname);
+int dir_exists(char *dname);
+int symlink_exists(const char* fname);
+void copy_File(char *sourcefile, char* destfile);
+void copy_Dir(char *sourcedir, char* destdir);
+int file_compare(char *fname1, char *fname2);
+int fgetc(int fp);
+
+
+
+
+
+
+
+
+
+
+

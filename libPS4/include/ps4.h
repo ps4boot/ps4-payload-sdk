@@ -21,3 +21,6 @@
 #include "graphics.h"
 #include "jit.h"
 #include "sysutil.h"
+#include "base64.h"
+#include "strings.h"
+#include "pkg.h"
