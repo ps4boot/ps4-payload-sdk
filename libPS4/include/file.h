@@ -23,6 +23,9 @@
 #define S_ISSOCK(m) (((m) & 0170000) == 0140000)
 #define S_ISWHT(m)  (((m) & 0170000) == 0160000)
 
+#define	UPDATE_MNT	0x0000000000010000ULL /* not real mount, just update */
+
+
 struct stat {
 	__dev_t   st_dev;		/* inode's device */
 	ino_t	  st_ino;		/* inode's number */
@@ -89,7 +92,8 @@ void copy_File(char *sourcefile, char* destfile);
 void copy_Dir(char *sourcedir, char* destdir);
 int file_compare(char *fname1, char *fname2);
 int fgetc(int fp);
-
+int mount_fs(const char* device, const char* mountpoint, const char* fstype, const char* mode, unsigned int flags);
+void create_iovec(struct iovec** iov, int* iovlen, const char* name, const void* val, size_t len);
 
 
 

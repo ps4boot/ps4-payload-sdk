@@ -24,3 +24,4 @@
 #include "base64.h"
 #include "strings.h"
 #include "pkg.h"
+#include "dump.h"
