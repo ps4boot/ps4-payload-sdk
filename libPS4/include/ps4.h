@@ -25,3 +25,4 @@
 #include "strings.h"
 #include "pkg.h"
 #include "dump.h"
+#include "proc.h"
