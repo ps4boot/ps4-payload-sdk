@@ -5,6 +5,8 @@
 #define SCE_USER_SERVICE_MAX_LOGIN_USERS 4
 #define SCE_USER_SERVICE_MAX_USER_NAME_LENGTH 16
 
+extern int (*sceSysUtilSendSystemNotificationWithText)(int messageType, char* message);
+
 typedef int32_t SceUserServiceUserId;
 
 typedef struct SceUserServiceLoginUserIdList {
