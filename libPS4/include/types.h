@@ -10,6 +10,8 @@
 
 #define BIT(n) (1 << (n))
 
+
+
 typedef int bool;
 
 typedef uint64_t size_t;
@@ -83,6 +85,8 @@ typedef int64_t  off_t;
 typedef uint32_t uid_t;
 typedef int64_t time_t;
 typedef long suseconds_t;
+
+
 
 struct timespec {
 	time_t tv_sec;

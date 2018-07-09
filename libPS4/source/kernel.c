@@ -15,6 +15,7 @@ int (*sceKernelLoadStartModule)(const char *name, size_t argc, const void *argv,
 
 int (*sceKernelAllocateDirectMemory)(off_t searchStart, off_t searchEnd, size_t length, size_t alignment, int type, off_t *physicalAddressDestination);
 int (*sceKernelMapDirectMemory)(void **addr, size_t length, int protection, int flags, off_t start, size_t alignment);
+size_t (*sceKernelGetDirectMemorySize)();
 
 int (*sceKernelStat)(const char *path, void* buf);
 int (*sceKernelOpen)(const char *path, int flags, int mode);
@@ -72,6 +73,7 @@ void initKernel(void) {
 
 	RESOLVE(libKernelHandle, sceKernelAllocateDirectMemory);
 	RESOLVE(libKernelHandle, sceKernelMapDirectMemory);
+	RESOLVE(libKernelHandle, sceKernelGetDirectMemorySize);
 
 	RESOLVE(libKernelHandle, sceKernelStat);
 	RESOLVE(libKernelHandle, sceKernelOpen);

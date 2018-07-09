@@ -6,7 +6,8 @@ int (*sceSysUtilSendSystemNotificationWithText)(int messageType, char* message);
 int (*sceSystemServiceLaunchWebBrowser)(const char *uri, void *);
 int (*sceUserServiceInitialize)(void *);
 int (*sceUserServiceGetLoginUserIdList)(SceUserServiceLoginUserIdList *);
-int (*sceUserServiceGetUserName)(SceUserServiceUserId userId, char *userName, const size_t size);
+int (*sceUserServiceGetUserName)(int32_t userId, char *userName, const size_t size);
+int (*sceUserServiceGetInitialUser)(int32_t *);
 int (*sceUserServiceTerminate)();
 
 
@@ -75,7 +76,7 @@ int32_t getUserID()
 	return -1;
 }
 
-char *getUserName(SceUserServiceUserId userId)
+char *getUserName(int32_t userId)
 {
 	int ret;
 	char *retval = malloc(SCE_USER_SERVICE_MAX_USER_NAME_LENGTH);
@@ -96,4 +97,25 @@ char *getUserName(SceUserServiceUserId userId)
 		}
 	}
 	return NULL;
+}
+
+int32_t getInitialUser()
+{
+	int ret;
+    int32_t userId;
+	int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
+    RESOLVE(libSceUserService, sceUserServiceGetInitialUser);
+	RESOLVE(libSceUserService, sceUserServiceInitialize);
+	RESOLVE(libSceUserService, sceUserServiceTerminate);
+	ret = sceUserServiceInitialize(NULL);
+	if (ret == 0) 
+	{
+		ret = sceUserServiceGetInitialUser(&userId);
+		if (ret == 0) 
+		{
+			sceUserServiceTerminate();
+			return userId;
+		}
+	}
+	return ret;
 }
