@@ -9,6 +9,7 @@ int (*sceUserServiceGetLoginUserIdList)(SceUserServiceLoginUserIdList *);
 int (*sceUserServiceGetUserName)(int32_t userId, char *userName, const size_t size);
 int (*sceUserServiceGetInitialUser)(int32_t *);
 int (*sceUserServiceTerminate)();
+int (*sceKernelReboot)();
 
 
 void initSysUtil(void) {
@@ -118,4 +119,19 @@ int32_t getInitialUser()
 		}
 	}
 	return ret;
+}
+
+void shutdown()
+{
+	int evf = syscall(540, "SceSysCoreReboot");
+	syscall(546, evf, 0x4000, 0);
+	syscall(541, evf);
+	syscall(37, 1, 30);
+}
+
+void reboot()
+{
+	int libkernel = sceKernelLoadStartModule("/system/common/lib/libkernel.sprx", 0, NULL, 0, 0, 0);
+	RESOLVE(libkernel, sceKernelReboot);
+	sceKernelReboot();
 }

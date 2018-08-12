@@ -1,6 +1,7 @@
 #pragma once
 
 #include "libc.h"
+#include "syscall.h"
 
 #define SCE_USER_SERVICE_MAX_LOGIN_USERS 4
 #define SCE_USER_SERVICE_MAX_USER_NAME_LENGTH 16
@@ -19,3 +20,5 @@ SceUserServiceLoginUserIdList getUserIDList();
 int32_t getUserID();
 char *getUserName(int32_t userId);
 int32_t getInitialUser();
+void reboot();
+void shutdown();
