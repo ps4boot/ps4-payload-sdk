@@ -24,7 +24,7 @@ static inline uint32_t bswap_32(uint32_t val)
 
 int isfpkg(char *pkgfn) {
     int result = 0;
-
+    char buffer[5];
     FILE *in = NULL;
     struct cnt_pkg_main_header m_header;
     struct cnt_pkg_content_header c_header;
@@ -37,6 +37,14 @@ int isfpkg(char *pkgfn) {
         goto exit;
     }
 
+	fseek(in, 1, SEEK_SET);
+    fread(buffer, 1,  4, in);
+	if (strcmp(buffer, "CNT@") == 0)
+    {
+        result = 0;
+        goto exit;
+    }
+	
     fseek(in, 0, SEEK_SET);
     fread(&m_header, 1,  0x180, in);
 
