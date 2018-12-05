@@ -24,7 +24,9 @@
 #define S_ISSOCK(m) (((m)&0170000) == 0140000)
 #define S_ISWHT(m) (((m)&0170000) == 0160000)
 
-#define UPDATE_MNT 0x0000000000010000ULL /* not real mount, just update */
+#define PATH_MAX 255
+
+#define MNT_UPDATE 0x0000000000010000ULL /* not real mount, just update */
 
 struct stat {
   __dev_t st_dev;          /* inode's device */
