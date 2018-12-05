@@ -22,7 +22,7 @@ int (*sceUsbdCheckConnected)(libusb_device_handle *devh);
 
 int (*sceUsbdControlTransfer)(libusb_device_handle *devh, uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, unsigned char *data, uint16_t wLength, unsigned int timeout);
 int (*sceUsbdBulkTransfer)(struct libusb_device_handle *devh, unsigned char endpoint, unsigned char *data, int length, int *transferred, unsigned int timeout);
-int (*sceUsbdInterruptTransfer)(struct libusb_device_handle *devh, unsigned char endpoint, unsigned char *data, int length, int *transferred,  unsigned int timeout);
+int (*sceUsbdInterruptTransfer)(struct libusb_device_handle *devh, unsigned char endpoint, unsigned char *data, int length, int *transferred, unsigned int timeout);
 
 int (*sceUsbdGetActiveConfigDescriptor)(libusb_device *dev, struct libusb_config_descriptor **config);
 int (*sceUsbdGetConfigDescriptor)(libusb_device *dev, uint8_t config_index, struct libusb_config_descriptor **config);
@@ -30,31 +30,31 @@ int (*sceUsbdGetConfigDescriptorByValue)(libusb_device *dev, uint8_t bConfigurat
 void (*sceUsbdFreeConfigDescriptor)(struct libusb_config_descriptor *config);
 
 void initUsb(void) {
-	int libUsb = sceKernelLoadStartModule("libSceUsbd.sprx", 0, NULL, 0, 0, 0);
+  int libUsb = sceKernelLoadStartModule("libSceUsbd.sprx", 0, NULL, 0, 0, 0);
 
-	RESOLVE(libUsb, sceUsbdInit);
-	RESOLVE(libUsb, sceUsbdExit);
+  RESOLVE(libUsb, sceUsbdInit);
+  RESOLVE(libUsb, sceUsbdExit);
 
-	RESOLVE(libUsb, sceUsbdGetDeviceList);
-	RESOLVE(libUsb, sceUsbdFreeDeviceList);
+  RESOLVE(libUsb, sceUsbdGetDeviceList);
+  RESOLVE(libUsb, sceUsbdFreeDeviceList);
 
-	RESOLVE(libUsb, sceUsbdGetDeviceDescriptor);
+  RESOLVE(libUsb, sceUsbdGetDeviceDescriptor);
 
-	RESOLVE(libUsb, sceUsbdOpen);
-	RESOLVE(libUsb, sceUsbdOpenDeviceWithVidPid);
-	RESOLVE(libUsb, sceUsbdClose);
+  RESOLVE(libUsb, sceUsbdOpen);
+  RESOLVE(libUsb, sceUsbdOpenDeviceWithVidPid);
+  RESOLVE(libUsb, sceUsbdClose);
 
-	RESOLVE(libUsb, sceUsbdSetInterfaceAltSetting);
-	RESOLVE(libUsb, sceUsbdClearHalt);
-	RESOLVE(libUsb, sceUsbdResetDevice);
-	RESOLVE(libUsb, sceUsbdCheckConnected);
+  RESOLVE(libUsb, sceUsbdSetInterfaceAltSetting);
+  RESOLVE(libUsb, sceUsbdClearHalt);
+  RESOLVE(libUsb, sceUsbdResetDevice);
+  RESOLVE(libUsb, sceUsbdCheckConnected);
 
-	RESOLVE(libUsb, sceUsbdControlTransfer);
-	RESOLVE(libUsb, sceUsbdBulkTransfer);
-	RESOLVE(libUsb, sceUsbdInterruptTransfer);
+  RESOLVE(libUsb, sceUsbdControlTransfer);
+  RESOLVE(libUsb, sceUsbdBulkTransfer);
+  RESOLVE(libUsb, sceUsbdInterruptTransfer);
 
-	RESOLVE(libUsb, sceUsbdGetActiveConfigDescriptor);
-	RESOLVE(libUsb, sceUsbdGetConfigDescriptor);
-	RESOLVE(libUsb, sceUsbdGetConfigDescriptorByValue);
-	RESOLVE(libUsb, sceUsbdFreeConfigDescriptor);
+  RESOLVE(libUsb, sceUsbdGetActiveConfigDescriptor);
+  RESOLVE(libUsb, sceUsbdGetConfigDescriptor);
+  RESOLVE(libUsb, sceUsbdGetConfigDescriptorByValue);
+  RESOLVE(libUsb, sceUsbdFreeConfigDescriptor);
 }

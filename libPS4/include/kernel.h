@@ -1,4 +1,5 @@
-#pragma once
+#ifndef KERNEL_H
+#define KERNEL_H
 
 #include "types.h"
 
@@ -10,7 +11,7 @@ extern int libKernelHandle;
 extern int **__stack_chk_guard;
 extern void (*__stack_chk_fail)(void);
 extern int *(*__error)();
-#define errno (* __error())
+#define errno (*__error())
 
 extern int (*sceKernelError)(int);
 
@@ -20,7 +21,7 @@ extern int (*sceKernelAllocateDirectMemory)(off_t searchStart, off_t searchEnd, 
 extern int (*sceKernelMapDirectMemory)(void **addr, size_t length, int protection, int flags, off_t start, size_t alignment);
 extern size_t (*sceKernelGetDirectMemorySize)();
 
-extern int (*sceKernelStat)(const char *path, void* buf);
+extern int (*sceKernelStat)(const char *path, void *buf);
 extern int (*sceKernelOpen)(const char *path, int flags, int mode);
 extern int (*sceKernelRead)(int fd, void *buf, size_t nbyte);
 extern int (*sceKernelLseek)(int fd, off_t offset, int whence);
@@ -59,4 +60,6 @@ int kill(int pid, int signum);
 
 void initKernel(void);
 
-int kexec(void* func, void* user_arg);
+int kexec(void *func, void *user_arg);
+
+#endif

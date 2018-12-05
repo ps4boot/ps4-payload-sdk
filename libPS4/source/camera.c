@@ -15,16 +15,16 @@ int (*sceCameraGetConfig)(int handle, SceCameraConfig *config);
 int (*sceCameraSetConfig)(int handle, SceCameraConfig *config);
 
 void initCamera(void) {
-	int libCamera = sceKernelLoadStartModule("libSceCamera.sprx", 0, NULL, 0, 0, 0);
-	
-	RESOLVE(libCamera, sceCameraOpen);
-	RESOLVE(libCamera, sceCameraClose);
-	RESOLVE(libCamera, sceCameraIsAttached);
-	RESOLVE(libCamera, sceCameraGetFrameData);
-	RESOLVE(libCamera, sceCameraStart);
-	RESOLVE(libCamera, sceCameraStop);
-	RESOLVE(libCamera, sceCameraGetDeviceInfo);
-	RESOLVE(libCamera, sceCameraGetDeviceConfig);
-	RESOLVE(libCamera, sceCameraGetConfig);
-	RESOLVE(libCamera, sceCameraSetConfig);
+  int libCamera = sceKernelLoadStartModule("libSceCamera.sprx", 0, NULL, 0, 0, 0);
+
+  RESOLVE(libCamera, sceCameraOpen);
+  RESOLVE(libCamera, sceCameraClose);
+  RESOLVE(libCamera, sceCameraIsAttached);
+  RESOLVE(libCamera, sceCameraGetFrameData);
+  RESOLVE(libCamera, sceCameraStart);
+  RESOLVE(libCamera, sceCameraStop);
+  RESOLVE(libCamera, sceCameraGetDeviceInfo);
+  RESOLVE(libCamera, sceCameraGetDeviceConfig);
+  RESOLVE(libCamera, sceCameraGetConfig);
+  RESOLVE(libCamera, sceCameraSetConfig);
 }

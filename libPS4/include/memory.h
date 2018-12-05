@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MEMORY_H
+#define MEMORY_H
 
 #include "types.h"
 
@@ -25,21 +26,21 @@
 
 #define MAP_FAILED (void *)-1
 
-#define	MS_SYNC 0x0000
+#define MS_SYNC 0x0000
 #define MS_ASYNC 0x0001
 #define MS_INVALIDATE 0x0002
 
 struct memoryRegionInfo {
-	void *base; // 0x0
-	void *end; // 0x8
-	unsigned int flags; // 0x16
+  void *base;          // 0x0
+  void *end;           // 0x8
+  unsigned int flags;  // 0x16
 };
 
 struct otherMemoryRegionInfo {
-	void *base; // 0x0
-	void *end; // 0x8
-	char unknown[0xa]; // 0x16
-	char name[32]; // 0x20
+  void *base;         // 0x0
+  void *end;          // 0x8
+  char unknown[0xa];  // 0x16
+  char name[32];      // 0x20
 };
 
 void *mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset);
@@ -51,3 +52,5 @@ int munlock(void *addr, size_t len);
 
 int getMemoryInfo(void *address, struct memoryRegionInfo *destination);
 int getOtherMemoryInfo(void *address, int nextMatchIfUnmapped, struct otherMemoryRegionInfo *destination);
+
+#endif

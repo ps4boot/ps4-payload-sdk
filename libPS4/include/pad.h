@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PAD_H
+#define PAD_H
 
 extern int (*scePadInit)(void);
 extern int (*scePadOpen)(int userID, int, int, void *);
@@ -7,3 +8,5 @@ extern int (*scePadRead)(int handle, void *data, int count);
 extern int (*scePadReadState)(int handle, void *data);
 
 void initPad(void);
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
 #define RGB(r, g, b) ((r) | ((g) << 8) | ((b) << 16) | (0xff << 24))
 
@@ -8,3 +9,5 @@
 
 #define WHITE 0xffffffff
 #define BLACK 0xff000000
+
+#endif

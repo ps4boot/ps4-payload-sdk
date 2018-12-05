@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PS4_H
+#define PS4_H
 
 #include "barrier.h"
 #include "eventflag.h"
@@ -26,3 +27,5 @@
 #include "pkg.h"
 #include "dump.h"
 #include "proc.h"
+
+#endif

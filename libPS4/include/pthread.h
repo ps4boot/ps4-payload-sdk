@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PTHREAD_H
+#define PTHREAD_H
 
 typedef void *ScePthread;
 typedef void *ScePthreadAttr;
@@ -22,3 +23,5 @@ extern int (*scePthreadMutexTimedlock)(ScePthreadMutex *mutex, SceKernelUseconds
 extern int (*scePthreadMutexUnlock)(ScePthreadMutex *mutex);
 
 void initPthread(void);
+
+#endif
