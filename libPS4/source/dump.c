@@ -4,9 +4,6 @@
 #include "dump.h"
 #include "elf64.h"
 
-#define TRUE 1
-#define FALSE 0
-
 typedef struct {
   int index;
   uint64_t fileoff;
@@ -60,13 +57,13 @@ bool read_decrypt_segment(int fd, uint64_t index, uint64_t offset, size_t size, 
       memcpy(outPtr, addr, bytes);
       munmap(addr, bytes);
     } else {
-      return FALSE;
+      return 0;
     }
     outPtr += bytes;
     outSize -= bytes;
     realOffset += bytes;
   }
-  return TRUE;
+  return 1;
 }
 
 int is_segment_in_other_segment(Elf64_Phdr *phdr, int index, Elf64_Phdr *phdrs, int num) {
@@ -75,12 +72,12 @@ int is_segment_in_other_segment(Elf64_Phdr *phdr, int index, Elf64_Phdr *phdrs, 
     if (i != index) {
       if (p->p_filesz > 0) {
         if ((phdr->p_offset >= p->p_offset) && ((phdr->p_offset + phdr->p_filesz) <= (p->p_offset + p->p_filesz))) {
-          return TRUE;
+          return 1;
         }
       }
     }
   }
-  return FALSE;
+  return 0;
 }
 
 SegmentBufInfo *parse_phdr(Elf64_Phdr *phdrs, int num, int *segBufNum) {
@@ -96,7 +93,7 @@ SegmentBufInfo *parse_phdr(Elf64_Phdr *phdrs, int num, int *segBufNum) {
         info->bufsz = (phdr->p_filesz + (phdr->p_align - 1)) & (~(phdr->p_align - 1));
         info->filesz = phdr->p_filesz;
         info->fileoff = phdr->p_offset;
-        info->enc = (phdr->p_type != 0x6fffff01) ? TRUE : FALSE;
+        info->enc = (phdr->p_type != 0x6fffff01) ? 1 : 0;
       }
     }
   }

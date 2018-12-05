@@ -6,12 +6,6 @@
 #include "kernel.h"
 #include "syscall.h"
 
-#define TRUE 1
-#define FALSE 0
-
-typedef char BOOL;
-typedef unsigned char u8;
-
 #define CTL_KERN 1
 #define KERN_PROC 14
 #define KERN_PROC_ALL 0     /* everything */
