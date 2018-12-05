@@ -68,8 +68,9 @@ void copy_File(char *sourcefile, char *destfile) {
       size_t bytes;
       char *buffer = malloc(4194304);
       if (buffer != NULL) {
-        while (0 < (bytes = read(src, buffer, 4194304)))
+        while (0 < (bytes = read(src, buffer, 4194304))) {
           write(out, buffer, bytes);
+        }
         free(buffer);
       }
       close(out);
@@ -86,8 +87,9 @@ void copy_Dir(char *sourcedir, char *destdir) {
   struct stat info;
   char src_path[1024], dst_path[1024];
   dir = opendir(sourcedir);
-  if (!dir)
+  if (!dir) {
     return;
+  }
   mkdir(destdir, 0777);
   while ((dp = readdir(dir)) != NULL) {
     if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..")) {
@@ -125,7 +127,9 @@ int file_compare(char *fname1, char *fname2) {
     res = 0;
     goto exit;
   }
-  if (size1 < lastBytes) lastBytes = size1;
+  if (size1 < lastBytes) {
+    lastBytes = size1;
+  }
   lseek(file1, -lastBytes, SEEK_END);
   lseek(file2, -lastBytes, SEEK_END);
   bytesRead1 = read(file1, buffer1, sizeof(char));
@@ -150,15 +154,17 @@ exit:
 int fgetc(int fp) {
   char c;
 
-  if (read(fp, &c, 1) == 0)
+  if (read(fp, &c, 1) == 0) {
     return (-1);
+  }
   return (c);
 }
 
 void create_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val, size_t len) {
   int i;
-  if (*iovlen < 0)
+  if (*iovlen < 0) {
     return;
+  }
   i = *iovlen;
   *iov = realloc(*iov, sizeof **iov * (i + 2));
   if (*iov == NULL) {
@@ -170,10 +176,11 @@ void create_iovec(struct iovec **iov, int *iovlen, const char *name, const void 
   ++i;
   (*iov)[i].iov_base = (void *)val;
   if (len == (size_t)-1) {
-    if (val != NULL)
+    if (val != NULL) {
       len = strlen(val) + 1;
-    else
+    } else {
       len = 0;
+    }
   }
   (*iov)[i].iov_len = (int)len;
   *iovlen = ++i;

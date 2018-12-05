@@ -12,16 +12,18 @@ char *replace_str(char *str, char *orig, char *rep) {
     }
   }
   ret = malloc(i + count * (newlen - oldlen));
-  if (ret == NULL)
+  if (ret == NULL) {
     return str;
+  }
   i = 0;
   while (*str) {
     if (strstr(str, orig) == str) {
       strcpy(&ret[i], rep);
       i += newlen;
       str += oldlen;
-    } else
+    } else {
       ret[i++] = *str++;
+    }
   }
   ret[i] = '\0';
   return ret;
@@ -35,19 +37,22 @@ int split_string(char *str, char c, char ***arr) {
   char *t;
   p = str;
   while (*p != '\0') {
-    if (*p == c)
+    if (*p == c) {
       count++;
+    }
     p++;
   }
   *arr = (char **)malloc(sizeof(char *) * count);
-  if (*arr == NULL)
+  if (*arr == NULL) {
     return 0;
+  }
   p = str;
   while (*p != '\0') {
     if (*p == c) {
       (*arr)[i] = (char *)malloc(sizeof(char) * token_len);
-      if ((*arr)[i] == NULL)
+      if ((*arr)[i] == NULL) {
         return 0;
+      }
       token_len = 0;
       i++;
     }
@@ -55,8 +60,9 @@ int split_string(char *str, char c, char ***arr) {
     token_len++;
   }
   (*arr)[i] = (char *)malloc(sizeof(char) * token_len);
-  if ((*arr)[i] == NULL)
+  if ((*arr)[i] == NULL) {
     return 0;
+  }
   i = 0;
   p = str;
   t = ((*arr)[i]);
@@ -78,7 +84,9 @@ char *read_string(int f) {
   char *string = malloc(sizeof(char) * 65536);
   int c;
   int length = 0;
-  if (!string) return string;
+  if (!string) {
+    return string;
+  }
   while ((c = fgetc(f)) != -1) {
     string[length++] = c;
   }

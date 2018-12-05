@@ -45,8 +45,9 @@ int ptrace(int req, int pid, void* addr, int data);
 SYSCALL(ptrace, 26);
 
 void PTRACE(int req, int pid, void* addr, int data) {
-  while (ptrace(req, pid, addr, data))
+  while (ptrace(req, pid, addr, data)) {
     ;
+  }
 }
 
 void procAttach(int pid) {
