@@ -35,10 +35,8 @@ int is_self(const char *fn) {
         }
       }
       munmap(addr, 0x4000);
-    } else {
     }
     close(fd);
-  } else {
   }
 
   return res;
@@ -123,7 +121,6 @@ void do_dump(char *saveFile, int fd, SegmentBufInfo *segBufs, int segBufNum, Elf
       free(buf);
     }
     close(sf);
-  } else {
   }
 }
 
@@ -141,9 +138,7 @@ void decrypt_and_dump_self(char *selfFile, char *saveFile) {
       do_dump(saveFile, fd, segBufs, segBufNum, ehdr);
       free(segBufs);
       munmap(addr, 0x4000);
-    } else {
     }
     close(fd);
-  } else {
   }
 }

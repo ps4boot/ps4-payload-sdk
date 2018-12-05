@@ -40,7 +40,6 @@ SceUserServiceLoginUserIdList getUserIDList() {
     ret = sceUserServiceGetLoginUserIdList(&userIdList);
     if (ret == 0) {
       sceUserServiceTerminate();
-      return userIdList;
     }
   }
   return userIdList;

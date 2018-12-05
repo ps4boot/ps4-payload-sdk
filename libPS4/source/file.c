@@ -40,7 +40,6 @@ int file_exists(char *fname) {
 
 int dir_exists(char *dname) {
   DIR *dir = opendir(dname);
-
   if (dir) {
     closedir(dir);
     return 1;
@@ -74,10 +73,8 @@ void copy_File(char *sourcefile, char *destfile) {
         free(buffer);
       }
       close(out);
-    } else {
     }
     close(src);
-  } else {
   }
 }
 
@@ -153,14 +150,13 @@ exit:
 
 int fgetc(int fp) {
   char c;
-
   if (read(fp, &c, 1) == 0) {
     return (-1);
   }
   return (c);
 }
 
-void create_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val, size_t len) {
+void build_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val, size_t len) {
   int i;
   if (*iovlen < 0) {
     return;
@@ -186,19 +182,19 @@ void create_iovec(struct iovec **iov, int *iovlen, const char *name, const void 
   *iovlen = ++i;
 }
 
-int mount_fs(const char *device, const char *mountpoint, const char *fstype, const char *mode, unsigned int flags) {
+int mount_large_fs(const char *device, const char *mountpoint, const char *fstype, const char *mode, unsigned int flags) {
   struct iovec *iov = NULL;
   int iovlen = 0;
-  create_iovec(&iov, &iovlen, "fstype", fstype, -1);
-  create_iovec(&iov, &iovlen, "fspath", mountpoint, -1);
-  create_iovec(&iov, &iovlen, "from", device, -1);
-  create_iovec(&iov, &iovlen, "large", "yes", -1);
-  create_iovec(&iov, &iovlen, "timezone", "static", -1);
-  create_iovec(&iov, &iovlen, "async", "", -1);
-  create_iovec(&iov, &iovlen, "ignoreacl", "", -1);
+  build_iovec(&iov, &iovlen, "fstype", fstype, -1);
+  build_iovec(&iov, &iovlen, "fspath", mountpoint, -1);
+  build_iovec(&iov, &iovlen, "from", device, -1);
+  build_iovec(&iov, &iovlen, "large", "yes", -1);
+  build_iovec(&iov, &iovlen, "timezone", "static", -1);
+  build_iovec(&iov, &iovlen, "async", "", -1);
+  build_iovec(&iov, &iovlen, "ignoreacl", "", -1);
   if (mode) {
-    create_iovec(&iov, &iovlen, "dirmask", mode, -1);
-    create_iovec(&iov, &iovlen, "mask", mode, -1);
+    build_iovec(&iov, &iovlen, "dirmask", mode, -1);
+    build_iovec(&iov, &iovlen, "mask", mode, -1);
   }
   return nmount(iov, iovlen, flags);
 }

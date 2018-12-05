@@ -111,8 +111,6 @@ int substring(char *haystack, char *needle) {
         return i;
       }
     }
-    return -1;
-  } else {
-    return -1;
   }
+  return -1;
 }
