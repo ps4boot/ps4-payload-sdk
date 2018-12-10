@@ -89,6 +89,7 @@ int getSandboxDirectory(char *destination, int *length);
 int file_exists(char *fname);
 int dir_exists(char *dname);
 int symlink_exists(const char *fname);
+void touch_file(char *destfile);
 void copy_File(char *sourcefile, char *destfile);
 void copy_Dir(char *sourcedir, char *destdir);
 int file_compare(char *fname1, char *fname2);

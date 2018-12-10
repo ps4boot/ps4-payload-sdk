@@ -59,6 +59,13 @@ int symlink_exists(const char *fname) {
   }
 }
 
+void touch_file(char *destfile) {
+  int fd = open(destfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  if (fd != -1) {
+    close(fd);
+  }
+}
+
 void copy_File(char *sourcefile, char *destfile) {
   int src = open(sourcefile, O_RDONLY, 0);
   if (src != -1) {
