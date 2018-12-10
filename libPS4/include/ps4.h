@@ -2,6 +2,7 @@
 #define PS4_H
 
 #include "barrier.h"
+#include "cfg.h"
 #include "eventflag.h"
 #include "file.h"
 #include "kernel.h"
@@ -24,6 +25,7 @@
 #include "sysutil.h"
 #include "base64.h"
 #include "strings.h"
+#include "pfs.h"
 #include "pkg.h"
 #include "dump.h"
 #include "proc.h"

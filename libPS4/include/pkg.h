@@ -1,6 +1,8 @@
 #ifndef PKG_H
 #define PKG_H
 
+#include "types.h"
+
 #define PS4_PKG_MAGIC 0x544E437F  // .CNT
 
 enum PS4_PKG_ENTRY_TYPES {
@@ -88,5 +90,6 @@ struct file_entry {
 };
 
 int isfpkg(char *pkgfn);
+int unpkg(char *pkgfn, char *tidpath);
 
 #endif

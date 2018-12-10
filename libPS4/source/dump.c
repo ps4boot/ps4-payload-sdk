@@ -1,8 +1,8 @@
-#include "libc.h"
-#include "types.h"
-#include "memory.h"
 #include "dump.h"
 #include "elf64.h"
+#include "libc.h"
+#include "memory.h"
+#include "types.h"
 
 typedef struct {
   int index;
@@ -141,4 +141,108 @@ void decrypt_and_dump_self(char *selfFile, char *saveFile) {
     }
     close(fd);
   }
+}
+
+void decrypt_dir(char *sourcedir, char *destdir) {
+  DIR *dir;
+  struct dirent *dp;
+  struct stat info;
+  char src_path[1024], dst_path[1024];
+
+  dir = opendir(sourcedir);
+  if (!dir) {
+    return;
+  }
+
+  mkdir(destdir, 0777);
+
+  while ((dp = readdir(dir)) != NULL) {
+    if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..")) {
+      // Do Nothing
+    } else {
+      sprintf(src_path, "%s/%s", sourcedir, dp->d_name);
+      sprintf(dst_path, "%s/%s", destdir, dp->d_name);
+      if (!stat(src_path, &info)) {
+        if (S_ISDIR(info.st_mode)) {
+          decrypt_dir(src_path, dst_path);
+        } else if (S_ISREG(info.st_mode)) {
+          if (is_self(src_path)) {
+            decrypt_and_dump_self(src_path, dst_path);
+          }
+        }
+      }
+    }
+  }
+  closedir(dir);
+}
+
+int wait_for_game(char *title_id) {
+  int res = 0;
+
+  DIR *dir;
+  struct dirent *dp;
+
+  dir = opendir("/mnt/sandbox/pfsmnt");
+  if (!dir) {
+    return 0;
+  }
+
+  while ((dp = readdir(dir)) != NULL) {
+    if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..")) {
+      // Do Nothing
+    } else {
+      if (strstr(dp->d_name, "-app0") != NULL) {
+        sscanf(dp->d_name, "%[^-]", title_id);
+        res = 1;
+        break;
+      }
+    }
+  }
+  closedir(dir);
+
+  return res;
+}
+
+int wait_for_bdcopy(char *title_id) {
+  char path[256];
+  char *buf;
+  size_t filelen, progress;
+
+  sprintf(path, "/system_data/playgo/%s/bdcopy.pbm", title_id);
+  FILE *pbm = fopen(path, "rb");
+  if (!pbm) {
+    return 100;
+  }
+
+  fseek(pbm, 0, SEEK_END);
+  filelen = ftell(pbm);
+  fseek(pbm, 0, SEEK_SET);
+
+  buf = malloc(filelen);
+
+  fread(buf, sizeof(char), filelen, pbm);
+  fclose(pbm);
+
+  progress = 0;
+  for (int i = 0x100; i < filelen; i++) {
+    if (buf[i]) {
+      progress++;
+    }
+  }
+
+  free(buf);
+
+  return (progress * 100 / (filelen - 0x100));
+}
+
+int wait_for_usb(char *usb_name, char *usb_path) {
+  int fd = open("/mnt/usb0/.dirtest", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  if (fd != -1) {
+    close(fd);
+    unlink("/mnt/usb0/.dirtest");
+    sprintf(usb_name, "%s", "USB0");
+    sprintf(usb_path, "%s", "/mnt/usb0");
+    return 1;
+  }
+  return 0;
 }
