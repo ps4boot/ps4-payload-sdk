@@ -90,11 +90,11 @@ int file_exists(char *fname);
 int dir_exists(char *dname);
 int symlink_exists(const char *fname);
 void touch_file(char *destfile);
-void copy_File(char *sourcefile, char *destfile);
-void copy_Dir(char *sourcedir, char *destdir);
+void copy_file(char *sourcefile, char *destfile);
+void copy_dir(char *sourcedir, char *destdir);
 int file_compare(char *fname1, char *fname2);
-int fgetc(int fp);
-int mount_fs(const char *device, const char *mountpoint, const char *fstype, const char *mode, unsigned int flags);
+int fgetc_pointer(int fp);
+int mount_large_fs(const char *device, const char *mountpoint, const char *fstype, const char *mode, unsigned int flags);
 void create_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val, size_t len);
 
 #endif

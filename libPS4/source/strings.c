@@ -87,7 +87,7 @@ char *read_string(int f) {
   if (!string) {
     return string;
   }
-  while ((c = fgetc(f)) != -1) {
+  while ((c = fgetc_pointer(f)) != -1) {
     string[length++] = c;
   }
   string[length++] = '\0';

@@ -66,7 +66,7 @@ void touch_file(char *destfile) {
   }
 }
 
-void copy_File(char *sourcefile, char *destfile) {
+void copy_file(char *sourcefile, char *destfile) {
   int src = open(sourcefile, O_RDONLY, 0);
   if (src != -1) {
     int out = open(destfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -85,7 +85,7 @@ void copy_File(char *sourcefile, char *destfile) {
   }
 }
 
-void copy_Dir(char *sourcedir, char *destdir) {
+void copy_dir(char *sourcedir, char *destdir) {
   DIR *dir;
   struct dirent *dp;
   struct stat info;
@@ -103,9 +103,9 @@ void copy_Dir(char *sourcedir, char *destdir) {
 
       if (!stat(src_path, &info)) {
         if (S_ISDIR(info.st_mode)) {
-          copy_Dir(src_path, dst_path);
+          copy_dir(src_path, dst_path);
         } else if (S_ISREG(info.st_mode)) {
-          copy_File(src_path, dst_path);
+          copy_file(src_path, dst_path);
         }
       }
     }
@@ -155,7 +155,7 @@ exit:
   return res;
 }
 
-int fgetc(int fp) {
+int fgetc_pointer(int fp) {
   char c;
   if (read(fp, &c, 1) == 0) {
     return (-1);
