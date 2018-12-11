@@ -15,7 +15,6 @@ https://github.com/benhoyt/inih
 
 static inline int fgetc_file(FILE* fp) {
   char c;
-
   if (fread(&c, 1, 1, fp) == 0) {
     return (EOF);
   }
