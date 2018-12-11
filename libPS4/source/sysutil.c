@@ -21,7 +21,7 @@ void initSysUtil(void) {
 void systemMessage(char *msg) {
   char buffer[512];
   sprintf(buffer, "%s", msg);
-  sceSysUtilSendSystemNotificationWithText(0x81, buffer);
+  sceSysUtilSendSystemNotificationWithText(0xDE, buffer);
 }
 
 void openBrowser(char *uri) {
