@@ -7,7 +7,7 @@ apt-get -y install make clang gcc llvm binutils
 git clone https://github.com/Scene-Collective/ps4-payload-sdk ~/PS4-SDK
 
 # Build SDK
-pushd ~/PS4-SDK
+pushd ~/PS4-SDK/libPS4
 make
 popd
 
