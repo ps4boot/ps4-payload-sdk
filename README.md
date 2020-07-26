@@ -10,6 +10,12 @@ Then create an environment variable called, `PS4SDK` which points to the base di
 
     /C/Users/Chris/Documents/GitHub/PS4-SDK
 
+
+    git clone https://github.com/ps4boot/ps4-payload-sdk
+
+
+    export PS4SDK=/home/USERNAME/ps4-payloads-sdk/
+
 Build the libraries by running `make` on the `libPS4` and `libusbfatfs` directories.
 
 Finally, you can build examples by running `make` on them.
