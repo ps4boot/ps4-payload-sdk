@@ -70,7 +70,7 @@ typedef volatile s64 vs64;
 //typedef int *intptr_t;
 
 /* POSIX types */
-//typedef uint32_t __dev_t;
+typedef uint32_t dev_t;
 typedef uint32_t blksize_t;
 typedef int64_t blkcnt_t;
 typedef uint32_t dev_t;

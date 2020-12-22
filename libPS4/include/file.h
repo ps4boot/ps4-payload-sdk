@@ -29,13 +29,13 @@
 #define MNT_UPDATE 0x0000000000010000ULL /* not real mount, just update */
 
 struct stat {
-  __dev_t st_dev;          /* inode's device */
+  dev_t st_dev;            /* inode's device */
   ino_t st_ino;            /* inode's number */
   mode_t st_mode;          /* inode protection mode */
   nlink_t st_nlink;        /* number of hard links */
   uid_t st_uid;            /* user ID of the file's owner */
   gid_t st_gid;            /* group ID of the file's group */
-  __dev_t st_rdev;         /* device type */
+  dev_t st_rdev;           /* device type */
   struct timespec st_atim; /* time of last access */
   struct timespec st_mtim; /* time of last data modification */
   struct timespec st_ctim; /* time of last file status change */
