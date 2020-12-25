@@ -37,7 +37,7 @@ int32_t getUserIDList(SceUserServiceLoginUserIdList *userIdList) {
   RESOLVE(libSceUserService, sceUserServiceGetLoginUserIdList);
   RESOLVE(libSceUserService, sceUserServiceTerminate);
   if (sceUserServiceInitialize(NULL) == 0) {
-    if (sceUserServiceGetLoginUserIdList(userIdList) == 0) { // TODO: Is this arg correct? Was  &userIdList
+    if (sceUserServiceGetLoginUserIdList(userIdList) == 0) {
       sceUserServiceTerminate();
       return 1;
     }
@@ -47,18 +47,10 @@ int32_t getUserIDList(SceUserServiceLoginUserIdList *userIdList) {
 
 int32_t getUserID() {
   SceUserServiceLoginUserIdList userIdList;
-  int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
-  RESOLVE(libSceUserService, sceUserServiceInitialize);
-  RESOLVE(libSceUserService, sceUserServiceGetLoginUserIdList);
-  RESOLVE(libSceUserService, sceUserServiceTerminate);
-  if (sceUserServiceInitialize(NULL) == 0) {
-    if (sceUserServiceGetLoginUserIdList(&userIdList) == 0) {
-      for (int i = 0; i < 1; i++) {
-        if (userIdList.userId[i] != -1) {
-          sceUserServiceTerminate();
-          return userIdList.userId[i];
-        }
-      }
+  getUserIDList(&userIdList);
+  for (int i = 0; i < 1; i++) {
+    if (userIdList.userId[i] != -1) {
+      return userIdList.userId[i];
     }
   }
   return -1;
