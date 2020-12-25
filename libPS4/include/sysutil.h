@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef SYSUTIL_H
 #define SYSUTIL_H
 
-#include "libc.h"
-#include "syscall.h"
+#include "types.h"
 
 #define SCE_USER_SERVICE_MAX_LOGIN_USERS 4
 #define SCE_USER_SERVICE_MAX_USER_NAME_LENGTH 16
@@ -16,11 +17,18 @@ typedef struct SceUserServiceLoginUserIdList {
 void initSysUtil(void);
 void systemMessage(char* msg);
 void openBrowser(char* uri);
-SceUserServiceLoginUserIdList getUserIDList();
+int32_t getUserIDList(SceUserServiceLoginUserIdList *userIdList);
 int32_t getUserID();
 char* getUserName(int32_t userId);
 int32_t getInitialUser();
 void reboot();
 void shutdown();
+
+#define printf_notification(...)                       \
+  do {                                                 \
+    char message[256];                                 \
+    snprintf(message, sizeof(message), ##__VA_ARGS__); \
+    systemMessage(message);                            \
+  } while (0)
 
 #endif

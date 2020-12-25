@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
+
+#include "types.h"
 
 int createSemaphore(const char *name, int attributes, int startingCount, int maxCount);
 int removeSemaphore(int semaphore);

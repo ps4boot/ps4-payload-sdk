@@ -1,3 +1,4 @@
+#include "file.h"
 #include "kernel.h"
 #include "module.h"
 
@@ -29,6 +30,7 @@ char *(*index)(const char *s, int c);
 char *(*rindex)(const char *s, int c);
 int (*isdigit)(int c);
 int (*atoi)(const char *s);
+double (*atof)(const char *s);
 size_t (*strlcpy)(char *dst, const char *src, size_t size);
 char *(*strerror)(int errnum);
 void *(*_Getpctype)();
@@ -96,6 +98,7 @@ void initLibc(void) {
   RESOLVE(libc, rindex);
   RESOLVE(libc, isdigit);
   RESOLVE(libc, atoi);
+  RESOLVE(libc, atof);
   RESOLVE(libc, strlcpy);
   RESOLVE(libc, strerror);
   RESOLVE(libc, _Getpctype);

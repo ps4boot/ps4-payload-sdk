@@ -26,8 +26,12 @@
  * $FreeBSD: release/9.0.0/sys/sys/elf64.h 186667 2009-01-01 02:08:56Z obrien $
  */
 
+#pragma once
+
 #ifndef ELF64_H
 #define ELF64_H
+
+#include "types.h"
 
 #include "elf_common.h"
 

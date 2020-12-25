@@ -1,6 +1,6 @@
 #include "kernel.h"
-#include "module.h"
 #include "memory.h"
+#include "module.h"
 
 #include "jit.h"
 

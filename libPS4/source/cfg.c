@@ -7,6 +7,8 @@ https://github.com/benhoyt/inih
 
 */
 
+#include "libc.h"
+
 #include "cfg.h"
 
 #define MAX_NAME 50

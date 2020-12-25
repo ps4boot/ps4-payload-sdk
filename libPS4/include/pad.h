@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef PAD_H
 #define PAD_H
+
+#include "types.h"
 
 extern int (*scePadInit)(void);
 extern int (*scePadOpen)(int userID, int, int, void *);

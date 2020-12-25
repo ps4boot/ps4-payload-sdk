@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef PTHREAD_H
 #define PTHREAD_H
+
+#include "types.h"
 
 typedef void *ScePthread;
 typedef void *ScePthreadAttr;

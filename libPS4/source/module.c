@@ -1,5 +1,5 @@
-#include "syscall.h"
 #include "kernel.h"
+#include "syscall.h"
 
 #include "module.h"
 

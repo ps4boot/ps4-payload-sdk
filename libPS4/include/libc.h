@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef LIBC_H
 #define LIBC_H
 
 #include "types.h"
-#include "file.h"
 
 typedef struct DIR DIR;
 typedef int FILE;
@@ -38,6 +39,7 @@ extern char *(*rindex)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
 extern int (*isdigit)(int c);
 extern int (*atoi)(const char *s);
+extern double (*atof)(const char *s);
 extern size_t (*strlcpy)(char *dst, const char *src, size_t size);
 extern char *(*strerror)(int errnum);
 extern void *(*_Getpctype)();

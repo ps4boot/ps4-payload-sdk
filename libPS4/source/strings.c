@@ -1,3 +1,6 @@
+#include "file.h"
+#include "libc.h"
+
 #include "strings.h"
 
 char *replace_str(char *str, char *orig, char *rep) {

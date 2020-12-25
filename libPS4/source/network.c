@@ -1,6 +1,8 @@
-#include "kernel.h"
-#include "module.h"
 #include "file.h"
+#include "kernel.h"
+#include "libc.h"
+#include "module.h"
+
 #include "network.h"
 
 int (*sceNetSocket)(const char *, int, int, int);
@@ -92,7 +94,13 @@ char *SckRecv(int socket) {
   char rbuf[4096], *retval = malloc(sizeof(char) * 1);
   int plen, length = 0, i;
   while ((plen = sceNetRecv(socket, rbuf, sizeof(rbuf), 0)) > 0) {
-    retval = (char *)realloc(retval, sizeof(char) * (length + plen) + 1);
+    void *tmp = (char *)realloc(retval, sizeof(char) * (length + plen) + 1);
+    if (tmp == NULL) {
+      free(retval);
+      return NULL;
+    } else {
+      retval = tmp;
+    }
     for (i = 0; i < plen; i++) {
       retval[length] = rbuf[i];
       length++;

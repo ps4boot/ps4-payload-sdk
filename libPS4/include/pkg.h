@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PKG_H
 #define PKG_H
 

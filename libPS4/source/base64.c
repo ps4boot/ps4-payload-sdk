@@ -6,6 +6,8 @@
  * See README for more details.
  */
 
+#include "libc.h"
+
 #include "base64.h"
 
 static const unsigned char base64_table[65] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

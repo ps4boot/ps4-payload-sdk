@@ -1,8 +1,9 @@
-#include "dump.h"
 #include "elf64.h"
+#include "file.h"
 #include "libc.h"
 #include "memory.h"
-#include "types.h"
+
+#include "dump.h"
 
 typedef struct {
   int index;

@@ -2,8 +2,11 @@
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/gpl-2.0.txt
 
+#include "file.h"
+#include "libc.h"
+#include "strings.h"
+
 #include "pkg.h"
-#include "ps4.h"
 
 #define EOF '\00'
 

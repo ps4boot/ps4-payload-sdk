@@ -1,3 +1,7 @@
+#include "kernel.h"
+#include "libc.h"
+#include "syscall.h"
+
 #include "proc.h"
 
 int findProcess(char* procName) {

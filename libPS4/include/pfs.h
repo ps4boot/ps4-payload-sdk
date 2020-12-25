@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef PFS_H
 #define PFS_H
 
 #include "types.h"
-#include "file.h"
 
 struct pfs_header_t {
   uint64_t version;

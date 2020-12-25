@@ -7,10 +7,13 @@ https://github.com/benhoyt/inih
 
 */
 
+#pragma once
+
 #ifndef CFG_H
 #define CFG_H
 
 #include "libc.h"
+#include "types.h"
 
 /* Nonzero if cfg_handler callback should accept lineno parameter. */
 #ifndef CFG_HANDLER_LINENO

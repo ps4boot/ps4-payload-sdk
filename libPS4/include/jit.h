@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef JIT_H
 #define JIT_H
+
+#include "types.h"
 
 extern int (*sceKernelJitCreateSharedMemory)(int flags, size_t size, int protection, int *destinationHandle);
 extern int (*sceKernelJitCreateAliasOfSharedMemory)(int handle, int protection, int *destinationHandle);

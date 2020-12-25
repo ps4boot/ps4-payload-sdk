@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef DUMP_H
 #define DUMP_H
 

@@ -1,5 +1,9 @@
+#pragma once
+
 #ifndef SYSCALL_H
 #define SYSCALL_H
+
+#include "types.h"
 
 #define SYSCALL(name, number)        \
   __asm__(".intel_syntax noprefix"); \

@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef FILE_H
 #define FILE_H
 
 #include "types.h"
-#include "libc.h"
 
 #define O_RDONLY 0x0000
 #define O_WRONLY 0x0001

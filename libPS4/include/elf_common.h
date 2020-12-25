@@ -27,8 +27,12 @@
  * $FreeBSD: release/9.0.0/sys/sys/elf_common.h 221569 2011-05-07 01:05:31Z obrien $
  */
 
+#pragma once
+
 #ifndef ELF_COMMON_H
 #define ELF_COMMON_H
+
+#include "types.h"
 
 /*
  * ELF definitions that are independent of architecture or word size.
