@@ -239,6 +239,9 @@ int unpkg(char *pkgfn, char *tidpath) {
       write(fdout, entry_file_data, entry_files[i].size);
       close(fdout);
     } else {
+      close(fdin);
+      free(entries);
+      free(entry_files);
       return 3;
     }
   }

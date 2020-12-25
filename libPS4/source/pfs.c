@@ -61,10 +61,12 @@ static void parse_directory(int ino, int lev, char *parent_name, bool dry_run) {
         read(pfs, name, ent->namelen);
       }
 
-      char *fname = malloc(strlen(parent_name) + ent->namelen + 2);
+      char *fname;
       if (parent_name != NULL) {
+        fname = malloc(strlen(parent_name) + ent->namelen + 2);
         sprintf(fname, "%s/%s", parent_name, name);
       } else {
+        fname = malloc(ent->namelen + 2);
         sprintf(fname, "%s", name);
       }
 
