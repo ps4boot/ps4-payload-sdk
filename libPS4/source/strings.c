@@ -99,12 +99,10 @@ char *read_string(int f) {
 }
 
 int substring(char *haystack, char *needle) {
-  int i = 0;
-  int d = 0;
   if (strlen(haystack) >= strlen(needle)) {
-    for (i = strlen(haystack) - strlen(needle); i >= 0; i--) {
+    for (int i = strlen(haystack) - strlen(needle); i >= 0; i--) {
       int found = 1;
-      for (d = 0; d < strlen(needle); d++) {
+      for (int d = 0; d < strlen(needle); d++) {
         if (haystack[i + d] != needle[d]) {
           found = 0;
           break;
