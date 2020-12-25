@@ -28,5 +28,6 @@ SECTIONS
 		*(.comment)
 		*(.note.GNU-stack)
 		*(.eh_frame)
+		*(.interp)
 	}
 }
