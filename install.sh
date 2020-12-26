@@ -23,7 +23,7 @@ make
 popd
 
 # Move compiled SDK
-mv libPS4 ~/PS4SDK/libPS4
+mv libPS4 ~/PS4SDK
 
 # Clear path from .bashrc if it's there
 sed -i "s/^\s*export PS4SDK=.*//gm" ~/.bashrc
