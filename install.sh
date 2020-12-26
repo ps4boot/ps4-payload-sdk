@@ -5,16 +5,17 @@ apt-get update
 apt-get -y upgrade
 apt-get -y install make gcc binutils
 
-# Delete directory if it exists
+# Delete directory if it exists and make empty directory
 rm -rf ~/PS4SDK || true
-
-# Clone Repo
-git clone https://github.com/Scene-Collective/ps4-payload-sdk ~/PS4SDK
+mkdir -p ~/PS4SDK
 
 # Build SDK
-pushd ~/PS4SDK/libPS4
+pushd libPS4
 make
 popd
+
+# Move compiled SDK
+mv libPS4 ~/PS4SDK/libPS4
 
 # Clear path from .bashrc if it's there
 sed -i "s/^\s*export PS4SDK=.*//gm" ~/.bashrc
