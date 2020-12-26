@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# NOTE: Assuming Ubuntu 20.04
+
 # Prerequisites
 apt-get update
-apt-get -y upgrade
-apt-get -y install make gcc binutils
+apt-get -y install \
+  binutils=2.34-6ubuntu1 \
+  gcc=4:9.3.0-1ubuntu2 \
+  make=4.2.1-1.2
 
 # Delete directory if it exists and make empty directory
 rm -rf ~/PS4SDK || true
