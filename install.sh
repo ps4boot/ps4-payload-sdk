@@ -15,7 +15,7 @@ fi
 
 # Delete directory if it exists and make empty directory
 rm -rf ~/PS4SDK || true
-mkdir -p ~/PS4SK
+mkdir -p ~/PS4SDK
 
 # Build SDK
 pushd libPS4
