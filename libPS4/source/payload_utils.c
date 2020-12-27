@@ -6,7 +6,27 @@
 #include "payload_utils.h"
 
 int is_fw_spoofed() {
-  // TODO
+  SceFwInfo ssv_fw;
+  char ssv_fw_trimmed[5];
+  uint16_t ssv_fw_final;
+
+  uint16_t libc_fw = get_firmware();
+  sceKernelGetSystemSwVersion(&ssv_fw);
+
+  char temp[0x1C];
+  snprintf(temp, 0x1C, "%s", ssv_fw);
+
+  char *first = strtok(temp, ".");
+  char *second = strtok(NULL, ".");
+
+  sprintf(ssv_fw_trimmed, "%s%c%c", first, second[0], second[1]);
+
+  ssv_fw_final = atoi(ssv_fw_trimmed);
+
+  if (ssv_fw_final != libc_fw) {
+    return 1;
+  }
+
   return 0;
 }
 

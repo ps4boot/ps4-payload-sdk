@@ -34,6 +34,7 @@ extern char *(*strchr)(const char *s, int c);
 extern char *(*strrchr)(const char *s, int c);
 extern char *(*strstr)(char *str1, char *str2);
 extern char *(*strdup)(const char *s);
+extern char *(*strtok)(char *str, const char *sep);
 extern char *(*index)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);

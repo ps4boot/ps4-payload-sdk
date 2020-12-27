@@ -26,6 +26,7 @@ char *(*strchr)(const char *s, int c);
 char *(*strrchr)(const char *s, int c);
 char *(*strstr)(char *str1, char *str2);
 char *(*strdup)(const char *s);
+char *(*strtok)(char *str, const char *sep);
 char *(*index)(const char *s, int c);
 char *(*rindex)(const char *s, int c);
 int (*isdigit)(int c);
@@ -94,6 +95,7 @@ void initLibc(void) {
   RESOLVE(libc, strrchr);
   RESOLVE(libc, strstr);
   RESOLVE(libc, strdup);
+  RESOLVE(libc, strtok);
   RESOLVE(libc, index);
   RESOLVE(libc, rindex);
   RESOLVE(libc, isdigit);
