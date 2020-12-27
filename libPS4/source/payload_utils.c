@@ -2,6 +2,7 @@
 #include "fw_defines.h"
 #include "kernel.h"
 #include "libc.h"
+#include "memory.h"
 
 #include "payload_utils.h"
 
@@ -52,14 +53,279 @@ int is_tid_spoofed() {
   return 0;
 }
 
-int kpayload_base(struct thread *td, uint16_t fw_version, uint64_t *uaddr) {
-  // TODO
+int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
+  void *kernel_base;
+
+	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
+
+  uint16_t fw_version = args->kpayload_kbase_info->fw_version;
+
+  // NOTE: `copyout_macro()` is a C preprocessor macro so it cannot have a
+  //       variable as input, it is executed at compile time
+  switch(fw_version) {
+    case 350:
+      copyout_macro(350);
+      break;
+    case 355:
+      copyout_macro(355);
+      break;
+    case 370:
+      copyout_macro(370);
+      break;
+    case 400:
+      copyout_macro(400);
+      break;
+    case 401:
+      copyout_macro(401);
+      break;
+    case 405:
+      copyout_macro(405);
+      break;
+    case 406:
+      copyout_macro(406);
+      break;
+    case 407:
+      copyout_macro(407);
+      break;
+    case 450:
+      copyout_macro(450);
+      break;
+    case 455:
+      copyout_macro(455);
+      break;
+    case 470:
+      copyout_macro(470);
+      break;
+    case 471:
+      copyout_macro(471);
+      break;
+    case 472:
+      copyout_macro(472);
+      break;
+    case 473:
+      copyout_macro(473);
+      break;
+    case 474:
+      copyout_macro(474);
+      break;
+    case 500:
+      copyout_macro(500);
+      break;
+    case 501:
+      copyout_macro(501);
+      break;
+    case 503:
+      copyout_macro(503);
+      break;
+    case 505:
+      copyout_macro(505);
+      break;
+    case 507:
+      copyout_macro(507);
+      break;
+    case 550:
+      copyout_macro(550);
+      break;
+    case 553:
+      copyout_macro(553);
+      break;
+    case 555:
+      copyout_macro(555);
+      break;
+    case 556:
+      copyout_macro(556);
+      break;
+    case 600:
+      copyout_macro(600);
+      break;
+    case 602:
+      copyout_macro(602);
+      break;
+    case 620:
+      copyout_macro(620);
+      break;
+    case 650:
+      copyout_macro(650);
+      break;
+    case 651:
+      copyout_macro(651);
+      break;
+    case 670:
+      copyout_macro(670);
+      break;
+    case 671:
+      copyout_macro(671);
+      break;
+    case 672:
+      copyout_macro(672);
+      break;
+    case 700:
+      copyout_macro(700);
+      break;
+    case 701:
+      copyout_macro(701);
+      break;
+    case 702:
+      copyout_macro(702);
+      break;
+    case 750:
+      copyout_macro(750);
+      break;
+    case 751:
+      copyout_macro(751);
+      break;
+    case 755:
+      copyout_macro(755);
+      break;
+    default:
+      return -1;
+  }
+
+  uint64_t uaddr = args->kpayload_kbase_info->uaddr;
+	copyout(&kernel_base, (uint64_t *)uaddr, 8);
+
   return 0;
 }
 
-int kpayload_dump(struct thread *td, uint16_t fw_version, uint64_t kaddr, uint64_t *uaddr, size_t size) {
-  // TODO
-  return 0;
+int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
+  void *kernel_base;
+
+	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
+
+  uint16_t fw_version = args->kpayload_dump_info->fw_version;
+
+  // NOTE: `copyout_macro()` is a C preprocessor macro so it cannot have a
+  //       variable as input, it is executed at compile time
+  switch(fw_version) {
+    case 350:
+      copyout_macro(350);
+      break;
+    case 355:
+      copyout_macro(355);
+      break;
+    case 370:
+      copyout_macro(370);
+      break;
+    case 400:
+      copyout_macro(400);
+      break;
+    case 401:
+      copyout_macro(401);
+      break;
+    case 405:
+      copyout_macro(405);
+      break;
+    case 406:
+      copyout_macro(406);
+      break;
+    case 407:
+      copyout_macro(407);
+      break;
+    case 450:
+      copyout_macro(450);
+      break;
+    case 455:
+      copyout_macro(455);
+      break;
+    case 470:
+      copyout_macro(470);
+      break;
+    case 471:
+      copyout_macro(471);
+      break;
+    case 472:
+      copyout_macro(472);
+      break;
+    case 473:
+      copyout_macro(473);
+      break;
+    case 474:
+      copyout_macro(474);
+      break;
+    case 500:
+      copyout_macro(500);
+      break;
+    case 501:
+      copyout_macro(501);
+      break;
+    case 503:
+      copyout_macro(503);
+      break;
+    case 505:
+      copyout_macro(505);
+      break;
+    case 507:
+      copyout_macro(507);
+      break;
+    case 550:
+      copyout_macro(550);
+      break;
+    case 553:
+      copyout_macro(553);
+      break;
+    case 555:
+      copyout_macro(555);
+      break;
+    case 556:
+      copyout_macro(556);
+      break;
+    case 600:
+      copyout_macro(600);
+      break;
+    case 602:
+      copyout_macro(602);
+      break;
+    case 620:
+      copyout_macro(620);
+      break;
+    case 650:
+      copyout_macro(650);
+      break;
+    case 651:
+      copyout_macro(651);
+      break;
+    case 670:
+      copyout_macro(670);
+      break;
+    case 671:
+      copyout_macro(671);
+      break;
+    case 672:
+      copyout_macro(672);
+      break;
+    case 700:
+      copyout_macro(700);
+      break;
+    case 701:
+      copyout_macro(701);
+      break;
+    case 702:
+      copyout_macro(702);
+      break;
+    case 750:
+      copyout_macro(750);
+      break;
+    case 751:
+      copyout_macro(751);
+      break;
+    case 755:
+      copyout_macro(755);
+      break;
+    default:
+      return -1;
+  }
+
+  uint64_t kaddr = args->kpayload_dump_info->kaddr;
+	uint64_t uaddr = args->kpayload_dump_info->uaddr;
+	size_t size = args->kpayload_dump_info->size;
+
+	int ret = copyout((uint64_t *)kaddr, (uint64_t *)uaddr, size);
+
+	if (ret == -1) {
+		memset((uint64_t *)uaddr, 0, size);
+  }
+
+	return ret;
 }
 
 int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
@@ -382,8 +648,136 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
   return 0;
 }
 
-int kpayload_kernel_clock(struct thread *td, uint16_t fw_version, uint32_t value) {
-  // TODO
+int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) {
+  void *kernel_base;
+  uint8_t *kernel_ptr;
+
+  void (*sceSblSrtcClearTimeDifference)(uint64_t value);
+  void (*sceSblSrtcSetTime)(uint64_t tm);
+
+  uint16_t fw_version = args->kpayload_kclock_info->fw_version;
+
+  // NOTE: `kclock_macro()` is a C preprocessor macro so it cannot have a
+  //       variable as input, it is executed at compile time
+  switch(fw_version) {
+    case 350:
+      kclock_macro(350);
+      break;
+    case 355:
+      kclock_macro(355);
+      break;
+    case 370:
+      kclock_macro(370);
+      break;
+    case 400:
+      kclock_macro(400);
+      break;
+    case 401:
+      kclock_macro(401);
+      break;
+    case 405:
+      kclock_macro(405);
+      break;
+    case 406:
+      kclock_macro(406);
+      break;
+    case 407:
+      kclock_macro(407);
+      break;
+    case 450:
+      kclock_macro(450);
+      break;
+    case 455:
+      kclock_macro(455);
+      break;
+    case 470:
+      kclock_macro(470);
+      break;
+    case 471:
+      kclock_macro(471);
+      break;
+    case 472:
+      kclock_macro(472);
+      break;
+    case 473:
+      kclock_macro(473);
+      break;
+    case 474:
+      kclock_macro(474);
+      break;
+    case 500:
+      kclock_macro(500);
+      break;
+    case 501:
+      kclock_macro(501);
+      break;
+    case 503:
+      kclock_macro(503);
+      break;
+    case 505:
+      kclock_macro(505);
+      break;
+    case 507:
+      kclock_macro(507);
+      break;
+    case 550:
+      kclock_macro(550);
+      break;
+    case 553:
+      kclock_macro(553);
+      break;
+    case 555:
+      kclock_macro(555);
+      break;
+    case 556:
+      kclock_macro(556);
+      break;
+    case 600:
+      kclock_macro(600);
+      break;
+    case 602:
+      kclock_macro(602);
+      break;
+    case 620:
+      kclock_macro(620);
+      break;
+    case 650:
+      kclock_macro(650);
+      break;
+    case 651:
+      kclock_macro(651);
+      break;
+    case 670:
+      kclock_macro(670);
+      break;
+    case 671:
+      kclock_macro(671);
+      break;
+    case 672:
+      kclock_macro(672);
+      break;
+    case 700:
+      kclock_macro(700);
+      break;
+    case 701:
+      kclock_macro(701);
+      break;
+    case 702:
+      kclock_macro(702);
+      break;
+    case 750:
+      kclock_macro(750);
+      break;
+    case 751:
+      kclock_macro(751);
+      break;
+    case 755:
+      kclock_macro(755);
+      break;
+    default:
+      return -1;
+  }
+
   return 0;
 }
 
@@ -547,14 +941,26 @@ uint16_t get_firmware() {
   return ret;
 }
 
-int get_kernel_base() {
-  // TODO
-  return 0;
+uint64_t get_kernel_base() {
+  uint64_t kernel_base;
+	uint64_t *kernel_base_ptr = mmap(NULL, 8, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0); // Allocate a buffer in userland
+	struct kpayload_kbase_info kpayload_kbase_info;
+	kpayload_kbase_info.fw_version = get_firmware();
+	kpayload_kbase_info.uaddr = (uint64_t)kernel_base_ptr;
+	kexec(&kpayload_kbase, &kpayload_kbase_info);
+	memcpy(&kernel_base, kernel_base_ptr, 8);
+	munmap(kernel_base_ptr, 8);
+	return kernel_base;
 }
 
-int get_kernel_chunk() {
-  // TODO
-  return 0;
+int get_memory_dump(uint64_t kaddr, uint64_t *uaddr, size_t size) {
+  struct kpayload_dump_info kpayload_dump_info;
+	kpayload_dump_info.fw_version = get_firmware();
+	kpayload_dump_info.kaddr = kaddr;
+	kpayload_dump_info.uaddr = (uint64_t)uaddr;
+	kpayload_dump_info.size = size;
+	kexec(&kpayload_dump, &kpayload_dump_info);
+	return 0;
 }
 
 int jailbreak() {
@@ -574,8 +980,11 @@ int mmap_patch() {
   return 0;
 }
 
-int kernel_clock(uint32_t value) {
-  // TODO
+int kernel_clock(uint64_t set_time) {
+  struct kpayload_kclock_info kpayload_kclock_info;
+  kpayload_kclock_info.fw_version = get_firmware();
+  kpayload_kclock_info.set_time = set_time;
+  kexec(&kpayload_kernel_clock, &kpayload_kclock_info);
   return 0;
 }
 

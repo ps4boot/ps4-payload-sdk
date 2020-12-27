@@ -46,6 +46,28 @@ struct thread {
   struct proc *td_proc;
 };
 
+struct kpayload_kbase_info {
+  uint16_t fw_version;
+  uint64_t uaddr;
+};
+
+struct kpayload_kbase_args {
+  void *syscall_handler;
+  struct kpayload_kbase_info *kpayload_kbase_info;
+};
+
+struct kpayload_dump_info {
+	uint16_t fw_version;
+	uint64_t kaddr;
+	uint64_t uaddr;
+	size_t size;
+};
+
+struct kpayload_dump_args {
+	void *syscall_handler;
+	struct kpayload_dump_info *kpayload_dump_info;
+};
+
 struct kpayload_firmware_info {
   uint16_t fw_version;
 };
@@ -53,6 +75,16 @@ struct kpayload_firmware_info {
 struct kpayload_firmware_args {
   void *syscall_handler;
   struct kpayload_firmware_info *kpayload_firmware_info;
+};
+
+struct kpayload_kclock_info {
+  uint16_t fw_version;
+  uint64_t set_time;
+};
+
+struct kpayload_kclock_args {
+  void *syscall_handler;
+  struct kpayload_kclock_info *kpayload_kclock_info;
 };
 
 #define X86_CR0_WP (1 << 16)
@@ -82,6 +114,11 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
                    : "memory");
 }
 
+#define copyout_macro(x) { \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  copyout = (void *)(kernel_base + K ## x ## _COPYOUT); \
+}
+
 #define jailbreak_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
   kernel_ptr = (uint8_t *)kernel_base; \
@@ -97,6 +134,15 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   mmap_patch_3 = &kernel_ptr[K ## x ## _MMAP_SELF_3]; \
 }
 
+#define kclock_macro(x) { \
+kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+    kernel_ptr = (uint8_t *)kernel_base; \
+    if (x >= 450) { \
+      *(void **)(&sceSblSrtcClearTimeDifference) = &kernel_ptr[K ## x ## _CLEAR_TIME_DIFFERENCE]; \
+    } \
+    *(void **)(&sceSblSrtcSetTime) = &kernel_ptr[K ## x ## _SET_TIME]; \
+    }
+
 #define activate_browser_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
   kernel_ptr = (uint8_t *)kernel_base; \
@@ -111,11 +157,11 @@ int is_tid_spoofed();
 
 uint16_t get_firmware();
 
-int get_kernel_base();
-int get_kernel_chunk();
+uint64_t get_kernel_base();
+int get_memory_dump(uint64_t kaddr, uint64_t *dump, size_t size);
 int jailbreak();
 int mmap_patch();
-int kernel_clock(uint32_t value);
+int kernel_clock(uint64_t value);
 int activate_browser();
 
 #endif
