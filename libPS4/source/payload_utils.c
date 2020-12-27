@@ -38,21 +38,6 @@ int is_jailbroken() {
   return 0;
 }
 
-int is_testkit() {
-  // TODO
-  return 0;
-}
-
-int is_devkit() {
-  // TODO
-  return 0;
-}
-
-int is_tid_spoofed() {
-  // TODO
-  return 0;
-}
-
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
   void *kernel_base;
 
@@ -336,8 +321,8 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
 
   void *kernel_base;
   uint8_t *kernel_ptr;
-  void **got_prison0;
-  void **got_rootvnode;
+  void **prison0;
+  void **rootvnode;
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
@@ -467,8 +452,8 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
   cred->cr_rgid = 0;
   cred->cr_groups[0] = 0;
 
-  cred->cr_prison = *got_prison0;
-  fd->fd_rdir = fd->fd_jdir = *got_rootvnode;
+  cred->cr_prison = *prison0;
+  fd->fd_rdir = fd->fd_jdir = *rootvnode;
 
   void *td_ucred = *(void **)(((char *)td) + 304);
 
@@ -650,7 +635,6 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
 
 int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) {
   void *kernel_base;
-  uint8_t *kernel_ptr;
 
   void (*sceSblSrtcClearTimeDifference)(uint64_t value);
   void (*sceSblSrtcSetTime)(uint64_t tm);
@@ -787,7 +771,6 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
 
 int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args *args) {
   void *kernel_base;
-  uint8_t *kernel_ptr;
 
   uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value);
 

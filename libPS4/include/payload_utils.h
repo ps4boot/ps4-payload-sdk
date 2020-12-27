@@ -122,8 +122,8 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 #define jailbreak_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
   kernel_ptr = (uint8_t *)kernel_base; \
-  got_prison0 = (void **)&kernel_ptr[K ## x ## _PRISON_0]; \
-  got_rootvnode = (void **)&kernel_ptr[K ## x ## _ROOTVNODE]; \
+  prison0 = (void **)&kernel_ptr[K ## x ## _PRISON_0]; \
+  rootvnode = (void **)&kernel_ptr[K ## x ## _ROOTVNODE]; \
 }
 
 #define mmap_macro(x) { \
@@ -136,25 +136,20 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 
 #define kclock_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  kernel_ptr = (uint8_t *)kernel_base; \
-  if (x >= 450) { \
-    *(void **)(&sceSblSrtcClearTimeDifference) = &kernel_ptr[K ## x ## _CLEAR_TIME_DIFFERENCE]; \
+  if (atoi(#x) >= 450) { \
+    sceSblSrtcClearTimeDifference = (void *)(kernel_base + K ## x ## _CLEAR_TIME_DIFFERENCE); \
     sceSblSrtcClearTimeDifference(15); \
   } \
-  *(void **)(&sceSblSrtcSetTime) = &kernel_ptr[K ## x ## _SET_TIME]; \
+  sceSblSrtcSetTime = (void *)(kernel_base + K ## x ## _SET_TIME); \
 }
 
 #define activate_browser_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  kernel_ptr = (uint8_t *)kernel_base; \
-  *(void **)(&sceRegMgrSetInt) = &kernel_ptr[K ## x ## _REG_MGR_SET_INT]; \
+  sceRegMgrSetInt = (void *)(kernel_base + K ## x ## _REG_MGR_SET_INT); \
 }
 
 int is_fw_spoofed();
 int is_jailbroken();
-int is_testkit();
-int is_devkit();
-int is_tid_spoofed();
 
 uint16_t get_firmware();
 
