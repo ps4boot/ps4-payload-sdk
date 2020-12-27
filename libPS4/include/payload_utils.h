@@ -135,13 +135,14 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 }
 
 #define kclock_macro(x) { \
-kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-    kernel_ptr = (uint8_t *)kernel_base; \
-    if (x >= 450) { \
-      *(void **)(&sceSblSrtcClearTimeDifference) = &kernel_ptr[K ## x ## _CLEAR_TIME_DIFFERENCE]; \
-    } \
-    *(void **)(&sceSblSrtcSetTime) = &kernel_ptr[K ## x ## _SET_TIME]; \
-    }
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base; \
+  if (x >= 450) { \
+    *(void **)(&sceSblSrtcClearTimeDifference) = &kernel_ptr[K ## x ## _CLEAR_TIME_DIFFERENCE]; \
+    sceSblSrtcClearTimeDifference(15); \
+  } \
+  *(void **)(&sceSblSrtcSetTime) = &kernel_ptr[K ## x ## _SET_TIME]; \
+}
 
 #define activate_browser_macro(x) { \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \

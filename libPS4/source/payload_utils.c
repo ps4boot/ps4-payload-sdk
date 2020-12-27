@@ -778,6 +778,10 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
       return -1;
   }
 
+  uint64_t set_time = args->kpayload_kclock_info->set_time;
+
+  sceSblSrtcSetTime(set_time);
+
   return 0;
 }
 
