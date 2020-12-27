@@ -46,6 +46,15 @@ struct thread {
   struct proc *td_proc;
 };
 
+struct kpayload_firmware_info {
+  uint16_t fw_version;
+};
+
+struct kpayload_firmware_args {
+  void *syscall_handler;
+  struct kpayload_firmware_info *kpayload_firmware_info;
+};
+
 #define X86_CR0_WP (1 << 16)
 
 static inline __attribute__((always_inline)) uint64_t __readmsr(unsigned long __register) {
@@ -71,6 +80,27 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
                    :
                    : "r"(cr0)
                    : "memory");
+}
+
+#define jailbreak_macro(x) { \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base; \
+  got_prison0 = (void **)&kernel_ptr[K ## x ## _PRISON_0]; \
+  got_rootvnode = (void **)&kernel_ptr[K ## x ## _ROOTVNODE]; \
+}
+
+#define mmap_macro(x) { \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base; \
+  mmap_patch_1 = &kernel_ptr[K ## x ## _MMAP_SELF_1]; \
+  mmap_patch_2 = &kernel_ptr[K ## x ## _MMAP_SELF_2]; \
+  mmap_patch_3 = &kernel_ptr[K ## x ## _MMAP_SELF_3]; \
+}
+
+#define activate_browser_macro(x) { \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base; \
+  *(void **)(&sceRegMgrSetInt) = &kernel_ptr[K ## x ## _REG_MGR_SET_INT]; \
 }
 
 int is_fw_spoofed();
