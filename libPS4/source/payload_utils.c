@@ -60,80 +60,118 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
   switch(fw_version) {
     case 350:
       jailbreak_macro(350);
+      break;
     case 355:
       jailbreak_macro(355);
+      break;
     case 370:
       jailbreak_macro(370);
+      break;
     case 400:
       jailbreak_macro(400);
+      break;
     case 401:
       jailbreak_macro(401);
+      break;
     case 405:
       jailbreak_macro(405);
+      break;
     case 406:
       jailbreak_macro(406);
+      break;
     case 407:
       jailbreak_macro(407);
+      break;
     case 450:
       jailbreak_macro(450);
+      break;
     case 455:
       jailbreak_macro(455);
+      break;
     case 470:
       jailbreak_macro(470);
+      break;
     case 471:
       jailbreak_macro(471);
+      break;
     case 472:
       jailbreak_macro(472);
+      break;
     case 473:
       jailbreak_macro(473);
+      break;
     case 474:
       jailbreak_macro(474);
+      break;
     case 500:
       jailbreak_macro(500);
+      break;
     case 501:
       jailbreak_macro(501);
+      break;
     case 503:
       jailbreak_macro(503);
+      break;
     case 505:
       jailbreak_macro(505);
+      break;
     case 507:
       jailbreak_macro(507);
+      break;
     case 550:
       jailbreak_macro(550);
+      break;
     case 553:
       jailbreak_macro(553);
+      break;
     case 555:
       jailbreak_macro(555);
+      break;
     case 556:
       jailbreak_macro(556);
+      break;
     case 600:
       jailbreak_macro(600);
+      break;
     case 602:
       jailbreak_macro(602);
+      break;
     case 620:
       jailbreak_macro(620);
+      break;
     case 650:
       jailbreak_macro(650);
+      break;
     case 651:
       jailbreak_macro(651);
+      break;
     case 670:
       jailbreak_macro(670);
+      break;
     case 671:
       jailbreak_macro(671);
+      break;
     case 672:
       jailbreak_macro(672);
+      break;
     case 700:
       jailbreak_macro(700);
+      break;
     case 701:
       jailbreak_macro(701);
+      break;
     case 702:
       jailbreak_macro(702);
+      break;
     case 750:
       jailbreak_macro(750);
+      break;
     case 751:
       jailbreak_macro(751);
+      break;
     case 755:
       jailbreak_macro(755);
+      break;
     default:
       return -1;
   }
@@ -177,80 +215,118 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
   switch(fw_version) {
     case 350:
       mmap_macro(350);
+      break;
     case 355:
       mmap_macro(355);
+      break;
     case 370:
       mmap_macro(370);
+      break;
     case 400:
       mmap_macro(400);
+      break;
     case 401:
       mmap_macro(401);
+      break;
     case 405:
       mmap_macro(405);
+      break;
     case 406:
       mmap_macro(406);
+      break;
     case 407:
       mmap_macro(407);
+      break;
     case 450:
       mmap_macro(450);
+      break;
     case 455:
       mmap_macro(455);
+      break;
     case 470:
       mmap_macro(470);
+      break;
     case 471:
       mmap_macro(471);
+      break;
     case 472:
       mmap_macro(472);
+      break;
     case 473:
       mmap_macro(473);
+      break;
     case 474:
       mmap_macro(474);
+      break;
     case 500:
       mmap_macro(500);
+      break;
     case 501:
       mmap_macro(501);
+      break;
     case 503:
       mmap_macro(503);
+      break;
     case 505:
       mmap_macro(505);
+      break;
     case 507:
       mmap_macro(507);
+      break;
     case 550:
       mmap_macro(550);
+      break;
     case 553:
       mmap_macro(553);
+      break;
     case 555:
       mmap_macro(555);
+      break;
     case 556:
       mmap_macro(556);
+      break;
     case 600:
       mmap_macro(600);
+      break;
     case 602:
       mmap_macro(602);
+      break;
     case 620:
       mmap_macro(620);
+      break;
     case 650:
       mmap_macro(650);
+      break;
     case 651:
       mmap_macro(651);
+      break;
     case 670:
       mmap_macro(670);
+      break;
     case 671:
       mmap_macro(671);
+      break;
     case 672:
       mmap_macro(672);
+      break;
     case 700:
       mmap_macro(700);
+      break;
     case 701:
       mmap_macro(701);
+      break;
     case 702:
       mmap_macro(702);
+      break;
     case 750:
       mmap_macro(750);
+      break;
     case 751:
       mmap_macro(751);
+      break;
     case 755:
       mmap_macro(755);
+      break;
     default:
       return -1;
   }
@@ -304,80 +380,118 @@ int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args 
   switch(fw_version) {
     case 350:
       activate_browser_macro(350);
+      break;
     case 355:
       activate_browser_macro(355);
+      break;
     case 370:
       activate_browser_macro(370);
+      break;
     case 400:
       activate_browser_macro(400);
+      break;
     case 401:
       activate_browser_macro(401);
+      break;
     case 405:
       activate_browser_macro(405);
+      break;
     case 406:
       activate_browser_macro(406);
+      break;
     case 407:
       activate_browser_macro(407);
+      break;
     case 450:
       activate_browser_macro(450);
+      break;
     case 455:
       activate_browser_macro(455);
+      break;
     case 470:
       activate_browser_macro(470);
+      break;
     case 471:
       activate_browser_macro(471);
+      break;
     case 472:
       activate_browser_macro(472);
+      break;
     case 473:
       activate_browser_macro(473);
+      break;
     case 474:
       activate_browser_macro(474);
+      break;
     case 500:
       activate_browser_macro(500);
+      break;
     case 501:
       activate_browser_macro(501);
+      break;
     case 503:
       activate_browser_macro(503);
+      break;
     case 505:
       activate_browser_macro(505);
+      break;
     case 507:
       activate_browser_macro(507);
+      break;
     case 550:
       activate_browser_macro(550);
+      break;
     case 553:
       activate_browser_macro(553);
+      break;
     case 555:
       activate_browser_macro(555);
+      break;
     case 556:
       activate_browser_macro(556);
+      break;
     case 600:
       activate_browser_macro(600);
+      break;
     case 602:
       activate_browser_macro(602);
+      break;
     case 620:
       activate_browser_macro(620);
+      break;
     case 650:
       activate_browser_macro(650);
+      break;
     case 651:
       activate_browser_macro(651);
+      break;
     case 670:
       activate_browser_macro(670);
+      break;
     case 671:
       activate_browser_macro(671);
+      break;
     case 672:
       activate_browser_macro(672);
+      break;
     case 700:
       activate_browser_macro(700);
+      break;
     case 701:
       activate_browser_macro(701);
+      break;
     case 702:
       activate_browser_macro(702);
+      break;
     case 750:
       activate_browser_macro(750);
+      break;
     case 751:
       activate_browser_macro(751);
+      break;
     case 755:
       activate_browser_macro(755);
+      break;
     default:
       return -1;
   }
