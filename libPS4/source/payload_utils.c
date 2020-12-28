@@ -330,6 +330,77 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
   return 0;
 }
 
+int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+  uint8_t *kernel_ptr;
+
+  uint8_t *kmem;
+
+  uint8_t *aslr_patch;
+
+  uint16_t fw_version = args->kpayload_firmware_info->fw_version;
+
+  // NOTE: These are C preprocessor macros
+  switch(fw_version) {
+    caseentry(350, aslr_macro);
+    caseentry(355, aslr_macro);
+    caseentry(370, aslr_macro);
+    caseentry(400, aslr_macro);
+    caseentry(401, aslr_macro);
+    caseentry(405, aslr_macro);
+    caseentry(406, aslr_macro);
+    caseentry(407, aslr_macro);
+    caseentry(450, aslr_macro);
+    caseentry(455, aslr_macro);
+    caseentry(470, aslr_macro);
+    caseentry(471, aslr_macro);
+    caseentry(472, aslr_macro);
+    caseentry(473, aslr_macro);
+    caseentry(474, aslr_macro);
+    caseentry(500, aslr_macro);
+    caseentry(501, aslr_macro);
+    caseentry(503, aslr_macro);
+    caseentry(505, aslr_macro);
+    caseentry(507, aslr_macro);
+    caseentry(550, aslr_macro);
+    caseentry(553, aslr_macro);
+    caseentry(555, aslr_macro);
+    caseentry(556, aslr_macro);
+    caseentry(600, aslr_macro);
+    caseentry(602, aslr_macro);
+    caseentry(620, aslr_macro);
+    caseentry(650, aslr_macro);
+    caseentry(651, aslr_macro);
+    caseentry(670, aslr_macro);
+    caseentry(671, aslr_macro);
+    caseentry(672, aslr_macro);
+    caseentry(700, aslr_macro);
+    caseentry(701, aslr_macro);
+    caseentry(702, aslr_macro);
+    caseentry(750, aslr_macro);
+    caseentry(751, aslr_macro);
+    caseentry(755, aslr_macro);
+    default:
+      return -1;
+  }
+
+  uint64_t cr0 = readCr0();
+  writeCr0(cr0 & ~X86_CR0_WP);
+
+  kmem = (uint8_t *)aslr_patch;
+  if (fw_version < 600) {
+    kmem[0] = 0x90;
+    kmem[1] = 0x90;
+  } else {
+    kmem[0] = 0xEB;
+  }
+
+  writeCr0(cr0);
+
+  return 0;
+}
+
 int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) {
   UNUSED(td);
   void *kernel_base;
@@ -513,6 +584,13 @@ int mmap_patch() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
   kexec(&kpayload_mmap, &kpayload_firmware_info);
+  return 0;
+}
+
+int disable_aslr() {
+  struct kpayload_firmware_info kpayload_firmware_info;
+  kpayload_firmware_info.fw_version = get_firmware();
+  kexec(&kpayload_aslr, &kpayload_firmware_info);
   return 0;
 }
 

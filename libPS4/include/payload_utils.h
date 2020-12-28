@@ -134,6 +134,12 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   mmap_patch_3 = &kernel_ptr[K ## x ## _MMAP_SELF_3];                           \
 }
 
+#define aslr_macro(x) {                                                         \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                          \
+  aslr_patch = &kernel_ptr[K ## x ## _DISABLE_ASLR];                            \
+}
+
 #define kclock_macro(x) {                                                                     \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL];               \
   if (atoi(#x) >= 450) {                                                                      \
@@ -163,6 +169,7 @@ uint64_t get_kernel_base();
 int get_memory_dump(uint64_t kaddr, uint64_t *dump, size_t size);
 int jailbreak();
 int mmap_patch();
+int disable_aslr();
 int kernel_clock(uint64_t value);
 int enable_browser();
 
