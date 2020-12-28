@@ -388,7 +388,7 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
   return 0;
 }
 
-int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args *args) {
+int kpayload_enable_browser(struct thread *td,  struct kpayload_firmware_args *args) {
   UNUSED(td);
   void *kernel_base;
 
@@ -398,44 +398,44 @@ int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args 
 
   // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    caseentry(350, activate_browser_macro);
-    caseentry(355, activate_browser_macro);
-    caseentry(370, activate_browser_macro);
-    caseentry(400, activate_browser_macro);
-    caseentry(401, activate_browser_macro);
-    caseentry(405, activate_browser_macro);
-    caseentry(406, activate_browser_macro);
-    caseentry(407, activate_browser_macro);
-    caseentry(450, activate_browser_macro);
-    caseentry(455, activate_browser_macro);
-    caseentry(470, activate_browser_macro);
-    caseentry(471, activate_browser_macro);
-    caseentry(472, activate_browser_macro);
-    caseentry(473, activate_browser_macro);
-    caseentry(474, activate_browser_macro);
-    caseentry(500, activate_browser_macro);
-    caseentry(501, activate_browser_macro);
-    caseentry(503, activate_browser_macro);
-    caseentry(505, activate_browser_macro);
-    caseentry(507, activate_browser_macro);
-    caseentry(550, activate_browser_macro);
-    caseentry(553, activate_browser_macro);
-    caseentry(555, activate_browser_macro);
-    caseentry(556, activate_browser_macro);
-    caseentry(600, activate_browser_macro);
-    caseentry(602, activate_browser_macro);
-    caseentry(620, activate_browser_macro);
-    caseentry(650, activate_browser_macro);
-    caseentry(651, activate_browser_macro);
-    caseentry(670, activate_browser_macro);
-    caseentry(671, activate_browser_macro);
-    caseentry(672, activate_browser_macro);
-    caseentry(700, activate_browser_macro);
-    caseentry(701, activate_browser_macro);
-    caseentry(702, activate_browser_macro);
-    caseentry(750, activate_browser_macro);
-    caseentry(751, activate_browser_macro);
-    caseentry(755, activate_browser_macro);
+    caseentry(350, enable_browser_macro);
+    caseentry(355, enable_browser_macro);
+    caseentry(370, enable_browser_macro);
+    caseentry(400, enable_browser_macro);
+    caseentry(401, enable_browser_macro);
+    caseentry(405, enable_browser_macro);
+    caseentry(406, enable_browser_macro);
+    caseentry(407, enable_browser_macro);
+    caseentry(450, enable_browser_macro);
+    caseentry(455, enable_browser_macro);
+    caseentry(470, enable_browser_macro);
+    caseentry(471, enable_browser_macro);
+    caseentry(472, enable_browser_macro);
+    caseentry(473, enable_browser_macro);
+    caseentry(474, enable_browser_macro);
+    caseentry(500, enable_browser_macro);
+    caseentry(501, enable_browser_macro);
+    caseentry(503, enable_browser_macro);
+    caseentry(505, enable_browser_macro);
+    caseentry(507, enable_browser_macro);
+    caseentry(550, enable_browser_macro);
+    caseentry(553, enable_browser_macro);
+    caseentry(555, enable_browser_macro);
+    caseentry(556, enable_browser_macro);
+    caseentry(600, enable_browser_macro);
+    caseentry(602, enable_browser_macro);
+    caseentry(620, enable_browser_macro);
+    caseentry(650, enable_browser_macro);
+    caseentry(651, enable_browser_macro);
+    caseentry(670, enable_browser_macro);
+    caseentry(671, enable_browser_macro);
+    caseentry(672, enable_browser_macro);
+    caseentry(700, enable_browser_macro);
+    caseentry(701, enable_browser_macro);
+    caseentry(702, enable_browser_macro);
+    caseentry(750, enable_browser_macro);
+    caseentry(751, enable_browser_macro);
+    caseentry(755, enable_browser_macro);
     default:
       return -1;
   }
@@ -518,9 +518,9 @@ int kernel_clock(uint64_t set_time) {
   return 0;
 }
 
-int activate_browser() {
+int enable_browser() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_activate_browser, &kpayload_firmware_info);
+  kexec(&kpayload_enable_browser, &kpayload_firmware_info);
   return 0;
 }

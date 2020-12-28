@@ -143,7 +143,7 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   sceSblSrtcSetTime = (void *)(kernel_base + K ## x ## _SET_TIME);                            \
 }
 
-#define activate_browser_macro(x) {                                             \
+#define enable_browser_macro(x) {                                             \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
   sceRegMgrSetInt = (void *)(kernel_base + K ## x ## _REG_MGR_SET_INT);         \
 }
