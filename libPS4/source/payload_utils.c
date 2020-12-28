@@ -6,6 +6,8 @@
 
 #include "payload_utils.h"
 
+uint16_t g_firmware;
+
 int is_fw_spoofed() {
   SceFwInfo ssv_fw;
   char ssv_fw_trimmed[5];
@@ -446,6 +448,9 @@ int kpayload_enable_browser(struct thread *td,  struct kpayload_firmware_args *a
 }
 
 uint16_t get_firmware() {
+  if (g_firmware) {
+    return g_firmware;
+  }
   uint16_t ret; // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
   char binary_fw[2] = { 0 }; // 0x0000
   char string_fw[5] = { 0 }; // "0000\0"
@@ -468,6 +473,7 @@ uint16_t get_firmware() {
   }
   ret = atoi(string_fw);
 
+  g_firmware = ret;
   return ret;
 }
 
