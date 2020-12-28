@@ -164,6 +164,6 @@ int get_memory_dump(uint64_t kaddr, uint64_t *dump, size_t size);
 int jailbreak();
 int mmap_patch();
 int kernel_clock(uint64_t value);
-int activate_browser();
+int enable_browser();
 
 #endif
