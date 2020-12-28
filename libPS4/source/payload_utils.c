@@ -33,16 +33,16 @@ int is_fw_spoofed() {
 
 int is_jailbroken() {
   if (getuid() == 0) {
-    return 1;
+    return 0;
   }
-  return 0;
+  return 1;
 }
 
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
   UNUSED(td);
   void *kernel_base;
 
-	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
+  int (*copyout)(const void *kaddr, void *uaddr, size_t len) = 0;
 
   uint16_t fw_version = args->kpayload_kbase_info->fw_version;
 
@@ -91,7 +91,7 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
   }
 
   uint64_t uaddr = args->kpayload_kbase_info->uaddr;
-	copyout(&kernel_base, (uint64_t *)uaddr, 8);
+  copyout(&kernel_base, (uint64_t *)uaddr, 8);
 
   return 0;
 }
@@ -100,7 +100,7 @@ int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
   UNUSED(td);
   void *kernel_base;
 
-	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
+  int (*copyout)(const void *kaddr, void *uaddr, size_t len) = 0;
 
   uint16_t fw_version = args->kpayload_dump_info->fw_version;
 
@@ -149,16 +149,16 @@ int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
   }
 
   uint64_t kaddr = args->kpayload_dump_info->kaddr;
-	uint64_t uaddr = args->kpayload_dump_info->uaddr;
-	size_t size = args->kpayload_dump_info->size;
+  uint64_t uaddr = args->kpayload_dump_info->uaddr;
+  size_t size = args->kpayload_dump_info->size;
 
-	int ret = copyout((uint64_t *)kaddr, (uint64_t *)uaddr, size);
+  int ret = copyout((uint64_t *)kaddr, (uint64_t *)uaddr, size);
 
-	if (ret == -1) {
-		memset((uint64_t *)uaddr, 0, size);
+  if (ret == -1) {
+    memset((uint64_t *)uaddr, 0, size);
   }
 
-	return ret;
+  return ret;
 }
 
 int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
@@ -332,8 +332,8 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
   UNUSED(td);
   void *kernel_base;
 
-  void (*sceSblSrtcClearTimeDifference)(uint64_t value);
-  void (*sceSblSrtcSetTime)(uint64_t tm);
+  void (*sceSblSrtcClearTimeDifference)(uint64_t value) = 0;
+  void (*sceSblSrtcSetTime)(uint64_t tm) = 0;
 
   uint16_t fw_version = args->kpayload_kclock_info->fw_version;
 
@@ -392,7 +392,7 @@ int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args 
   UNUSED(td);
   void *kernel_base;
 
-  uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value);
+  uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value) = 0;
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
@@ -449,9 +449,9 @@ uint16_t get_firmware() {
   uint16_t ret; // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
   char binary_fw[2] = { 0 }; // 0x0000
   char string_fw[5] = { 0 }; // "0000\0"
-  char sandbox_path[40]; // `/XXXXXXXXXX/system/common/lib/libc.sprx` [Char count of 39 + nullterm]
+  char sandbox_path[33]; // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
 
-  snprintf(sandbox_path, sizeof(sandbox_path), "/%s/system/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
+  snprintf(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
 
   FILE *fp = fopen(sandbox_path, "rb");
   if (!fp) {
@@ -473,24 +473,24 @@ uint16_t get_firmware() {
 
 uint64_t get_kernel_base() {
   uint64_t kernel_base;
-	uint64_t *kernel_base_ptr = mmap(NULL, 8, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0); // Allocate a buffer in userland
-	struct kpayload_kbase_info kpayload_kbase_info;
-	kpayload_kbase_info.fw_version = get_firmware();
-	kpayload_kbase_info.uaddr = (uint64_t)kernel_base_ptr;
-	kexec(&kpayload_kbase, &kpayload_kbase_info);
-	memcpy(&kernel_base, kernel_base_ptr, 8);
-	munmap(kernel_base_ptr, 8);
-	return kernel_base;
+  uint64_t *kernel_base_ptr = mmap(NULL, 8, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0); // Allocate a buffer in userland
+  struct kpayload_kbase_info kpayload_kbase_info;
+  kpayload_kbase_info.fw_version = get_firmware();
+  kpayload_kbase_info.uaddr = (uint64_t)kernel_base_ptr;
+  kexec(&kpayload_kbase, &kpayload_kbase_info);
+  memcpy(&kernel_base, kernel_base_ptr, 8);
+  munmap(kernel_base_ptr, 8);
+  return kernel_base;
 }
 
 int get_memory_dump(uint64_t kaddr, uint64_t *uaddr, size_t size) {
   struct kpayload_dump_info kpayload_dump_info;
-	kpayload_dump_info.fw_version = get_firmware();
-	kpayload_dump_info.kaddr = kaddr;
-	kpayload_dump_info.uaddr = (uint64_t)uaddr;
-	kpayload_dump_info.size = size;
-	kexec(&kpayload_dump, &kpayload_dump_info);
-	return 0;
+  kpayload_dump_info.fw_version = get_firmware();
+  kpayload_dump_info.kaddr = kaddr;
+  kpayload_dump_info.uaddr = (uint64_t)uaddr;
+  kpayload_dump_info.size = size;
+  kexec(&kpayload_dump, &kpayload_dump_info);
+  return 0;
 }
 
 int jailbreak() {

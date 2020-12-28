@@ -57,15 +57,15 @@ struct kpayload_kbase_args {
 };
 
 struct kpayload_dump_info {
-	uint16_t fw_version;
-	uint64_t kaddr;
-	uint64_t uaddr;
-	size_t size;
+  uint16_t fw_version;
+  uint64_t kaddr;
+  uint64_t uaddr;
+  size_t size;
 };
 
 struct kpayload_dump_args {
-	void *syscall_handler;
-	struct kpayload_dump_info *kpayload_dump_info;
+  void *syscall_handler;
+  struct kpayload_dump_info *kpayload_dump_info;
 };
 
 struct kpayload_firmware_info {
