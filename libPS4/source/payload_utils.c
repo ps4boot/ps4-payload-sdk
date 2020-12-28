@@ -14,8 +14,8 @@ int is_fw_spoofed() {
   uint16_t libc_fw = get_firmware();
   sceKernelGetSystemSwVersion(&ssv_fw);
 
-  char temp[0x1C];
-  snprintf(temp, 0x1C, "%s", ssv_fw);
+  char temp[0x1c];
+  snprintf(temp, 0x1c, "%s", ssv_fw.version_string);
 
   char *first = strtok(temp, ".");
   char *second = strtok(NULL, ".");
@@ -39,129 +39,53 @@ int is_jailbroken() {
 }
 
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
+  UNUSED(td);
   void *kernel_base;
 
 	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
 
   uint16_t fw_version = args->kpayload_kbase_info->fw_version;
 
-  // NOTE: `copyout_macro()` is a C preprocessor macro so it cannot have a
-  //       variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      copyout_macro(350);
-      break;
-    case 355:
-      copyout_macro(355);
-      break;
-    case 370:
-      copyout_macro(370);
-      break;
-    case 400:
-      copyout_macro(400);
-      break;
-    case 401:
-      copyout_macro(401);
-      break;
-    case 405:
-      copyout_macro(405);
-      break;
-    case 406:
-      copyout_macro(406);
-      break;
-    case 407:
-      copyout_macro(407);
-      break;
-    case 450:
-      copyout_macro(450);
-      break;
-    case 455:
-      copyout_macro(455);
-      break;
-    case 470:
-      copyout_macro(470);
-      break;
-    case 471:
-      copyout_macro(471);
-      break;
-    case 472:
-      copyout_macro(472);
-      break;
-    case 473:
-      copyout_macro(473);
-      break;
-    case 474:
-      copyout_macro(474);
-      break;
-    case 500:
-      copyout_macro(500);
-      break;
-    case 501:
-      copyout_macro(501);
-      break;
-    case 503:
-      copyout_macro(503);
-      break;
-    case 505:
-      copyout_macro(505);
-      break;
-    case 507:
-      copyout_macro(507);
-      break;
-    case 550:
-      copyout_macro(550);
-      break;
-    case 553:
-      copyout_macro(553);
-      break;
-    case 555:
-      copyout_macro(555);
-      break;
-    case 556:
-      copyout_macro(556);
-      break;
-    case 600:
-      copyout_macro(600);
-      break;
-    case 602:
-      copyout_macro(602);
-      break;
-    case 620:
-      copyout_macro(620);
-      break;
-    case 650:
-      copyout_macro(650);
-      break;
-    case 651:
-      copyout_macro(651);
-      break;
-    case 670:
-      copyout_macro(670);
-      break;
-    case 671:
-      copyout_macro(671);
-      break;
-    case 672:
-      copyout_macro(672);
-      break;
-    case 700:
-      copyout_macro(700);
-      break;
-    case 701:
-      copyout_macro(701);
-      break;
-    case 702:
-      copyout_macro(702);
-      break;
-    case 750:
-      copyout_macro(750);
-      break;
-    case 751:
-      copyout_macro(751);
-      break;
-    case 755:
-      copyout_macro(755);
-      break;
+    caseentry(350, copyout_macro);
+    caseentry(355, copyout_macro);
+    caseentry(370, copyout_macro);
+    caseentry(400, copyout_macro);
+    caseentry(401, copyout_macro);
+    caseentry(405, copyout_macro);
+    caseentry(406, copyout_macro);
+    caseentry(407, copyout_macro);
+    caseentry(450, copyout_macro);
+    caseentry(455, copyout_macro);
+    caseentry(470, copyout_macro);
+    caseentry(471, copyout_macro);
+    caseentry(472, copyout_macro);
+    caseentry(473, copyout_macro);
+    caseentry(474, copyout_macro);
+    caseentry(500, copyout_macro);
+    caseentry(501, copyout_macro);
+    caseentry(503, copyout_macro);
+    caseentry(505, copyout_macro);
+    caseentry(507, copyout_macro);
+    caseentry(550, copyout_macro);
+    caseentry(553, copyout_macro);
+    caseentry(555, copyout_macro);
+    caseentry(556, copyout_macro);
+    caseentry(600, copyout_macro);
+    caseentry(602, copyout_macro);
+    caseentry(620, copyout_macro);
+    caseentry(650, copyout_macro);
+    caseentry(651, copyout_macro);
+    caseentry(670, copyout_macro);
+    caseentry(671, copyout_macro);
+    caseentry(672, copyout_macro);
+    caseentry(700, copyout_macro);
+    caseentry(701, copyout_macro);
+    caseentry(702, copyout_macro);
+    caseentry(750, copyout_macro);
+    caseentry(751, copyout_macro);
+    caseentry(755, copyout_macro);
     default:
       return -1;
   }
@@ -173,129 +97,53 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
 }
 
 int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
+  UNUSED(td);
   void *kernel_base;
 
 	int (*copyout)(const void *kaddr, void *uaddr, size_t len);
 
   uint16_t fw_version = args->kpayload_dump_info->fw_version;
 
-  // NOTE: `copyout_macro()` is a C preprocessor macro so it cannot have a
-  //       variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      copyout_macro(350);
-      break;
-    case 355:
-      copyout_macro(355);
-      break;
-    case 370:
-      copyout_macro(370);
-      break;
-    case 400:
-      copyout_macro(400);
-      break;
-    case 401:
-      copyout_macro(401);
-      break;
-    case 405:
-      copyout_macro(405);
-      break;
-    case 406:
-      copyout_macro(406);
-      break;
-    case 407:
-      copyout_macro(407);
-      break;
-    case 450:
-      copyout_macro(450);
-      break;
-    case 455:
-      copyout_macro(455);
-      break;
-    case 470:
-      copyout_macro(470);
-      break;
-    case 471:
-      copyout_macro(471);
-      break;
-    case 472:
-      copyout_macro(472);
-      break;
-    case 473:
-      copyout_macro(473);
-      break;
-    case 474:
-      copyout_macro(474);
-      break;
-    case 500:
-      copyout_macro(500);
-      break;
-    case 501:
-      copyout_macro(501);
-      break;
-    case 503:
-      copyout_macro(503);
-      break;
-    case 505:
-      copyout_macro(505);
-      break;
-    case 507:
-      copyout_macro(507);
-      break;
-    case 550:
-      copyout_macro(550);
-      break;
-    case 553:
-      copyout_macro(553);
-      break;
-    case 555:
-      copyout_macro(555);
-      break;
-    case 556:
-      copyout_macro(556);
-      break;
-    case 600:
-      copyout_macro(600);
-      break;
-    case 602:
-      copyout_macro(602);
-      break;
-    case 620:
-      copyout_macro(620);
-      break;
-    case 650:
-      copyout_macro(650);
-      break;
-    case 651:
-      copyout_macro(651);
-      break;
-    case 670:
-      copyout_macro(670);
-      break;
-    case 671:
-      copyout_macro(671);
-      break;
-    case 672:
-      copyout_macro(672);
-      break;
-    case 700:
-      copyout_macro(700);
-      break;
-    case 701:
-      copyout_macro(701);
-      break;
-    case 702:
-      copyout_macro(702);
-      break;
-    case 750:
-      copyout_macro(750);
-      break;
-    case 751:
-      copyout_macro(751);
-      break;
-    case 755:
-      copyout_macro(755);
-      break;
+    caseentry(350, copyout_macro);
+    caseentry(355, copyout_macro);
+    caseentry(370, copyout_macro);
+    caseentry(400, copyout_macro);
+    caseentry(401, copyout_macro);
+    caseentry(405, copyout_macro);
+    caseentry(406, copyout_macro);
+    caseentry(407, copyout_macro);
+    caseentry(450, copyout_macro);
+    caseentry(455, copyout_macro);
+    caseentry(470, copyout_macro);
+    caseentry(471, copyout_macro);
+    caseentry(472, copyout_macro);
+    caseentry(473, copyout_macro);
+    caseentry(474, copyout_macro);
+    caseentry(500, copyout_macro);
+    caseentry(501, copyout_macro);
+    caseentry(503, copyout_macro);
+    caseentry(505, copyout_macro);
+    caseentry(507, copyout_macro);
+    caseentry(550, copyout_macro);
+    caseentry(553, copyout_macro);
+    caseentry(555, copyout_macro);
+    caseentry(556, copyout_macro);
+    caseentry(600, copyout_macro);
+    caseentry(602, copyout_macro);
+    caseentry(620, copyout_macro);
+    caseentry(650, copyout_macro);
+    caseentry(651, copyout_macro);
+    caseentry(670, copyout_macro);
+    caseentry(671, copyout_macro);
+    caseentry(672, copyout_macro);
+    caseentry(700, copyout_macro);
+    caseentry(701, copyout_macro);
+    caseentry(702, copyout_macro);
+    caseentry(750, copyout_macro);
+    caseentry(751, copyout_macro);
+    caseentry(755, copyout_macro);
     default:
       return -1;
   }
@@ -326,123 +174,46 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: `jailbreak_macro()` is a C preprocessor macro so it cannot have a
-  //       variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      jailbreak_macro(350);
-      break;
-    case 355:
-      jailbreak_macro(355);
-      break;
-    case 370:
-      jailbreak_macro(370);
-      break;
-    case 400:
-      jailbreak_macro(400);
-      break;
-    case 401:
-      jailbreak_macro(401);
-      break;
-    case 405:
-      jailbreak_macro(405);
-      break;
-    case 406:
-      jailbreak_macro(406);
-      break;
-    case 407:
-      jailbreak_macro(407);
-      break;
-    case 450:
-      jailbreak_macro(450);
-      break;
-    case 455:
-      jailbreak_macro(455);
-      break;
-    case 470:
-      jailbreak_macro(470);
-      break;
-    case 471:
-      jailbreak_macro(471);
-      break;
-    case 472:
-      jailbreak_macro(472);
-      break;
-    case 473:
-      jailbreak_macro(473);
-      break;
-    case 474:
-      jailbreak_macro(474);
-      break;
-    case 500:
-      jailbreak_macro(500);
-      break;
-    case 501:
-      jailbreak_macro(501);
-      break;
-    case 503:
-      jailbreak_macro(503);
-      break;
-    case 505:
-      jailbreak_macro(505);
-      break;
-    case 507:
-      jailbreak_macro(507);
-      break;
-    case 550:
-      jailbreak_macro(550);
-      break;
-    case 553:
-      jailbreak_macro(553);
-      break;
-    case 555:
-      jailbreak_macro(555);
-      break;
-    case 556:
-      jailbreak_macro(556);
-      break;
-    case 600:
-      jailbreak_macro(600);
-      break;
-    case 602:
-      jailbreak_macro(602);
-      break;
-    case 620:
-      jailbreak_macro(620);
-      break;
-    case 650:
-      jailbreak_macro(650);
-      break;
-    case 651:
-      jailbreak_macro(651);
-      break;
-    case 670:
-      jailbreak_macro(670);
-      break;
-    case 671:
-      jailbreak_macro(671);
-      break;
-    case 672:
-      jailbreak_macro(672);
-      break;
-    case 700:
-      jailbreak_macro(700);
-      break;
-    case 701:
-      jailbreak_macro(701);
-      break;
-    case 702:
-      jailbreak_macro(702);
-      break;
-    case 750:
-      jailbreak_macro(750);
-      break;
-    case 751:
-      jailbreak_macro(751);
-      break;
-    case 755:
-      jailbreak_macro(755);
-      break;
+    caseentry(350, jailbreak_macro);
+    caseentry(355, jailbreak_macro);
+    caseentry(370, jailbreak_macro);
+    caseentry(400, jailbreak_macro);
+    caseentry(401, jailbreak_macro);
+    caseentry(405, jailbreak_macro);
+    caseentry(406, jailbreak_macro);
+    caseentry(407, jailbreak_macro);
+    caseentry(450, jailbreak_macro);
+    caseentry(455, jailbreak_macro);
+    caseentry(470, jailbreak_macro);
+    caseentry(471, jailbreak_macro);
+    caseentry(472, jailbreak_macro);
+    caseentry(473, jailbreak_macro);
+    caseentry(474, jailbreak_macro);
+    caseentry(500, jailbreak_macro);
+    caseentry(501, jailbreak_macro);
+    caseentry(503, jailbreak_macro);
+    caseentry(505, jailbreak_macro);
+    caseentry(507, jailbreak_macro);
+    caseentry(550, jailbreak_macro);
+    caseentry(553, jailbreak_macro);
+    caseentry(555, jailbreak_macro);
+    caseentry(556, jailbreak_macro);
+    caseentry(600, jailbreak_macro);
+    caseentry(602, jailbreak_macro);
+    caseentry(620, jailbreak_macro);
+    caseentry(650, jailbreak_macro);
+    caseentry(651, jailbreak_macro);
+    caseentry(670, jailbreak_macro);
+    caseentry(671, jailbreak_macro);
+    caseentry(672, jailbreak_macro);
+    caseentry(700, jailbreak_macro);
+    caseentry(701, jailbreak_macro);
+    caseentry(702, jailbreak_macro);
+    caseentry(750, jailbreak_macro);
+    caseentry(751, jailbreak_macro);
+    caseentry(755, jailbreak_macro);
     default:
       return -1;
   }
@@ -470,6 +241,7 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
 }
 
 int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
   void *kernel_base;
   uint8_t *kernel_ptr;
 
@@ -481,123 +253,46 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: `mmap_macro()` is a C preprocessor macro so it cannot have a
-  //       variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      mmap_macro(350);
-      break;
-    case 355:
-      mmap_macro(355);
-      break;
-    case 370:
-      mmap_macro(370);
-      break;
-    case 400:
-      mmap_macro(400);
-      break;
-    case 401:
-      mmap_macro(401);
-      break;
-    case 405:
-      mmap_macro(405);
-      break;
-    case 406:
-      mmap_macro(406);
-      break;
-    case 407:
-      mmap_macro(407);
-      break;
-    case 450:
-      mmap_macro(450);
-      break;
-    case 455:
-      mmap_macro(455);
-      break;
-    case 470:
-      mmap_macro(470);
-      break;
-    case 471:
-      mmap_macro(471);
-      break;
-    case 472:
-      mmap_macro(472);
-      break;
-    case 473:
-      mmap_macro(473);
-      break;
-    case 474:
-      mmap_macro(474);
-      break;
-    case 500:
-      mmap_macro(500);
-      break;
-    case 501:
-      mmap_macro(501);
-      break;
-    case 503:
-      mmap_macro(503);
-      break;
-    case 505:
-      mmap_macro(505);
-      break;
-    case 507:
-      mmap_macro(507);
-      break;
-    case 550:
-      mmap_macro(550);
-      break;
-    case 553:
-      mmap_macro(553);
-      break;
-    case 555:
-      mmap_macro(555);
-      break;
-    case 556:
-      mmap_macro(556);
-      break;
-    case 600:
-      mmap_macro(600);
-      break;
-    case 602:
-      mmap_macro(602);
-      break;
-    case 620:
-      mmap_macro(620);
-      break;
-    case 650:
-      mmap_macro(650);
-      break;
-    case 651:
-      mmap_macro(651);
-      break;
-    case 670:
-      mmap_macro(670);
-      break;
-    case 671:
-      mmap_macro(671);
-      break;
-    case 672:
-      mmap_macro(672);
-      break;
-    case 700:
-      mmap_macro(700);
-      break;
-    case 701:
-      mmap_macro(701);
-      break;
-    case 702:
-      mmap_macro(702);
-      break;
-    case 750:
-      mmap_macro(750);
-      break;
-    case 751:
-      mmap_macro(751);
-      break;
-    case 755:
-      mmap_macro(755);
-      break;
+    caseentry(350, mmap_macro);
+    caseentry(355, mmap_macro);
+    caseentry(370, mmap_macro);
+    caseentry(400, mmap_macro);
+    caseentry(401, mmap_macro);
+    caseentry(405, mmap_macro);
+    caseentry(406, mmap_macro);
+    caseentry(407, mmap_macro);
+    caseentry(450, mmap_macro);
+    caseentry(455, mmap_macro);
+    caseentry(470, mmap_macro);
+    caseentry(471, mmap_macro);
+    caseentry(472, mmap_macro);
+    caseentry(473, mmap_macro);
+    caseentry(474, mmap_macro);
+    caseentry(500, mmap_macro);
+    caseentry(501, mmap_macro);
+    caseentry(503, mmap_macro);
+    caseentry(505, mmap_macro);
+    caseentry(507, mmap_macro);
+    caseentry(550, mmap_macro);
+    caseentry(553, mmap_macro);
+    caseentry(555, mmap_macro);
+    caseentry(556, mmap_macro);
+    caseentry(600, mmap_macro);
+    caseentry(602, mmap_macro);
+    caseentry(620, mmap_macro);
+    caseentry(650, mmap_macro);
+    caseentry(651, mmap_macro);
+    caseentry(670, mmap_macro);
+    caseentry(671, mmap_macro);
+    caseentry(672, mmap_macro);
+    caseentry(700, mmap_macro);
+    caseentry(701, mmap_macro);
+    caseentry(702, mmap_macro);
+    caseentry(750, mmap_macro);
+    caseentry(751, mmap_macro);
+    caseentry(755, mmap_macro);
     default:
       return -1;
   }
@@ -634,6 +329,7 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
 }
 
 int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) {
+  UNUSED(td);
   void *kernel_base;
 
   void (*sceSblSrtcClearTimeDifference)(uint64_t value);
@@ -641,123 +337,46 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
 
   uint16_t fw_version = args->kpayload_kclock_info->fw_version;
 
-  // NOTE: `kclock_macro()` is a C preprocessor macro so it cannot have a
-  //       variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      kclock_macro(350);
-      break;
-    case 355:
-      kclock_macro(355);
-      break;
-    case 370:
-      kclock_macro(370);
-      break;
-    case 400:
-      kclock_macro(400);
-      break;
-    case 401:
-      kclock_macro(401);
-      break;
-    case 405:
-      kclock_macro(405);
-      break;
-    case 406:
-      kclock_macro(406);
-      break;
-    case 407:
-      kclock_macro(407);
-      break;
-    case 450:
-      kclock_macro(450);
-      break;
-    case 455:
-      kclock_macro(455);
-      break;
-    case 470:
-      kclock_macro(470);
-      break;
-    case 471:
-      kclock_macro(471);
-      break;
-    case 472:
-      kclock_macro(472);
-      break;
-    case 473:
-      kclock_macro(473);
-      break;
-    case 474:
-      kclock_macro(474);
-      break;
-    case 500:
-      kclock_macro(500);
-      break;
-    case 501:
-      kclock_macro(501);
-      break;
-    case 503:
-      kclock_macro(503);
-      break;
-    case 505:
-      kclock_macro(505);
-      break;
-    case 507:
-      kclock_macro(507);
-      break;
-    case 550:
-      kclock_macro(550);
-      break;
-    case 553:
-      kclock_macro(553);
-      break;
-    case 555:
-      kclock_macro(555);
-      break;
-    case 556:
-      kclock_macro(556);
-      break;
-    case 600:
-      kclock_macro(600);
-      break;
-    case 602:
-      kclock_macro(602);
-      break;
-    case 620:
-      kclock_macro(620);
-      break;
-    case 650:
-      kclock_macro(650);
-      break;
-    case 651:
-      kclock_macro(651);
-      break;
-    case 670:
-      kclock_macro(670);
-      break;
-    case 671:
-      kclock_macro(671);
-      break;
-    case 672:
-      kclock_macro(672);
-      break;
-    case 700:
-      kclock_macro(700);
-      break;
-    case 701:
-      kclock_macro(701);
-      break;
-    case 702:
-      kclock_macro(702);
-      break;
-    case 750:
-      kclock_macro(750);
-      break;
-    case 751:
-      kclock_macro(751);
-      break;
-    case 755:
-      kclock_macro(755);
-      break;
+    caseentry(350, kclock_macro);
+    caseentry(355, kclock_macro);
+    caseentry(370, kclock_macro);
+    caseentry(400, kclock_macro);
+    caseentry(401, kclock_macro);
+    caseentry(405, kclock_macro);
+    caseentry(406, kclock_macro);
+    caseentry(407, kclock_macro);
+    caseentry(450, kclock_macro);
+    caseentry(455, kclock_macro);
+    caseentry(470, kclock_macro);
+    caseentry(471, kclock_macro);
+    caseentry(472, kclock_macro);
+    caseentry(473, kclock_macro);
+    caseentry(474, kclock_macro);
+    caseentry(500, kclock_macro);
+    caseentry(501, kclock_macro);
+    caseentry(503, kclock_macro);
+    caseentry(505, kclock_macro);
+    caseentry(507, kclock_macro);
+    caseentry(550, kclock_macro);
+    caseentry(553, kclock_macro);
+    caseentry(555, kclock_macro);
+    caseentry(556, kclock_macro);
+    caseentry(600, kclock_macro);
+    caseentry(602, kclock_macro);
+    caseentry(620, kclock_macro);
+    caseentry(650, kclock_macro);
+    caseentry(651, kclock_macro);
+    caseentry(670, kclock_macro);
+    caseentry(671, kclock_macro);
+    caseentry(672, kclock_macro);
+    caseentry(700, kclock_macro);
+    caseentry(701, kclock_macro);
+    caseentry(702, kclock_macro);
+    caseentry(750, kclock_macro);
+    caseentry(751, kclock_macro);
+    caseentry(755, kclock_macro);
     default:
       return -1;
   }
@@ -770,129 +389,53 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
 }
 
 int kpayload_activate_browser(struct thread *td,  struct kpayload_firmware_args *args) {
+  UNUSED(td);
   void *kernel_base;
 
   uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value);
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: `activate_browser_macro()` is a C preprocessor macro so it cannot
-  //       have a variable as input, it is executed at compile time
+  // NOTE: These are C preprocessor macros
   switch(fw_version) {
-    case 350:
-      activate_browser_macro(350);
-      break;
-    case 355:
-      activate_browser_macro(355);
-      break;
-    case 370:
-      activate_browser_macro(370);
-      break;
-    case 400:
-      activate_browser_macro(400);
-      break;
-    case 401:
-      activate_browser_macro(401);
-      break;
-    case 405:
-      activate_browser_macro(405);
-      break;
-    case 406:
-      activate_browser_macro(406);
-      break;
-    case 407:
-      activate_browser_macro(407);
-      break;
-    case 450:
-      activate_browser_macro(450);
-      break;
-    case 455:
-      activate_browser_macro(455);
-      break;
-    case 470:
-      activate_browser_macro(470);
-      break;
-    case 471:
-      activate_browser_macro(471);
-      break;
-    case 472:
-      activate_browser_macro(472);
-      break;
-    case 473:
-      activate_browser_macro(473);
-      break;
-    case 474:
-      activate_browser_macro(474);
-      break;
-    case 500:
-      activate_browser_macro(500);
-      break;
-    case 501:
-      activate_browser_macro(501);
-      break;
-    case 503:
-      activate_browser_macro(503);
-      break;
-    case 505:
-      activate_browser_macro(505);
-      break;
-    case 507:
-      activate_browser_macro(507);
-      break;
-    case 550:
-      activate_browser_macro(550);
-      break;
-    case 553:
-      activate_browser_macro(553);
-      break;
-    case 555:
-      activate_browser_macro(555);
-      break;
-    case 556:
-      activate_browser_macro(556);
-      break;
-    case 600:
-      activate_browser_macro(600);
-      break;
-    case 602:
-      activate_browser_macro(602);
-      break;
-    case 620:
-      activate_browser_macro(620);
-      break;
-    case 650:
-      activate_browser_macro(650);
-      break;
-    case 651:
-      activate_browser_macro(651);
-      break;
-    case 670:
-      activate_browser_macro(670);
-      break;
-    case 671:
-      activate_browser_macro(671);
-      break;
-    case 672:
-      activate_browser_macro(672);
-      break;
-    case 700:
-      activate_browser_macro(700);
-      break;
-    case 701:
-      activate_browser_macro(701);
-      break;
-    case 702:
-      activate_browser_macro(702);
-      break;
-    case 750:
-      activate_browser_macro(750);
-      break;
-    case 751:
-      activate_browser_macro(751);
-      break;
-    case 755:
-      activate_browser_macro(755);
-      break;
+    caseentry(350, activate_browser_macro);
+    caseentry(355, activate_browser_macro);
+    caseentry(370, activate_browser_macro);
+    caseentry(400, activate_browser_macro);
+    caseentry(401, activate_browser_macro);
+    caseentry(405, activate_browser_macro);
+    caseentry(406, activate_browser_macro);
+    caseentry(407, activate_browser_macro);
+    caseentry(450, activate_browser_macro);
+    caseentry(455, activate_browser_macro);
+    caseentry(470, activate_browser_macro);
+    caseentry(471, activate_browser_macro);
+    caseentry(472, activate_browser_macro);
+    caseentry(473, activate_browser_macro);
+    caseentry(474, activate_browser_macro);
+    caseentry(500, activate_browser_macro);
+    caseentry(501, activate_browser_macro);
+    caseentry(503, activate_browser_macro);
+    caseentry(505, activate_browser_macro);
+    caseentry(507, activate_browser_macro);
+    caseentry(550, activate_browser_macro);
+    caseentry(553, activate_browser_macro);
+    caseentry(555, activate_browser_macro);
+    caseentry(556, activate_browser_macro);
+    caseentry(600, activate_browser_macro);
+    caseentry(602, activate_browser_macro);
+    caseentry(620, activate_browser_macro);
+    caseentry(650, activate_browser_macro);
+    caseentry(651, activate_browser_macro);
+    caseentry(670, activate_browser_macro);
+    caseentry(671, activate_browser_macro);
+    caseentry(672, activate_browser_macro);
+    caseentry(700, activate_browser_macro);
+    caseentry(701, activate_browser_macro);
+    caseentry(702, activate_browser_macro);
+    caseentry(750, activate_browser_macro);
+    caseentry(751, activate_browser_macro);
+    caseentry(755, activate_browser_macro);
     default:
       return -1;
   }
@@ -910,16 +453,16 @@ uint16_t get_firmware() {
 
   snprintf(sandbox_path, sizeof(sandbox_path), "/%s/system/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
 
-  int fd = sceKernelOpen(sandbox_path, O_RDONLY, 0);
-  if (fd < 0) {
+  FILE *fp = fopen(sandbox_path, "rb");
+  if (!fp) {
     // Assume it's currently jailbroken
-    fd = sceKernelOpen("/system/common/lib/libc.sprx", O_RDONLY, 0);
+    fp = fopen("/system/common/lib/libc.sprx", "rb");
   }
 
-  if (fd >= 0) {
-    sceKernelLseek(fd, 0x374, SEEK_CUR);
-    sceKernelRead(fd, &binary_fw, 2);
-    sceKernelClose(fd);
+  if (fp) {
+    fseek(fp, 0x374, SEEK_CUR);
+    fread(&binary_fw, sizeof(char), 2, fp);
+    fclose(fp);
 
     snprintf(string_fw, sizeof(string_fw), "%02x%02x", binary_fw[1], binary_fw[0]);
   }

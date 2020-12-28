@@ -70,6 +70,23 @@ long int (*ftell)(FILE *stream);
 int (*fclose)(FILE *stream);
 int (*fprintf)(FILE *stream, const char *format, ...);
 
+int memset_s(void *s, rsize_t smax, int c, rsize_t n) {
+  bool violation = (s == NULL) || (smax > RSIZE_MAX) || (n > RSIZE_MAX) || (n > smax);
+  if (violation) {
+    if ((s != NULL) && !(smax > RSIZE_MAX)) {
+      for (rsize_t i = 0; i < smax; ++i) {
+        ((volatile unsigned char*)s)[i] = c;
+      }
+    }
+    return 1;
+  } else {
+    for (rsize_t i = 0; i < n; ++i) {
+      ((volatile unsigned char*)s)[i] = c;
+    }
+    return 0;
+  }
+}
+
 void initLibc(void) {
   int libc = sceKernelLoadStartModule("libSceLibcInternal.sprx", 0, NULL, 0, 0, 0);
 

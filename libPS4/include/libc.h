@@ -79,6 +79,8 @@ extern long int (*ftell)(FILE *stream);
 extern int (*fclose)(FILE *stream);
 extern int (*fprintf)(FILE *stream, const char *format, ...);
 
+int memset_s(void *s, rsize_t smax, int c, rsize_t n);
+
 void initLibc(void);
 
 #endif

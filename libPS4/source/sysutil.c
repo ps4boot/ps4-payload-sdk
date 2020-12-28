@@ -58,6 +58,9 @@ int32_t getUserID() {
 
 char *getUserName(int32_t userId) {
   char *retval = malloc(SCE_USER_SERVICE_MAX_USER_NAME_LENGTH + 1);
+  if (retval == NULL) {
+    return NULL;
+  }
   int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
   RESOLVE(libSceUserService, sceUserServiceInitialize);
   RESOLVE(libSceUserService, sceUserServiceGetUserName);
