@@ -261,6 +261,26 @@ uint16_t get_firmware() {
   return ret;
 }
 
+int get_firmware_string(char *fw_string) {
+  uint16_t fw_version = get_firmware();
+
+  sprintf(fw_string, "%i", fw_version);
+
+  if (fw_version < 10) {
+    sprintf(fw_string, "0.0%c", fw_string[0]);
+  } else if (fw_version < 100) {
+    sprintf(fw_string, "0.%c%c", fw_string[0], fw_string[1]);
+  } else if (fw_version < 1000) {
+    sprintf(fw_string, "%c.%c%c", fw_string[0], fw_string[1], fw_string[2]);
+  } else if (fw_version < 10000) {
+    sprintf(fw_string, "%c%c.%c%c", fw_string[0], fw_string[1], fw_string[2], fw_string[3]);
+  } else {
+    return -1;
+  }
+
+  return 0;
+}
+
 uint64_t get_kernel_base() {
   uint64_t kernel_base;
   uint64_t *kernel_base_ptr = mmap(NULL, 8, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0); // Allocate a buffer in userland

@@ -209,6 +209,7 @@ int is_fw_spoofed();
 int is_jailbroken();
 
 uint16_t get_firmware();
+int get_firmware_string(char* fw_string);
 
 uint64_t get_kernel_base();
 int get_memory_dump(uint64_t kaddr, uint64_t *dump, size_t size);
