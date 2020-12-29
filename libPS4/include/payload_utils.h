@@ -160,6 +160,51 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     break;                     \
 }
 
+#define build_kpayload(id, macro) {  \
+  switch(fw_version) {               \
+    caseentry(350, macro);           \
+    caseentry(355, macro);           \
+    caseentry(370, macro);           \
+    caseentry(400, macro);           \
+    caseentry(401, macro);           \
+    caseentry(405, macro);           \
+    caseentry(406, macro);           \
+    caseentry(407, macro);           \
+    caseentry(450, macro);           \
+    caseentry(455, macro);           \
+    caseentry(470, macro);           \
+    caseentry(471, macro);           \
+    caseentry(472, macro);           \
+    caseentry(473, macro);           \
+    caseentry(474, macro);           \
+    caseentry(500, macro);           \
+    caseentry(501, macro);           \
+    caseentry(503, macro);           \
+    caseentry(505, macro);           \
+    caseentry(507, macro);           \
+    caseentry(550, macro);           \
+    caseentry(553, macro);           \
+    caseentry(555, macro);           \
+    caseentry(556, macro);           \
+    caseentry(600, macro);           \
+    caseentry(602, macro);           \
+    caseentry(620, macro);           \
+    caseentry(650, macro);           \
+    caseentry(651, macro);           \
+    caseentry(670, macro);           \
+    caseentry(671, macro);           \
+    caseentry(672, macro);           \
+    caseentry(700, macro);           \
+    caseentry(701, macro);           \
+    caseentry(702, macro);           \
+    caseentry(750, macro);           \
+    caseentry(751, macro);           \
+    caseentry(755, macro);           \
+    default:                         \
+      return -1;                     \
+  }                                  \
+}
+
 int is_fw_spoofed();
 int is_jailbroken();
 

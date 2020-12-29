@@ -48,49 +48,8 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
 
   uint16_t fw_version = args->kpayload_kbase_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, copyout_macro);
-    caseentry(355, copyout_macro);
-    caseentry(370, copyout_macro);
-    caseentry(400, copyout_macro);
-    caseentry(401, copyout_macro);
-    caseentry(405, copyout_macro);
-    caseentry(406, copyout_macro);
-    caseentry(407, copyout_macro);
-    caseentry(450, copyout_macro);
-    caseentry(455, copyout_macro);
-    caseentry(470, copyout_macro);
-    caseentry(471, copyout_macro);
-    caseentry(472, copyout_macro);
-    caseentry(473, copyout_macro);
-    caseentry(474, copyout_macro);
-    caseentry(500, copyout_macro);
-    caseentry(501, copyout_macro);
-    caseentry(503, copyout_macro);
-    caseentry(505, copyout_macro);
-    caseentry(507, copyout_macro);
-    caseentry(550, copyout_macro);
-    caseentry(553, copyout_macro);
-    caseentry(555, copyout_macro);
-    caseentry(556, copyout_macro);
-    caseentry(600, copyout_macro);
-    caseentry(602, copyout_macro);
-    caseentry(620, copyout_macro);
-    caseentry(650, copyout_macro);
-    caseentry(651, copyout_macro);
-    caseentry(670, copyout_macro);
-    caseentry(671, copyout_macro);
-    caseentry(672, copyout_macro);
-    caseentry(700, copyout_macro);
-    caseentry(701, copyout_macro);
-    caseentry(702, copyout_macro);
-    caseentry(750, copyout_macro);
-    caseentry(751, copyout_macro);
-    caseentry(755, copyout_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, copyout_macro);
 
   uint64_t uaddr = args->kpayload_kbase_info->uaddr;
   copyout(&kernel_base, (uint64_t *)uaddr, 8);
@@ -106,49 +65,8 @@ int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
 
   uint16_t fw_version = args->kpayload_dump_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, copyout_macro);
-    caseentry(355, copyout_macro);
-    caseentry(370, copyout_macro);
-    caseentry(400, copyout_macro);
-    caseentry(401, copyout_macro);
-    caseentry(405, copyout_macro);
-    caseentry(406, copyout_macro);
-    caseentry(407, copyout_macro);
-    caseentry(450, copyout_macro);
-    caseentry(455, copyout_macro);
-    caseentry(470, copyout_macro);
-    caseentry(471, copyout_macro);
-    caseentry(472, copyout_macro);
-    caseentry(473, copyout_macro);
-    caseentry(474, copyout_macro);
-    caseentry(500, copyout_macro);
-    caseentry(501, copyout_macro);
-    caseentry(503, copyout_macro);
-    caseentry(505, copyout_macro);
-    caseentry(507, copyout_macro);
-    caseentry(550, copyout_macro);
-    caseentry(553, copyout_macro);
-    caseentry(555, copyout_macro);
-    caseentry(556, copyout_macro);
-    caseentry(600, copyout_macro);
-    caseentry(602, copyout_macro);
-    caseentry(620, copyout_macro);
-    caseentry(650, copyout_macro);
-    caseentry(651, copyout_macro);
-    caseentry(670, copyout_macro);
-    caseentry(671, copyout_macro);
-    caseentry(672, copyout_macro);
-    caseentry(700, copyout_macro);
-    caseentry(701, copyout_macro);
-    caseentry(702, copyout_macro);
-    caseentry(750, copyout_macro);
-    caseentry(751, copyout_macro);
-    caseentry(755, copyout_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, copyout_macro);
 
   uint64_t kaddr = args->kpayload_dump_info->kaddr;
   uint64_t uaddr = args->kpayload_dump_info->uaddr;
@@ -176,49 +94,8 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, jailbreak_macro);
-    caseentry(355, jailbreak_macro);
-    caseentry(370, jailbreak_macro);
-    caseentry(400, jailbreak_macro);
-    caseentry(401, jailbreak_macro);
-    caseentry(405, jailbreak_macro);
-    caseentry(406, jailbreak_macro);
-    caseentry(407, jailbreak_macro);
-    caseentry(450, jailbreak_macro);
-    caseentry(455, jailbreak_macro);
-    caseentry(470, jailbreak_macro);
-    caseentry(471, jailbreak_macro);
-    caseentry(472, jailbreak_macro);
-    caseentry(473, jailbreak_macro);
-    caseentry(474, jailbreak_macro);
-    caseentry(500, jailbreak_macro);
-    caseentry(501, jailbreak_macro);
-    caseentry(503, jailbreak_macro);
-    caseentry(505, jailbreak_macro);
-    caseentry(507, jailbreak_macro);
-    caseentry(550, jailbreak_macro);
-    caseentry(553, jailbreak_macro);
-    caseentry(555, jailbreak_macro);
-    caseentry(556, jailbreak_macro);
-    caseentry(600, jailbreak_macro);
-    caseentry(602, jailbreak_macro);
-    caseentry(620, jailbreak_macro);
-    caseentry(650, jailbreak_macro);
-    caseentry(651, jailbreak_macro);
-    caseentry(670, jailbreak_macro);
-    caseentry(671, jailbreak_macro);
-    caseentry(672, jailbreak_macro);
-    caseentry(700, jailbreak_macro);
-    caseentry(701, jailbreak_macro);
-    caseentry(702, jailbreak_macro);
-    caseentry(750, jailbreak_macro);
-    caseentry(751, jailbreak_macro);
-    caseentry(755, jailbreak_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, jailbreak_macro);
 
   cred->cr_uid = 0;
   cred->cr_ruid = 0;
@@ -255,49 +132,8 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, mmap_macro);
-    caseentry(355, mmap_macro);
-    caseentry(370, mmap_macro);
-    caseentry(400, mmap_macro);
-    caseentry(401, mmap_macro);
-    caseentry(405, mmap_macro);
-    caseentry(406, mmap_macro);
-    caseentry(407, mmap_macro);
-    caseentry(450, mmap_macro);
-    caseentry(455, mmap_macro);
-    caseentry(470, mmap_macro);
-    caseentry(471, mmap_macro);
-    caseentry(472, mmap_macro);
-    caseentry(473, mmap_macro);
-    caseentry(474, mmap_macro);
-    caseentry(500, mmap_macro);
-    caseentry(501, mmap_macro);
-    caseentry(503, mmap_macro);
-    caseentry(505, mmap_macro);
-    caseentry(507, mmap_macro);
-    caseentry(550, mmap_macro);
-    caseentry(553, mmap_macro);
-    caseentry(555, mmap_macro);
-    caseentry(556, mmap_macro);
-    caseentry(600, mmap_macro);
-    caseentry(602, mmap_macro);
-    caseentry(620, mmap_macro);
-    caseentry(650, mmap_macro);
-    caseentry(651, mmap_macro);
-    caseentry(670, mmap_macro);
-    caseentry(671, mmap_macro);
-    caseentry(672, mmap_macro);
-    caseentry(700, mmap_macro);
-    caseentry(701, mmap_macro);
-    caseentry(702, mmap_macro);
-    caseentry(750, mmap_macro);
-    caseentry(751, mmap_macro);
-    caseentry(755, mmap_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, mmap_macro);
 
   uint64_t cr0 = readCr0();
   writeCr0(cr0 & ~X86_CR0_WP);
@@ -341,49 +177,8 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, aslr_macro);
-    caseentry(355, aslr_macro);
-    caseentry(370, aslr_macro);
-    caseentry(400, aslr_macro);
-    caseentry(401, aslr_macro);
-    caseentry(405, aslr_macro);
-    caseentry(406, aslr_macro);
-    caseentry(407, aslr_macro);
-    caseentry(450, aslr_macro);
-    caseentry(455, aslr_macro);
-    caseentry(470, aslr_macro);
-    caseentry(471, aslr_macro);
-    caseentry(472, aslr_macro);
-    caseentry(473, aslr_macro);
-    caseentry(474, aslr_macro);
-    caseentry(500, aslr_macro);
-    caseentry(501, aslr_macro);
-    caseentry(503, aslr_macro);
-    caseentry(505, aslr_macro);
-    caseentry(507, aslr_macro);
-    caseentry(550, aslr_macro);
-    caseentry(553, aslr_macro);
-    caseentry(555, aslr_macro);
-    caseentry(556, aslr_macro);
-    caseentry(600, aslr_macro);
-    caseentry(602, aslr_macro);
-    caseentry(620, aslr_macro);
-    caseentry(650, aslr_macro);
-    caseentry(651, aslr_macro);
-    caseentry(670, aslr_macro);
-    caseentry(671, aslr_macro);
-    caseentry(672, aslr_macro);
-    caseentry(700, aslr_macro);
-    caseentry(701, aslr_macro);
-    caseentry(702, aslr_macro);
-    caseentry(750, aslr_macro);
-    caseentry(751, aslr_macro);
-    caseentry(755, aslr_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, aslr_macro);
 
   uint64_t cr0 = readCr0();
   writeCr0(cr0 & ~X86_CR0_WP);
@@ -410,49 +205,8 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
 
   uint16_t fw_version = args->kpayload_kclock_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, kclock_macro);
-    caseentry(355, kclock_macro);
-    caseentry(370, kclock_macro);
-    caseentry(400, kclock_macro);
-    caseentry(401, kclock_macro);
-    caseentry(405, kclock_macro);
-    caseentry(406, kclock_macro);
-    caseentry(407, kclock_macro);
-    caseentry(450, kclock_macro);
-    caseentry(455, kclock_macro);
-    caseentry(470, kclock_macro);
-    caseentry(471, kclock_macro);
-    caseentry(472, kclock_macro);
-    caseentry(473, kclock_macro);
-    caseentry(474, kclock_macro);
-    caseentry(500, kclock_macro);
-    caseentry(501, kclock_macro);
-    caseentry(503, kclock_macro);
-    caseentry(505, kclock_macro);
-    caseentry(507, kclock_macro);
-    caseentry(550, kclock_macro);
-    caseentry(553, kclock_macro);
-    caseentry(555, kclock_macro);
-    caseentry(556, kclock_macro);
-    caseentry(600, kclock_macro);
-    caseentry(602, kclock_macro);
-    caseentry(620, kclock_macro);
-    caseentry(650, kclock_macro);
-    caseentry(651, kclock_macro);
-    caseentry(670, kclock_macro);
-    caseentry(671, kclock_macro);
-    caseentry(672, kclock_macro);
-    caseentry(700, kclock_macro);
-    caseentry(701, kclock_macro);
-    caseentry(702, kclock_macro);
-    caseentry(750, kclock_macro);
-    caseentry(751, kclock_macro);
-    caseentry(755, kclock_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, kclock_macro);
 
   uint64_t set_time = args->kpayload_kclock_info->set_time;
 
@@ -469,49 +223,8 @@ int kpayload_enable_browser(struct thread *td,  struct kpayload_firmware_args *a
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: These are C preprocessor macros
-  switch(fw_version) {
-    caseentry(350, enable_browser_macro);
-    caseentry(355, enable_browser_macro);
-    caseentry(370, enable_browser_macro);
-    caseentry(400, enable_browser_macro);
-    caseentry(401, enable_browser_macro);
-    caseentry(405, enable_browser_macro);
-    caseentry(406, enable_browser_macro);
-    caseentry(407, enable_browser_macro);
-    caseentry(450, enable_browser_macro);
-    caseentry(455, enable_browser_macro);
-    caseentry(470, enable_browser_macro);
-    caseentry(471, enable_browser_macro);
-    caseentry(472, enable_browser_macro);
-    caseentry(473, enable_browser_macro);
-    caseentry(474, enable_browser_macro);
-    caseentry(500, enable_browser_macro);
-    caseentry(501, enable_browser_macro);
-    caseentry(503, enable_browser_macro);
-    caseentry(505, enable_browser_macro);
-    caseentry(507, enable_browser_macro);
-    caseentry(550, enable_browser_macro);
-    caseentry(553, enable_browser_macro);
-    caseentry(555, enable_browser_macro);
-    caseentry(556, enable_browser_macro);
-    caseentry(600, enable_browser_macro);
-    caseentry(602, enable_browser_macro);
-    caseentry(620, enable_browser_macro);
-    caseentry(650, enable_browser_macro);
-    caseentry(651, enable_browser_macro);
-    caseentry(670, enable_browser_macro);
-    caseentry(671, enable_browser_macro);
-    caseentry(672, enable_browser_macro);
-    caseentry(700, enable_browser_macro);
-    caseentry(701, enable_browser_macro);
-    caseentry(702, enable_browser_macro);
-    caseentry(750, enable_browser_macro);
-    caseentry(751, enable_browser_macro);
-    caseentry(755, enable_browser_macro);
-    default:
-      return -1;
-  }
+  // NOTE: This is a C preprocessor macros
+  build_kpayload(fw_version, enable_browser_macro);
 
   sceRegMgrSetInt(0x3C040000, 0);
 
