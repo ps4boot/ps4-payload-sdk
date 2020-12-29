@@ -183,6 +183,7 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
   uint64_t cr0 = readCr0();
   writeCr0(cr0 & ~X86_CR0_WP);
 
+  // This may change depending on new FWs function structure
   kmem = (uint8_t *)aslr_patch;
   if (fw_version < 600) {
     kmem[0] = 0x90;
