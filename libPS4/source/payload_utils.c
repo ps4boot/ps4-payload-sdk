@@ -48,7 +48,7 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
 
   uint16_t fw_version = args->kpayload_kbase_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, copyout_macro);
 
   uint64_t uaddr = args->kpayload_kbase_info->uaddr;
@@ -65,7 +65,7 @@ int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
 
   uint16_t fw_version = args->kpayload_dump_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, copyout_macro);
 
   uint64_t kaddr = args->kpayload_dump_info->kaddr;
@@ -94,7 +94,7 @@ int kpayload_jailbreak(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, jailbreak_macro);
 
   cred->cr_uid = 0;
@@ -132,7 +132,7 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, mmap_macro);
 
   uint64_t cr0 = readCr0();
@@ -177,7 +177,7 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, aslr_macro);
 
   uint64_t cr0 = readCr0();
@@ -206,7 +206,7 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
 
   uint16_t fw_version = args->kpayload_kclock_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, kclock_macro);
 
   uint64_t set_time = args->kpayload_kclock_info->set_time;
@@ -224,7 +224,7 @@ int kpayload_enable_browser(struct thread *td,  struct kpayload_firmware_args *a
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
-  // NOTE: This is a C preprocessor macros
+  // NOTE: This is a C preprocessor macro
   build_kpayload(fw_version, enable_browser_macro);
 
   sceRegMgrSetInt(0x3C040000, 0);
