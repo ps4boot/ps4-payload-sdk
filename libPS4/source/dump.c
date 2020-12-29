@@ -245,13 +245,13 @@ int wait_for_bdcopy(char *title_id) {
 }
 
 int wait_for_usb(char *usb_name, char *usb_path) {
-  FILE *fp = fopen("/mnt/usb0/.dirtest", "w");
-  if (fp) {
-    fclose(fp);
-    unlink("/mnt/usb0/.dirtest");
-    sprintf(usb_name, "%s", "USB0");
-    sprintf(usb_path, "%s", "/mnt/usb0");
-    return 1;
+  int fd = open("/mnt/usb0/.probe", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  if (fd < 0) {
+    return 0;
   }
-  return 0;
+  close(fd);
+  unlink("/mnt/usb0/.probe");
+  sprintf(usb_name, "%s", "USB0");
+  sprintf(usb_path, "%s", "/mnt/usb0");
+  return 1;
 }
