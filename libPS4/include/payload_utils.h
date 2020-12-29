@@ -160,8 +160,8 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     break;                     \
 }
 
-#define build_kpayload(id, macro) {  \
-  switch(fw_version) {               \
+#define build_kpayload(id, macro)    \
+  switch(id) {                       \
     caseentry(350, macro);           \
     caseentry(355, macro);           \
     caseentry(370, macro);           \
@@ -201,9 +201,8 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(751, macro);           \
     caseentry(755, macro);           \
     default:                         \
-      return -1;                     \
-  }                                  \
-}
+      __asm__("ret");                \
+  }
 
 int is_fw_spoofed();
 int is_jailbroken();
