@@ -75,13 +75,13 @@ int memset_s(void *s, rsize_t smax, int c, rsize_t n) {
   if (violation) {
     if ((s != NULL) && !(smax > RSIZE_MAX)) {
       for (rsize_t i = 0; i < smax; ++i) {
-        ((volatile unsigned char*)s)[i] = c;
+        ((volatile unsigned char *)s)[i] = c;
       }
     }
     return 1;
   } else {
     for (rsize_t i = 0; i < n; ++i) {
-      ((volatile unsigned char*)s)[i] = c;
+      ((volatile unsigned char *)s)[i] = c;
     }
     return 0;
   }

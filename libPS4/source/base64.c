@@ -37,7 +37,7 @@ unsigned char *base64_encode(const unsigned char *src, size_t len, size_t *out_l
     return NULL; /* integer overflow */
   }
   out = malloc(olen);
-  if (out == NULL){
+  if (out == NULL) {
     return NULL;
   }
 

@@ -15,7 +15,7 @@ https://github.com/benhoyt/inih
 
 #define EOF '\00'
 
-static inline int fgetc_file(FILE* fp) {
+static inline int fgetc_file(FILE *fp) {
   char c;
   if (fread(&c, 1, 1, fp) == 0) {
     return (EOF);
@@ -23,9 +23,9 @@ static inline int fgetc_file(FILE* fp) {
   return (c);
 }
 
-static char* fgets(char* dst, int max, FILE* fp) {
+static char *fgets(char *dst, int max, FILE *fp) {
   int c = EOF;
-  char* p;
+  char *p;
 
   /* get max bytes or upto a newline */
   for (p = dst, max--; max > 0; max--) {
@@ -50,13 +50,13 @@ bool isspace(int c) {
 
 /* Used by cfg_parse_string() to keep track of string parsing state. */
 typedef struct {
-  const char* ptr;
+  const char *ptr;
   size_t num_left;
 } cfg_parse_string_ctx;
 
 /* Strip whitespace chars off end of given string, in place. Return s. */
-static char* rstrip(char* s) {
-  char* p = s + strlen(s);
+static char *rstrip(char *s) {
+  char *p = s + strlen(s);
   while (p > s && isspace((unsigned char)(*--p))) {
     *p = '\0';
   }
@@ -64,17 +64,17 @@ static char* rstrip(char* s) {
 }
 
 /* Return pointer to first non-whitespace char in given string. */
-static char* lskip(const char* s) {
+static char *lskip(const char *s) {
   while (*s && isspace((unsigned char)(*s))) {
     s++;
   }
-  return (char*)s;
+  return (char *)s;
 }
 
 /* Return pointer to first char (of chars) or inline comment in given string,
    or pointer to null at end of string if neither found. Inline comment must
    be prefixed by a whitespace character to register as a comment. */
-static char* find_chars_or_comment(const char* s, const char* chars) {
+static char *find_chars_or_comment(const char *s, const char *chars) {
 #if CFG_ALLOW_INLINE_COMMENTS
   int was_space = 0;
   while (*s && (!chars || !strchr(chars, *s)) && !(was_space && strchr(CFG_INLINE_COMMENT_PREFIXES, *s))) {
@@ -86,41 +86,41 @@ static char* find_chars_or_comment(const char* s, const char* chars) {
     s++;
   }
 #endif
-  return (char*)s;
+  return (char *)s;
 }
 
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
-static char* strncpy0(char* dest, const char* src, size_t size) {
+static char *strncpy0(char *dest, const char *src, size_t size) {
   strncpy(dest, src, size);
   dest[size - 1] = '\0';
   return dest;
 }
 
 /* See documentation in header file. */
-int cfg_parse_stream(cfg_reader reader, void* stream, cfg_handler handler, void* user) {
+int cfg_parse_stream(cfg_reader reader, void *stream, cfg_handler handler, void *user) {
   /* Uses a fair bit of stack (use heap instead if you need to) */
 #if CFG_USE_STACK
   char line[CFG_MAX_LINE];
   int max_line = CFG_MAX_LINE;
 #else
-  char* line;
+  char *line;
   int max_line = CFG_INITIAL_ALLOC;
 #endif
 #if CFG_ALLOW_REALLOC
-  char* new_line;
+  char *new_line;
   int offset;
 #endif
   char prev_name[MAX_NAME] = "";
 
-  char* start;
-  char* end;
-  char* name;
-  char* value;
+  char *start;
+  char *end;
+  char *name;
+  char *value;
   int lineno = 0;
   int error = 0;
 
 #if !CFG_USE_STACK
-  line = (char*)malloc(CFG_INITIAL_ALLOC);
+  line = (char *)malloc(CFG_INITIAL_ALLOC);
   if (!line) {
     return -2;
   }
@@ -221,13 +221,13 @@ int cfg_parse_stream(cfg_reader reader, void* stream, cfg_handler handler, void*
 }
 
 /* See documentation in header file. */
-int cfg_parse_file(FILE* file, cfg_handler handler, void* user) {
+int cfg_parse_file(FILE *file, cfg_handler handler, void *user) {
   return cfg_parse_stream((cfg_reader)fgets, file, handler, user);
 }
 
 /* See documentation in header file. */
-int cfg_parse(const char* filename, cfg_handler handler, void* user) {
-  FILE* file;
+int cfg_parse(const char *filename, cfg_handler handler, void *user) {
+  FILE *file;
   int error;
 
   file = fopen(filename, "r");
@@ -241,11 +241,11 @@ int cfg_parse(const char* filename, cfg_handler handler, void* user) {
 
 /* An cfg_reader function to read the next line from a string buffer. This
    is the fgets() equivalent used by cfg_parse_string(). */
-static char* cfg_reader_string(char* str, int num, void* stream) {
-  cfg_parse_string_ctx* ctx = (cfg_parse_string_ctx*)stream;
-  const char* ctx_ptr = ctx->ptr;
+static char *cfg_reader_string(char *str, int num, void *stream) {
+  cfg_parse_string_ctx *ctx = (cfg_parse_string_ctx *)stream;
+  const char *ctx_ptr = ctx->ptr;
   size_t ctx_num_left = ctx->num_left;
-  char* strp = str;
+  char *strp = str;
   char c;
 
   if (ctx_num_left == 0 || num < 2) {
@@ -269,7 +269,7 @@ static char* cfg_reader_string(char* str, int num, void* stream) {
 }
 
 /* See documentation in header file. */
-int cfg_parse_string(const char* string, cfg_handler handler, void* user) {
+int cfg_parse_string(const char *string, cfg_handler handler, void *user) {
   cfg_parse_string_ctx ctx;
 
   ctx.ptr = string;

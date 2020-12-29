@@ -60,14 +60,14 @@
 struct kinfo_proc {
   int structSize;
   int layout;
-  void* args;
-  void* paddr;
-  void* addr;
-  void* tracep;
-  void* textvp;
-  void* fd;
-  void* vmspace;
-  void* wchan;
+  void *args;
+  void *paddr;
+  void *addr;
+  void *tracep;
+  void *textvp;
+  void *fd;
+  void *vmspace;
+  void *wchan;
   int pid;
   char useless[0x173];
   char name[];
@@ -75,18 +75,18 @@ struct kinfo_proc {
 
 struct ptrace_io_desc {
   int piod_op;     /* I/O operation */
-  void* piod_offs; /* child offset */
-  void* piod_addr; /* parent offset */
+  void *piod_offs; /* child offset */
+  void *piod_addr; /* parent offset */
   size_t piod_len; /* request length */
 };
 
-int findProcess(char* procName);
+int findProcess(char *procName);
 
 void procAttach(int pid);
 void procDetach(int pid);
-void procReadBytes(int pid, void* offset, void* buffer, size_t len);
-void procWriteBytes(int pid, void* offset, void* buffer, size_t len);
-void closeProcess(char* procname);
-void killProcess(char* procname);
+void procReadBytes(int pid, void *offset, void *buffer, size_t len);
+void procWriteBytes(int pid, void *offset, void *buffer, size_t len);
+void closeProcess(char *procname);
+void killProcess(char *procname);
 
 #endif

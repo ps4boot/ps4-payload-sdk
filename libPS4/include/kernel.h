@@ -64,8 +64,8 @@ extern int (*setgid)(int gid);
 extern int (*setreuid)(int ruid, int euid);
 extern int (*setregid)(int rgid, int egid);
 
-extern const char* (*sceKernelGetFsSandboxRandomWord)();
-extern int (*sceKernelGetSystemSwVersion)(SceFwInfo* fw_info);
+extern const char *(*sceKernelGetFsSandboxRandomWord)();
+extern int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 
 int kill(int pid, int signum);
 

@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-#define PS4_PKG_MAGIC 0x544E437F  // .CNT
+#define PS4_PKG_MAGIC 0x544E437F // .CNT
 
 enum PS4_PKG_ENTRY_TYPES {
   PS4_PKG_ENTRY_TYPE_DIGEST_TABLE = 0x0001,

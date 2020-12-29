@@ -22,13 +22,13 @@ https://github.com/benhoyt/inih
 
 /* Typedef for prototype of handler function. */
 #if CFG_HANDLER_LINENO
-typedef int (*cfg_handler)(void* user, const char* name, const char* value, int lineno);
+typedef int (*cfg_handler)(void *user, const char *name, const char *value, int lineno);
 #else
-typedef int (*cfg_handler)(void* user, const char* name, const char* value);
+typedef int (*cfg_handler)(void *user, const char *name, const char *value);
 #endif
 
 /* Typedef for prototype of fgets-style reader function. */
-typedef char* (*cfg_reader)(char* str, int num, void* stream);
+typedef char *(*cfg_reader)(char *str, int num, void *stream);
 
 /* Parse given CONF-style file. May have name=value pairs
    (whitespace stripped), and comments starting with ';' (semicolon).
@@ -41,21 +41,21 @@ typedef char* (*cfg_reader)(char* str, int num, void* stream);
    stop on first error), -1 on file open error, or -2 on memory allocation
    error (only when CFG_USE_STACK is zero).
 */
-int cfg_parse(const char* filename, cfg_handler handler, void* user);
+int cfg_parse(const char *filename, cfg_handler handler, void *user);
 
 /* Same as cfg_parse(), but takes a FILE* instead of filename. This doesn't
    close the file when it's finished -- the caller must do that. */
-int cfg_parse_file(FILE* file, cfg_handler handler, void* user);
+int cfg_parse_file(FILE *file, cfg_handler handler, void *user);
 
 /* Same as cfg_parse(), but takes an cfg_reader function pointer instead of
    filename. Used for implementing custom or string-based I/O (see also
    cfg_parse_string). */
-int cfg_parse_stream(cfg_reader reader, void* stream, cfg_handler handler, void* user);
+int cfg_parse_stream(cfg_reader reader, void *stream, cfg_handler handler, void *user);
 
 /* Same as cfg_parse(), but takes a zero-terminated string with the CONF data
 instead of a file. Useful for parsing CONF data from a network socket or
 already in memory. */
-int cfg_parse_string(const char* string, cfg_handler handler, void* user);
+int cfg_parse_string(const char *string, cfg_handler handler, void *user);
 
 /* Nonzero to allow multi-line value parsing, in the style of Python's
    configparser. If allowed, cfg_parse() will call the handler with the same

@@ -57,7 +57,7 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
   return 0;
 }
 
-int kpayload_dump(struct thread *td, struct kpayload_dump_args* args) {
+int kpayload_dump(struct thread *td, struct kpayload_dump_args *args) {
   UNUSED(td);
   void *kernel_base;
 
@@ -216,7 +216,7 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
   return 0;
 }
 
-int kpayload_enable_browser(struct thread *td,  struct kpayload_firmware_args *args) {
+int kpayload_enable_browser(struct thread *td, struct kpayload_firmware_args *args) {
   UNUSED(td);
   void *kernel_base;
 
@@ -236,10 +236,10 @@ uint16_t get_firmware() {
   if (g_firmware) {
     return g_firmware;
   }
-  uint16_t ret; // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
-  char binary_fw[2] = { 0 }; // 0x0000
-  char string_fw[5] = { 0 }; // "0000\0"
-  char sandbox_path[33]; // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
+  uint16_t ret;            // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
+  char binary_fw[2] = {0}; // 0x0000
+  char string_fw[5] = {0}; // "0000\0"
+  char sandbox_path[33];   // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
 
   snprintf(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
 

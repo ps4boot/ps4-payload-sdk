@@ -114,39 +114,39 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
                    : "memory");
 }
 
-#define copyout_macro(x)                                                        \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  copyout = (void *)(kernel_base + K ## x ## _COPYOUT);
+#define copyout_macro(x)                                                    \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  copyout = (void *)(kernel_base + K##x##_COPYOUT);
 
-#define jailbreak_macro(x)                                                      \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  kernel_ptr = (uint8_t *)kernel_base;                                          \
-  prison0 = (void **)&kernel_ptr[K ## x ## _PRISON_0];                          \
-  rootvnode = (void **)&kernel_ptr[K ## x ## _ROOTVNODE];
+#define jailbreak_macro(x)                                                  \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  prison0 = (void **)&kernel_ptr[K##x##_PRISON_0];                          \
+  rootvnode = (void **)&kernel_ptr[K##x##_ROOTVNODE];
 
-#define mmap_macro(x)                                                           \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  kernel_ptr = (uint8_t *)kernel_base;                                          \
-  mmap_patch_1 = &kernel_ptr[K ## x ## _MMAP_SELF_1];                           \
-  mmap_patch_2 = &kernel_ptr[K ## x ## _MMAP_SELF_2];                           \
-  mmap_patch_3 = &kernel_ptr[K ## x ## _MMAP_SELF_3];
+#define mmap_macro(x)                                                       \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  mmap_patch_1 = &kernel_ptr[K##x##_MMAP_SELF_1];                           \
+  mmap_patch_2 = &kernel_ptr[K##x##_MMAP_SELF_2];                           \
+  mmap_patch_3 = &kernel_ptr[K##x##_MMAP_SELF_3];
 
-#define aslr_macro(x)                                                           \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  kernel_ptr = (uint8_t *)kernel_base;                                          \
-  aslr_patch = &kernel_ptr[K ## x ## _DISABLE_ASLR];
+#define aslr_macro(x)                                                       \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  aslr_patch = &kernel_ptr[K##x##_DISABLE_ASLR];
 
-#define kclock_macro(x)                                                                       \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL];               \
-  if (atoi(#x) >= 450) {                                                                      \
-    sceSblSrtcClearTimeDifference = (void *)(kernel_base + K ## x ## _CLEAR_TIME_DIFFERENCE); \
-    sceSblSrtcClearTimeDifference(15);                                                        \
-  }                                                                                           \
-  sceSblSrtcSetTime = (void *)(kernel_base + K ## x ## _SET_TIME);
+#define kclock_macro(x)                                                                   \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL];               \
+  if (atoi(#x) >= 450) {                                                                  \
+    sceSblSrtcClearTimeDifference = (void *)(kernel_base + K##x##_CLEAR_TIME_DIFFERENCE); \
+    sceSblSrtcClearTimeDifference(15);                                                    \
+  }                                                                                       \
+  sceSblSrtcSetTime = (void *)(kernel_base + K##x##_SET_TIME);
 
-#define enable_browser_macro(x)                                                 \
-  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K ## x ## _XFAST_SYSCALL]; \
-  sceRegMgrSetInt = (void *)(kernel_base + K ## x ## _REG_MGR_SET_INT);
+#define enable_browser_macro(x)                                             \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  sceRegMgrSetInt = (void *)(kernel_base + K##x##_REG_MGR_SET_INT);
 
 #define caseentry(id, macro) \
   case id:                   \
@@ -154,7 +154,7 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     break;
 
 #define build_kpayload(id, macro) \
-  switch(id) {                    \
+  switch (id) {                   \
     caseentry(350, macro);        \
     caseentry(355, macro);        \
     caseentry(370, macro);        \
@@ -193,16 +193,16 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(750, macro);        \
     caseentry(751, macro);        \
     caseentry(755, macro);        \
-    default:                      \
-      __asm__("ret");             \
-      /* raise(SIGSEGV); */       \
+  default:                        \
+    __asm__("ret");               \
+    /* raise(SIGSEGV); */         \
   }
 
 int is_fw_spoofed();
 int is_jailbroken();
 
 uint16_t get_firmware();
-int get_firmware_string(char* fw_string);
+int get_firmware_string(char *fw_string);
 
 uint64_t get_kernel_base();
 int get_memory_dump(uint64_t kaddr, uint64_t *dump, size_t size);

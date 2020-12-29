@@ -51,8 +51,8 @@ int (*setgid)(int gid);
 int (*setreuid)(int ruid, int euid);
 int (*setregid)(int rgid, int egid);
 
-const char* (*sceKernelGetFsSandboxRandomWord)();
-int (*sceKernelGetSystemSwVersion)(SceFwInfo* fw_info);
+const char *(*sceKernelGetFsSandboxRandomWord)();
+int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 
 SYSCALL(kill, 37);
 SYSCALL(ioctl, 54);
