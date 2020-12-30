@@ -155,9 +155,6 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 
 #define build_kpayload(id, macro) \
   switch (id) {                   \
-    caseentry(350, macro);        \
-    caseentry(355, macro);        \
-    caseentry(370, macro);        \
     caseentry(400, macro);        \
     caseentry(401, macro);        \
     caseentry(405, macro);        \
@@ -190,9 +187,6 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(700, macro);        \
     caseentry(701, macro);        \
     caseentry(702, macro);        \
-    caseentry(750, macro);        \
-    caseentry(751, macro);        \
-    caseentry(755, macro);        \
   default:                        \
     __asm__("ret");               \
     /* raise(SIGSEGV); */         \
