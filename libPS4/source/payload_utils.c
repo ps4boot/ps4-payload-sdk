@@ -44,7 +44,7 @@ int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
   UNUSED(td);
   void *kernel_base;
 
-  int (*copyout)(const void *kaddr, void *uaddr, size_t len) = 0;
+  int (*copyout)(const void *kaddr, void *uaddr, size_t len);
 
   uint16_t fw_version = args->kpayload_kbase_info->fw_version;
 
@@ -61,7 +61,7 @@ int kpayload_dump(struct thread *td, struct kpayload_dump_args *args) {
   UNUSED(td);
   void *kernel_base;
 
-  int (*copyout)(const void *kaddr, void *uaddr, size_t len) = 0;
+  int (*copyout)(const void *kaddr, void *uaddr, size_t len);
 
   uint16_t fw_version = args->kpayload_dump_info->fw_version;
 
@@ -125,7 +125,6 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
   uint8_t *kernel_ptr;
 
   uint8_t *kmem;
-
   uint8_t *mmap_patch_1;
   uint8_t *mmap_patch_2;
   uint8_t *mmap_patch_3;
@@ -172,7 +171,6 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
   uint8_t *kernel_ptr;
 
   uint8_t *kmem;
-
   uint8_t *aslr_patch;
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
@@ -183,7 +181,7 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
   uint64_t cr0 = readCr0();
   writeCr0(cr0 & ~X86_CR0_WP);
 
-  // This may change depending on new FWs function structure
+  // This may change depending on new firmware's function structure
   kmem = (uint8_t *)aslr_patch;
   if (fw_version < 600) {
     kmem[0] = 0x90;
@@ -201,8 +199,8 @@ int kpayload_kernel_clock(struct thread *td, struct kpayload_kclock_args *args) 
   UNUSED(td);
   void *kernel_base;
 
-  void (*sceSblSrtcClearTimeDifference)(uint64_t value) = 0;
-  void (*sceSblSrtcSetTime)(uint64_t tm) = 0;
+  void (*sceSblSrtcSetTime)(uint64_t tm);
+  void (*sceSblSrtcClearTimeDifference)(uint64_t value);
 
   uint16_t fw_version = args->kpayload_kclock_info->fw_version;
 
@@ -220,7 +218,7 @@ int kpayload_enable_browser(struct thread *td, struct kpayload_firmware_args *ar
   UNUSED(td);
   void *kernel_base;
 
-  uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value) = 0;
+  uint64_t (*sceRegMgrSetInt)(uint32_t regId, int value);
 
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 

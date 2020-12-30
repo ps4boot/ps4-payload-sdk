@@ -3,6 +3,8 @@
 #ifndef FW_DEFINES_H
 #define FW_DEFINES_H
 
+// clang-format off
+
 // Used in every payload that uses jailbreak();
 #define K300_XFAST_SYSCALL         0x0
 #define K310_XFAST_SYSCALL         0x0
@@ -520,5 +522,7 @@
 #define K800_CLEAR_TIME_DIFFERENCE 0x0
 #define K801_CLEAR_TIME_DIFFERENCE 0x0
 #define K803_CLEAR_TIME_DIFFERENCE 0x0
+
+// clang-format on
 
 #endif
