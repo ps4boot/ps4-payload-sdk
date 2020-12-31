@@ -93,7 +93,7 @@ unsigned char *base64_encode(const unsigned char *src, size_t len, size_t *out_l
  * Caller is responsible for freeing the returned buffer.
  */
 unsigned char *base64_decode(const unsigned char *src, size_t len, size_t *out_len) {
-  unsigned char dtable[256], *out, *pos, block[4], tmp;
+  unsigned char dtable[256], *out, *pos, block[4];
   size_t i, count, olen;
   int pad = 0;
 
@@ -122,7 +122,7 @@ unsigned char *base64_decode(const unsigned char *src, size_t len, size_t *out_l
 
   count = 0;
   for (i = 0; i < len; i++) {
-    tmp = dtable[src[i]];
+    unsigned char tmp = dtable[src[i]];
     if (tmp == 0x80) {
       continue;
     }

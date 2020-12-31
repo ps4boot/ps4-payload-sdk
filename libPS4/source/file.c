@@ -72,10 +72,10 @@ void copy_file(char *sourcefile, char *destfile) {
   if (src != -1) {
     int out = open(destfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (out != -1) {
-      size_t bytes;
       char *buffer = malloc(4194304);
       if (buffer != NULL) {
-        while (0 < (bytes = read(src, buffer, 4194304))) {
+        size_t bytes;
+        while ((bytes = read(src, buffer, 4194304)) > 0) {
           write(out, buffer, bytes);
         }
         free(buffer);
@@ -87,17 +87,19 @@ void copy_file(char *sourcefile, char *destfile) {
 }
 
 void copy_dir(char *sourcedir, char *destdir) {
-  DIR *dir;
+  DIR *dir = opendir(sourcedir);
   struct dirent *dp;
   struct stat info;
-  char src_path[1024], dst_path[1024];
-  dir = opendir(sourcedir);
+  char src_path[1024];
+  char dst_path[1024];
+
   if (!dir) {
     return;
   }
   mkdir(destdir, 0777);
   while ((dp = readdir(dir)) != NULL) {
     if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..")) {
+      continue;
     } else {
       sprintf(src_path, "%s/%s", sourcedir, dp->d_name);
       sprintf(dst_path, "%s/%s", destdir, dp->d_name);
@@ -115,29 +117,31 @@ void copy_dir(char *sourcedir, char *destdir) {
 }
 
 int file_compare(char *fname1, char *fname2) {
-  long size1, size2;
-  int bytesRead1 = 0, bytesRead2 = 0, lastBytes = 100, res = 0, i;
-  int file1 = open(fname1, O_RDONLY, 0), file2 = open(fname2, O_RDONLY, 0);
-  char *buffer1 = malloc(65536), *buffer2 = malloc(65536);
+  int res = 0;
+  int file1 = open(fname1, O_RDONLY, 0);
+  int file2 = open(fname2, O_RDONLY, 0);
+  char *buffer1 = malloc(65536);
+  char *buffer2 = malloc(65536);
 
   if (file1 && file2 && buffer1 != NULL && buffer2 != NULL) {
     lseek(file1, 0, SEEK_END);
     lseek(file2, 0, SEEK_END);
-    size1 = lseek(file1, 0, SEEK_CUR);
-    size2 = lseek(file2, 0, SEEK_CUR);
+    long size1 = lseek(file1, 0, SEEK_CUR);
+    long size2 = lseek(file2, 0, SEEK_CUR);
     lseek(file1, 0L, SEEK_SET);
     lseek(file2, 0L, SEEK_SET);
     if (size1 == size2) {
+      int lastBytes = 100;
       if (size1 < lastBytes) {
         lastBytes = size1;
       }
       lseek(file1, -lastBytes, SEEK_END);
       lseek(file2, -lastBytes, SEEK_END);
-      bytesRead1 = read(file1, buffer1, sizeof(char));
-      bytesRead2 = read(file2, buffer2, sizeof(char));
+      int bytesRead1 = read(file1, buffer1, sizeof(char));
+      int bytesRead2 = read(file2, buffer2, sizeof(char));
       if (bytesRead1 > 0 && bytesRead1 == bytesRead2) {
         res = 1;
-        for (i = 0; i < bytesRead1; i++) {
+        for (int i = 0; i < bytesRead1; i++) {
           if (buffer1[i] != buffer2[i]) {
             res = 0;
             break;
@@ -156,7 +160,6 @@ int file_compare(char *fname1, char *fname2) {
 
 int rmtree(const char *path) {
   DIR *d = opendir(path);
-  size_t path_len = strlen(path);
   int r = -1;
 
   if (d) {
@@ -168,12 +171,11 @@ int rmtree(const char *path) {
       char *buf;
       size_t len;
 
-      /* Skip the names "." and ".." as we don't want to recurse on them. */
       if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, "..")) {
         continue;
       }
 
-      len = path_len + strlen(p->d_name) + 2;
+      len = strlen(path) + strlen(p->d_name) + 2;
       buf = malloc(len);
 
       if (buf) {

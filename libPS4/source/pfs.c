@@ -17,12 +17,11 @@ struct di_d32 *inodes;
 char *copy_buffer;
 
 void memcpy_to_file(const char *fname, uint64_t ptr, uint64_t size) {
-  size_t bytes;
-  size_t ix = 0;
   int fd = open(fname, O_WRONLY | O_CREAT | O_TRUNC, 0777);
   if (fd != -1) {
+    size_t ix = 0;
     while (size > 0) {
-      bytes = (size > BUFFER_SIZE) ? BUFFER_SIZE : size;
+      size_t bytes = (size > BUFFER_SIZE) ? BUFFER_SIZE : size;
       lseek(pfs, ptr + ix * BUFFER_SIZE, SEEK_SET);
       read(pfs, copy_buffer, bytes);
       write(fd, copy_buffer, bytes);

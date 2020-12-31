@@ -12,7 +12,6 @@ https://github.com/benhoyt/inih
 #include "cfg.h"
 
 #define MAX_NAME 50
-
 #define EOF '\00'
 
 static inline int fgetc_file(FILE *fp) {

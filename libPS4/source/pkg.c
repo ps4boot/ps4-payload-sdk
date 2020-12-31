@@ -21,7 +21,6 @@ static inline uint32_t bswap_32(uint32_t val) {
 
 int isfpkg(char *pkgfn) {
   int result = 0;
-  char buffer[5];
   FILE *in = NULL;
   struct cnt_pkg_main_header m_header;
   struct cnt_pkg_content_header c_header;
@@ -31,6 +30,7 @@ int isfpkg(char *pkgfn) {
   if ((in = fopen(pkgfn, "rb")) == NULL) {
     result = 1;
   } else {
+    char buffer[5];
     fseek(in, 1, SEEK_SET);
     fread(buffer, 1, 4, in);
     if (strcmp(buffer, "CNT@") == 0) {
@@ -236,9 +236,6 @@ int unpkg(char *pkgfn, char *tidpath) {
   int file_name_index = 0;
   int file_count = 0;
 
-  // Var for file writing.
-  unsigned char *entry_file_data;
-
   // Search through the data entries and locate the name table entry.
   // This section should keep relevant strings for internal files inside the PKG/CNT file.
   for (i = 0; i < bswap_16(m_header.table_entries_num); i++) {
@@ -280,7 +277,8 @@ int unpkg(char *pkgfn, char *tidpath) {
 
   // Search through the entries for mapped file data and output it.
   for (i = 0; i < bswap_16(m_header.table_entries_num); i++) {
-    entry_file_data = (unsigned char *)realloc(NULL, entry_files[i].size);
+    // Var for file writing.
+    unsigned char *entry_file_data = (unsigned char *)realloc(NULL, entry_files[i].size);
 
     lseek(fdin, entry_files[i].offset, SEEK_SET);
     read(fdin, entry_file_data, entry_files[i].size);
