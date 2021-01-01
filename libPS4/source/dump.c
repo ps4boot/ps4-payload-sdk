@@ -181,7 +181,7 @@ void decrypt_dir(char *sourcedir, char *destdir) {
   closedir(dir);
 }
 
-int wait_for_game(char *title_id) {
+int wait_for_app(char *title_id) {
   int res = 0;
 
   DIR *dir;
@@ -215,8 +215,8 @@ int wait_for_bdcopy(char *title_id) {
 
   sprintf(path, "/system_data/playgo/%s/bdcopy.pbm", title_id);
   FILE *pbm = fopen(path, "rb");
-  if (!pbm) {
-    return 100;
+  if (!pbm) { // This is what triggers a "dump" when a game is deleted while the dumper is already running
+    return 100; // Returning 100 will stop the wait_for_bdcopy loop
   }
 
   fseek(pbm, 0, SEEK_END);
@@ -226,7 +226,7 @@ int wait_for_bdcopy(char *title_id) {
   buf = malloc(filelen);
   if (buf == NULL) {
     fclose(pbm);
-    return 0; // Return 0 on when unable to allocate buffer, should this be 100?
+    return 0; // Return 0 on when unable to allocate buffer, should this be 100? It will trigger the same issue above
   }
 
   fread(buf, sizeof(char), filelen, pbm);
