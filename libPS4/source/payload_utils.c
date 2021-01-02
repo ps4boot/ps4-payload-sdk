@@ -230,6 +230,31 @@ int kpayload_enable_browser(struct thread *td, struct kpayload_firmware_args *ar
   return 0;
 }
 
+int kpayload_target_id(struct thread *td, struct kpayload_target_id_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+  uint8_t *kernel_ptr;
+
+  uint8_t *kmem;
+  uint8_t *tid_patch;
+
+  uint16_t fw_version = args->kpayload_target_id_info->fw_version;
+  uint8_t spoof = args->kpayload_target_id_info->spoof;
+
+  // NOTE: This is a C preprocessor macro
+  build_kpayload(fw_version, tid_macro);
+
+  uint64_t cr0 = readCr0();
+  writeCr0(cr0 & ~X86_CR0_WP);
+
+  kmem = (uint8_t *)tid_patch;
+  kmem[0] = spoof;
+
+  writeCr0(cr0);
+
+  return 0;
+}
+
 uint16_t get_firmware() {
   if (g_firmware) {
     return g_firmware;
@@ -338,5 +363,13 @@ int enable_browser() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
   kexec(&kpayload_enable_browser, &kpayload_firmware_info);
+  return 0;
+}
+
+int spoof_target_id(uint8_t id) {
+  struct kpayload_target_id_info kpayload_target_id_info;
+  kpayload_target_id_info.fw_version = get_firmware();
+  kpayload_target_id_info.spoof = id;
+  kexec(&kpayload_target_id, &kpayload_target_id_info);
   return 0;
 }

@@ -523,6 +523,53 @@
 #define K801_CLEAR_TIME_DIFFERENCE 0x0
 #define K803_CLEAR_TIME_DIFFERENCE 0x0
 
+// Used in ToDex
+#define K300_TARGET_ID             0x0
+#define K310_TARGET_ID             0x0
+#define K311_TARGET_ID             0x0
+#define K315_TARGET_ID             0x0
+#define K350_TARGET_ID             0x0
+#define K355_TARGET_ID             0x0
+#define K370_TARGET_ID             0x0
+#define K400_TARGET_ID             0x0200151D
+#define K401_TARGET_ID             0x0200151D
+#define K405_TARGET_ID             0x0200151D
+#define K406_TARGET_ID             0x0200151D
+#define K407_TARGET_ID             0x0200551D
+#define K450_TARGET_ID             0x01B6D08D
+#define K455_TARGET_ID             0x01B6D08D
+#define K470_TARGET_ID             0x01B7D08D
+#define K471_TARGET_ID             0x01B7D08D
+#define K472_TARGET_ID             0x01B7D08D
+#define K473_TARGET_ID             0x01B7D08D
+#define K474_TARGET_ID             0x01B7D08D
+#define K500_TARGET_ID             0x01CD068D
+#define K501_TARGET_ID             0x01CD068D
+#define K503_TARGET_ID             0x01CD068D
+#define K505_TARGET_ID             0x01CD068D
+#define K507_TARGET_ID             0x01CD068D
+#define K550_TARGET_ID             0x022BBF8D
+#define K553_TARGET_ID             0x022BBF8D
+#define K555_TARGET_ID             0x022BFF8D
+#define K556_TARGET_ID             0x022BFF8D
+#define K600_TARGET_ID             0x02159B8D
+#define K602_TARGET_ID             0x02159B8D
+#define K620_TARGET_ID             0x0215DB8D
+#define K650_TARGET_ID             0x01BD800D
+#define K651_TARGET_ID             0x01BD800D
+#define K670_TARGET_ID             0x01BD800D
+#define K671_TARGET_ID             0x01BD800D
+#define K672_TARGET_ID             0x01BD800D
+#define K700_TARGET_ID             0x022FED8D
+#define K701_TARGET_ID             0x022FED8D
+#define K702_TARGET_ID             0x022FED8D
+#define K750_TARGET_ID             0x0
+#define K751_TARGET_ID             0x0
+#define K755_TARGET_ID             0x0
+#define K800_TARGET_ID             0x0
+#define K801_TARGET_ID             0x0
+#define K803_TARGET_ID             0x0
+
 // clang-format on
 
 #endif

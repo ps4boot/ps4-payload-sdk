@@ -87,6 +87,16 @@ struct kpayload_kclock_args {
   struct kpayload_kclock_info *kpayload_kclock_info;
 };
 
+struct kpayload_target_id_info {
+  uint16_t fw_version;
+  uint8_t spoof;
+};
+
+struct kpayload_target_id_args {
+  void *syscall_handler;
+  struct kpayload_target_id_info *kpayload_target_id_info;
+};
+
 #define X86_CR0_WP (1 << 16)
 
 static inline __attribute__((always_inline)) uint64_t __readmsr(unsigned long __register) {
@@ -148,6 +158,11 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
   sceRegMgrSetInt = (void *)(kernel_base + K##x##_REG_MGR_SET_INT);
 
+#define tid_macro(x)                                             \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  tid_patch = &kernel_ptr[K##x##_TARGET_ID];
+
 #define caseentry(id, macro) \
   case id:                   \
     macro(id);               \
@@ -205,5 +220,6 @@ int mmap_patch();
 int disable_aslr();
 int kernel_clock(uint64_t value);
 int enable_browser();
+int spoof_target_id(uint8_t id);
 
 #endif
