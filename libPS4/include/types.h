@@ -17,6 +17,9 @@
 
 #define BIT(n) (1 << (n))
 
+typedef int errno_t;
+typedef int errno;
+
 typedef int bool;
 
 typedef uint64_t size_t;
