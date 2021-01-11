@@ -158,10 +158,14 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
   sceRegMgrSetInt = (void *)(kernel_base + K##x##_REG_MGR_SET_INT);
 
-#define tid_macro(x)                                             \
+#define tid_macro(x)                                                        \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
   kernel_ptr = (uint8_t *)kernel_base;                                      \
   tid_patch = &kernel_ptr[K##x##_TARGET_ID];
+
+#define perm_uart_macro(x)                                                  \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  icc_nvs_write = (void *)(kernel_base + K##x##_ICC_NVS_WRITE);
 
 #define caseentry(id, macro) \
   case id:                   \
@@ -221,5 +225,6 @@ int disable_aslr();
 int kernel_clock(uint64_t value);
 int enable_browser();
 int spoof_target_id(uint8_t id);
+int enable_perm_uart();
 
 #endif

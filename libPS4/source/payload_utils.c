@@ -255,6 +255,23 @@ int kpayload_target_id(struct thread *td, struct kpayload_target_id_args *args) 
   return 0;
 }
 
+int kpayload_perm_uart(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+
+  uint64_t (*icc_nvs_write)(uint32_t block, uint32_t offset, uint32_t size, void *value);
+
+  uint16_t fw_version = args->kpayload_firmware_info->fw_version;
+
+  // NOTE: This is a C preprocessor macro
+  build_kpayload(fw_version, perm_uart_macro);
+
+  char uart = 1;
+  icc_nvs_write(4, 0x31F, 1, &uart);
+
+  return 0;
+}
+
 uint16_t get_firmware() {
   if (g_firmware) {
     return g_firmware;
@@ -371,5 +388,12 @@ int spoof_target_id(uint8_t id) {
   kpayload_target_id_info.fw_version = get_firmware();
   kpayload_target_id_info.spoof = id;
   kexec(&kpayload_target_id, &kpayload_target_id_info);
+  return 0;
+}
+
+int enable_perm_uart() {
+  struct kpayload_firmware_info kpayload_firmware_info;
+  kpayload_firmware_info.fw_version = get_firmware();
+  kexec(&kpayload_perm_uart, &kpayload_firmware_info);
   return 0;
 }
