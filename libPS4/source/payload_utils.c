@@ -183,7 +183,7 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
 
   // This may change depending on new firmware's function structure
   kmem = (uint8_t *)aslr_patch;
-  if (fw_version < 600) {
+  if (fw_version < 600 || fw_version > 755) {
     kmem[0] = 0x90;
     kmem[1] = 0x90;
   } else {
