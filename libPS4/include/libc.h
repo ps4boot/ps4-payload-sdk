@@ -20,7 +20,7 @@ extern void *(*memalign)(size_t boundary, size_t size);
 extern void *(*memset)(void *destination, int value, size_t num);
 extern void *(*memcpy)(void *destination, const void *source, size_t num);
 extern int (*memcmp)(const void *s1, const void *s2, size_t n);
-extern void *(*memmove)(void *dst,	const void *src, size_t	len);
+extern void *(*memmove)(void *dst, const void *src, size_t len);
 extern errno_t (*memmove_s)(void *dest, rsize_t destsz, const void *src, rsize_t count);
 extern char *(*strcpy)(char *destination, const char *source);
 extern char *(*strncpy)(char *destination, const char *source, size_t num);

@@ -215,7 +215,7 @@ int wait_for_bdcopy(char *title_id) {
 
   sprintf(path, "/system_data/playgo/%s/bdcopy.pbm", title_id);
   FILE *pbm = fopen(path, "rb");
-  if (!pbm) { // This is what triggers a "dump" when a game is deleted while the dumper is already running
+  if (!pbm) {   // This is what triggers a "dump" when a game is deleted while the dumper is already running
     return 100; // Returning 100 will stop the wait_for_bdcopy loop
   }
 

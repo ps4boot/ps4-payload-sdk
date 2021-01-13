@@ -12,7 +12,7 @@ void *(*memalign)(size_t boundary, size_t size);
 void *(*memset)(void *destination, int value, size_t num);
 void *(*memcpy)(void *destination, const void *source, size_t num);
 int (*memcmp)(const void *s1, const void *s2, size_t n);
-void *(*memmove)(void *dst,	const void *src, size_t	len);
+void *(*memmove)(void *dst, const void *src, size_t len);
 errno_t (*memmove_s)(void *dest, rsize_t destsz, const void *src, rsize_t count);
 char *(*strcpy)(char *destination, const char *source);
 char *(*strncpy)(char *destination, const char *source, size_t num);
