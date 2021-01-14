@@ -92,8 +92,8 @@
 #define K700_PRISON_0              0x0113E398
 #define K701_PRISON_0              0x0113E398
 #define K702_PRISON_0              0x0113E398
-#define K750_PRISON_0              0x0
-#define K751_PRISON_0              0x0
+#define K750_PRISON_0              0x0113B728
+#define K751_PRISON_0              0x0113B728
 #define K755_PRISON_0              0x0113B728
 #define K800_PRISON_0              0x0111A7D0
 #define K801_PRISON_0              0x0
@@ -139,8 +139,8 @@
 #define K700_ROOTVNODE             0x022C5750
 #define K701_ROOTVNODE             0x022C5750
 #define K702_ROOTVNODE             0x022C5750
-#define K750_ROOTVNODE             0x0
-#define K751_ROOTVNODE             0x0
+#define K750_ROOTVNODE             0x01B463E0
+#define K751_ROOTVNODE             0x01B463E0
 #define K755_ROOTVNODE             0x01B463E0
 #define K800_ROOTVNODE             0x01B8C730
 #define K801_ROOTVNODE             0x0
@@ -186,8 +186,8 @@
 #define K700_COPYOUT               0x0002F140
 #define K701_COPYOUT               0x0002F140
 #define K702_COPYOUT               0x0002F140
-#define K750_COPYOUT               0x0
-#define K751_COPYOUT               0x0
+#define K750_COPYOUT               0x0028F900
+#define K751_COPYOUT               0x0028F900
 #define K755_COPYOUT               0x0028F900
 #define K800_COPYOUT               0x0025E2C0
 #define K801_COPYOUT               0x0
@@ -233,8 +233,8 @@
 #define K700_MMAP_SELF_1           0x001CB8F0
 #define K701_MMAP_SELF_1           0x001CB8F0
 #define K702_MMAP_SELF_1           0x001CB8F0
-#define K750_MMAP_SELF_1           0x0
-#define K751_MMAP_SELF_1           0x0
+#define K750_MMAP_SELF_1           0x00364D40
+#define K751_MMAP_SELF_1           0x00364D40
 #define K755_MMAP_SELF_1           0x00364D40
 #define K800_MMAP_SELF_1           0x001D5780
 #define K801_MMAP_SELF_1           0x0
@@ -280,8 +280,8 @@
 #define K700_MMAP_SELF_2           0x001CB910
 #define K701_MMAP_SELF_2           0x001CB910
 #define K702_MMAP_SELF_2           0x001CB910
-#define K750_MMAP_SELF_2           0x0
-#define K751_MMAP_SELF_2           0x0
+#define K750_MMAP_SELF_2           0x00364D60
+#define K751_MMAP_SELF_2           0x00364D60
 #define K755_MMAP_SELF_2           0x00364D60
 #define K800_MMAP_SELF_2           0x001D57A0
 #define K801_MMAP_SELF_2           0x0
@@ -327,8 +327,8 @@
 #define K700_MMAP_SELF_3           0x001D40BB
 #define K701_MMAP_SELF_3           0x001D40BB
 #define K702_MMAP_SELF_3           0x001D40BB
-#define K750_MMAP_SELF_3           0x0
-#define K751_MMAP_SELF_3           0x0
+#define K750_MMAP_SELF_3           0x000DCED1
+#define K751_MMAP_SELF_3           0x000DCED1
 #define K755_MMAP_SELF_3           0x000DCED1
 #define K800_MMAP_SELF_3           0x000FED61
 #define K801_MMAP_SELF_3           0x0
@@ -375,8 +375,8 @@
 #define K700_DISABLE_ASLR          0x000C1F9A
 #define K701_DISABLE_ASLR          0x000C1F9A
 #define K702_DISABLE_ASLR          0x000C1F9A
-#define K750_DISABLE_ASLR          0x0
-#define K751_DISABLE_ASLR          0x0
+#define K750_DISABLE_ASLR          0x00218AF4
+#define K751_DISABLE_ASLR          0x00218AF4
 #define K755_DISABLE_ASLR          0x00218AF4
 #define K800_DISABLE_ASLR          0x002856F4
 #define K801_DISABLE_ASLR          0x0
@@ -422,8 +422,8 @@
 #define K700_REG_MGR_SET_INT       0x005013B0
 #define K701_REG_MGR_SET_INT       0x005013B0
 #define K702_REG_MGR_SET_INT       0x005013B0
-#define K750_REG_MGR_SET_INT       0x0
-#define K751_REG_MGR_SET_INT       0x0
+#define K750_REG_MGR_SET_INT       0x004FEFC0
+#define K751_REG_MGR_SET_INT       0x004FEFC0
 #define K755_REG_MGR_SET_INT       0x004FEFC0
 #define K800_REG_MGR_SET_INT       0x004E42A0
 #define K801_REG_MGR_SET_INT       0x0
@@ -469,8 +469,8 @@
 #define K700_SET_TIME              0x0064DA90 // Needs Verified
 #define K701_SET_TIME              0x0064DA90 // Needs Verified
 #define K702_SET_TIME              0x0064DA90 // Needs Verified
-#define K750_SET_TIME              0x0
-#define K751_SET_TIME              0x0
+#define K750_SET_TIME              0x0064CE20 // Needs Verified
+#define K751_SET_TIME              0x0064CE20 // Needs Verified
 #define K755_SET_TIME              0x0064CE20 // Needs Verified
 #define K800_SET_TIME              0x00630C20 // Needs Verified
 #define K801_SET_TIME              0x0
@@ -516,8 +516,8 @@
 #define K700_CLEAR_TIME_DIFFERENCE 0x0064CF70
 #define K701_CLEAR_TIME_DIFFERENCE 0x0064CF70
 #define K702_CLEAR_TIME_DIFFERENCE 0x0064CF70
-#define K750_CLEAR_TIME_DIFFERENCE 0x0
-#define K751_CLEAR_TIME_DIFFERENCE 0x0
+#define K750_CLEAR_TIME_DIFFERENCE 0x0064C300
+#define K751_CLEAR_TIME_DIFFERENCE 0x0064C300
 #define K755_CLEAR_TIME_DIFFERENCE 0x0064C300
 #define K800_CLEAR_TIME_DIFFERENCE 0x00630100
 #define K801_CLEAR_TIME_DIFFERENCE 0x0
@@ -610,8 +610,8 @@
 #define K700_ICC_NVS_WRITE         0x003488E0
 #define K701_ICC_NVS_WRITE         0x003488E0
 #define K702_ICC_NVS_WRITE         0x003488E0
-#define K750_ICC_NVS_WRITE         0x0
-#define K751_ICC_NVS_WRITE         0x0
+#define K750_ICC_NVS_WRITE         0x0002F770
+#define K751_ICC_NVS_WRITE         0x0002F770
 #define K755_ICC_NVS_WRITE         0x0002F770
 #define K800_ICC_NVS_WRITE         0x0041EC60
 #define K801_ICC_NVS_WRITE         0x0
