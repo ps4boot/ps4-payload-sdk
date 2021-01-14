@@ -206,6 +206,9 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(700, macro);        \
     caseentry(701, macro);        \
     caseentry(702, macro);        \
+    caseentry(750, macro);        \
+    caseentry(751, macro);        \
+    caseentry(755, macro);        \
   default:                        \
     __asm__("ret");               \
     /* raise(SIGSEGV); */         \
