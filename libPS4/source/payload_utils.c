@@ -276,14 +276,17 @@ uint16_t get_firmware() {
   if (g_firmware) {
     return g_firmware;
   }
-  uint16_t ret;            // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
-  uint32_t offset;         // Offset for ealier firmware's version location
-  char binary_fw[2] = {0}; // 0x0000
-  char string_fw[5] = {0}; // "0000\0"
-  char sandbox_path[33];   // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
+
+  uint16_t ret;                    // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
+  uint32_t offset;                 // Offset for firmware's version location
+  uint16_t elf_header_size;        // ELF header size
+  uint16_t elf_header_entry_size;  // ELF header entry size
+  uint16_t num_of_elf_entries;     // Number of entries in the ELF header
+  char binary_fw[2] = {0};         // 0x0000
+  char string_fw[5] = {0};         // "0000\0"
+  char sandbox_path[33];           // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
 
   snprintf_s(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
-
   int fd = open(sandbox_path, O_RDONLY, 0);
   if (fd < 0) {
     // Assume it's currently jailbroken
@@ -294,15 +297,23 @@ uint16_t get_firmware() {
     }
   }
 
-  lseek(fd, 0x240, SEEK_SET); // 0x240 for 1.01 -> ?.??, 0x2B0 for ?.?? (5.05) -> ???
-  read(fd, &offset, sizeof(offset));
+  lseek(fd, 0x154, SEEK_SET);
+  read(fd, &elf_header_size, sizeof(elf_header_size));
+  lseek(fd, 0x156, SEEK_SET);
+  read(fd, &elf_header_entry_size, sizeof(elf_header_entry_size));
+  lseek(fd, 0x158, SEEK_SET);
+  read(fd, &num_of_elf_entries, sizeof(num_of_elf_entries));
+  offset = elf_header_size + num_of_elf_entries * elf_header_entry_size;
 
-  if (offset == 0x50E57464) { // "Påtd"
-    lseek(fd, 0x334, SEEK_SET);
-  } else {
-    lseek(fd, 0x374, SEEK_SET);
+  // Align
+  while (offset % 0x10 != 0) {
+    offset += 1;
   }
 
+  // 0x120 is the size of the header on encrypted ELFs, 0x14 is the location of the version after the ELF headers
+  offset += 0x120 + 0x14;
+
+  lseek(fd, offset, SEEK_SET);
   read(fd, &binary_fw,  sizeof(binary_fw));
   close(fd);
 
