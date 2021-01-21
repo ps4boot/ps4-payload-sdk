@@ -299,9 +299,7 @@ uint16_t get_firmware() {
 
   lseek(fd, 0x154, SEEK_SET);
   read(fd, &elf_header_size, sizeof(elf_header_size));
-  lseek(fd, 0x156, SEEK_SET);
   read(fd, &elf_header_entry_size, sizeof(elf_header_entry_size));
-  lseek(fd, 0x158, SEEK_SET);
   read(fd, &num_of_elf_entries, sizeof(num_of_elf_entries));
   offset = elf_header_size + num_of_elf_entries * elf_header_entry_size;
 
