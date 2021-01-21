@@ -277,25 +277,37 @@ uint16_t get_firmware() {
     return g_firmware;
   }
   uint16_t ret;            // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
+  uint32_t offset;         // Offset for ealier firmware's version location
   char binary_fw[2] = {0}; // 0x0000
   char string_fw[5] = {0}; // "0000\0"
   char sandbox_path[33];   // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
 
-  snprintf(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
+  snprintf_s(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
 
-  FILE *fp = fopen(sandbox_path, "rb");
-  if (!fp) {
+  int fd = open(sandbox_path, O_RDONLY, 0);
+  if (fd < 0) {
     // Assume it's currently jailbroken
-    fp = fopen("/system/common/lib/libc.sprx", "rb");
+    fd = open("/system/common/lib/libc.sprx", O_RDONLY, 0);
+    if (fd < 0) {
+      // It's really broken
+      return -1;
+    }
   }
 
-  if (fp) {
-    fseek(fp, 0x374, SEEK_CUR);
-    fread(&binary_fw, sizeof(char), 2, fp);
-    fclose(fp);
+  lseek(fd, 0x240, SEEK_SET); // 0x240 for 1.01 -> ?.??, 0x2B0 for ?.?? (5.05) -> ???
+  read(fd, &offset, sizeof(offset));
 
-    snprintf(string_fw, sizeof(string_fw), "%02x%02x", binary_fw[1], binary_fw[0]);
+  if (offset == 0x50E57464) { // "Påtd"
+    lseek(fd, 0x334, SEEK_SET);
+  } else {
+    lseek(fd, 0x374, SEEK_SET);
   }
+
+  read(fd, &binary_fw,  sizeof(binary_fw));
+  close(fd);
+
+  snprintf_s(string_fw, sizeof(string_fw), "%02x%02x", binary_fw[1], binary_fw[0]);
+
   ret = atoi(string_fw);
 
   g_firmware = ret;
