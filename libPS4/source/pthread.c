@@ -3,6 +3,8 @@
 
 #include "pthread.h"
 
+int libPthread;
+
 int (*scePthreadCreate)(ScePthread *thread, const ScePthreadAttr *attr, void *(*entry)(void *), void *arg, const char *name);
 void (*scePthreadExit)(void *value);
 int (*scePthreadDetach)(ScePthread thread);
@@ -19,6 +21,10 @@ int (*scePthreadMutexTimedlock)(ScePthreadMutex *mutex, SceKernelUseconds usec);
 int (*scePthreadMutexUnlock)(ScePthreadMutex *mutex);
 
 void initPthread(void) {
+  if (libPthread) {
+    return;
+  }
+
   RESOLVE(libKernelHandle, scePthreadCreate);
   RESOLVE(libKernelHandle, scePthreadExit);
   RESOLVE(libKernelHandle, scePthreadDetach);
@@ -33,4 +39,6 @@ void initPthread(void) {
   RESOLVE(libKernelHandle, scePthreadMutexTrylock);
   RESOLVE(libKernelHandle, scePthreadMutexTimedlock);
   RESOLVE(libKernelHandle, scePthreadMutexUnlock);
+
+  libPthread = 1;
 }

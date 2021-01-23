@@ -5,6 +5,9 @@
 
 #include "network.h"
 
+int libNet;
+int libNetCtl;
+
 int (*sceNetSocket)(const char *, int, int, int);
 int (*sceNetSocketClose)(int);
 int (*sceNetConnect)(int, struct sockaddr *, int);
@@ -34,37 +37,41 @@ void (*sceNetCtlTerm)(void);
 int (*sceNetCtlGetInfo)(int code, SceNetCtlInfo *info);
 
 void initNetwork(void) {
-  int libNet = sceKernelLoadStartModule("libSceNet.sprx", 0, NULL, 0, 0, 0);
+  if (!libNet) {
+    libNet = sceKernelLoadStartModule("libSceNet.sprx", 0, 0, 0, NULL, NULL);
 
-  RESOLVE(libNet, sceNetSocket);
-  RESOLVE(libNet, sceNetSocketClose);
-  RESOLVE(libNet, sceNetConnect);
-  RESOLVE(libNet, sceNetSend);
-  RESOLVE(libNet, sceNetBind);
-  RESOLVE(libNet, sceNetListen);
-  RESOLVE(libNet, sceNetAccept);
-  RESOLVE(libNet, sceNetRecv);
-  RESOLVE(libNet, sceNetSocketAbort);
+    RESOLVE(libNet, sceNetSocket);
+    RESOLVE(libNet, sceNetSocketClose);
+    RESOLVE(libNet, sceNetConnect);
+    RESOLVE(libNet, sceNetSend);
+    RESOLVE(libNet, sceNetBind);
+    RESOLVE(libNet, sceNetListen);
+    RESOLVE(libNet, sceNetAccept);
+    RESOLVE(libNet, sceNetRecv);
+    RESOLVE(libNet, sceNetSocketAbort);
 
-  RESOLVE(libNet, sceNetGetsockname);
-  RESOLVE(libNet, sceNetGetsockopt);
-  RESOLVE(libNet, sceNetSetsockopt);
+    RESOLVE(libNet, sceNetGetsockname);
+    RESOLVE(libNet, sceNetGetsockopt);
+    RESOLVE(libNet, sceNetSetsockopt);
 
-  RESOLVE(libNet, sceNetInetNtop);
-  RESOLVE(libNet, sceNetInetPton);
+    RESOLVE(libNet, sceNetInetNtop);
+    RESOLVE(libNet, sceNetInetPton);
 
-  RESOLVE(libNet, sceNetHtonll);
-  RESOLVE(libNet, sceNetHtonl);
-  RESOLVE(libNet, sceNetHtons);
-  RESOLVE(libNet, sceNetNtohll);
-  RESOLVE(libNet, sceNetNtohl);
-  RESOLVE(libNet, sceNetNtohs);
+    RESOLVE(libNet, sceNetHtonll);
+    RESOLVE(libNet, sceNetHtonl);
+    RESOLVE(libNet, sceNetHtons);
+    RESOLVE(libNet, sceNetNtohll);
+    RESOLVE(libNet, sceNetNtohl);
+    RESOLVE(libNet, sceNetNtohs);
+  }
 
-  int libNetCtl = sceKernelLoadStartModule("libSceNetCtl.sprx", 0, NULL, 0, 0, 0);
+  if (!libNetCtl) {
+    libNetCtl = sceKernelLoadStartModule("libSceNetCtl.sprx", 0, 0, 0, NULL, NULL);
 
-  RESOLVE(libNetCtl, sceNetCtlInit);
-  RESOLVE(libNetCtl, sceNetCtlTerm);
-  RESOLVE(libNetCtl, sceNetCtlGetInfo);
+    RESOLVE(libNetCtl, sceNetCtlInit);
+    RESOLVE(libNetCtl, sceNetCtlTerm);
+    RESOLVE(libNetCtl, sceNetCtlGetInfo);
+  }
 }
 
 int SckConnect(char *hostIP, int hostPort) {

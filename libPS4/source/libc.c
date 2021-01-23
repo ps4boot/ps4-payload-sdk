@@ -4,6 +4,8 @@
 
 #include "libc.h"
 
+int libc;
+
 void *(*malloc)(size_t size);
 void (*free)(void *ptr);
 void *(*calloc)(size_t num, size_t size);
@@ -91,7 +93,11 @@ int memset_s(void *s, rsize_t smax, int c, rsize_t n) {
 }
 
 void initLibc(void) {
-  int libc = sceKernelLoadStartModule("libSceLibcInternal.sprx", 0, NULL, 0, 0, 0);
+  if (libc) {
+    return;
+  }
+
+  libc = sceKernelLoadStartModule("libSceLibcInternal.sprx", 0, 0, 0, NULL, NULL);
 
   RESOLVE(libc, malloc);
   RESOLVE(libc, free);

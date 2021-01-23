@@ -5,6 +5,10 @@
 
 #include "sysutil.h"
 
+int sysUtilHandle;
+int libSceSystemService;
+int libSceUserService;
+
 int (*sceSysUtilSendSystemNotificationWithText)(int messageType, char *message);
 int (*sceSystemServiceLaunchWebBrowser)(const char *uri, void *);
 int (*sceUserServiceInitialize)(void *);
@@ -15,16 +19,31 @@ int (*sceUserServiceTerminate)();
 int (*sceKernelReboot)();
 
 void initSysUtil(void) {
-  int sysUtilHandle = sceKernelLoadStartModule("/system/common/lib/libSceSysUtil.sprx", 0, NULL, 0, 0, 0);
-  int libSceSystemService = sceKernelLoadStartModule("/system/common/lib/libSceSystemService.sprx", 0, NULL, 0, 0, 0);
-  RESOLVE(sysUtilHandle, sceSysUtilSendSystemNotificationWithText);
-  RESOLVE(libSceSystemService, sceSystemServiceLaunchWebBrowser);
+  if (!sysUtilHandle) {
+    sysUtilHandle = sceKernelLoadStartModule("/system/common/lib/libSceSysUtil.sprx", 0, 0, 0, NULL, NULL);
+
+    RESOLVE(sysUtilHandle, sceSysUtilSendSystemNotificationWithText);
+  }
+
+  if (!libSceSystemService) {
+    libSceSystemService = sceKernelLoadStartModule("/system/common/lib/libSceSystemService.sprx", 0, 0, 0, NULL, NULL);
+
+    RESOLVE(libSceSystemService, sceSystemServiceLaunchWebBrowser);
+  }
 }
 
-void systemMessage(char *msg) {
-  char buffer[512];
-  sprintf(buffer, "%s", msg);
-  sceSysUtilSendSystemNotificationWithText(0xDE, buffer);
+void initUserService(void) {
+  if (libSceUserService) {
+    return;
+  }
+
+  libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, 0, 0, NULL, NULL);
+
+  RESOLVE(libSceUserService, sceUserServiceInitialize);
+  RESOLVE(libSceUserService, sceUserServiceGetInitialUser);
+  RESOLVE(libSceUserService, sceUserServiceGetLoginUserIdList);
+  RESOLVE(libSceUserService, sceUserServiceGetUserName);
+  RESOLVE(libSceUserService, sceUserServiceTerminate);
 }
 
 void openBrowser(char *uri) {
@@ -32,10 +51,7 @@ void openBrowser(char *uri) {
 }
 
 int getUserIDList(SceUserServiceLoginUserIdList *userIdList) {
-  int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
-  RESOLVE(libSceUserService, sceUserServiceInitialize);
-  RESOLVE(libSceUserService, sceUserServiceGetLoginUserIdList);
-  RESOLVE(libSceUserService, sceUserServiceTerminate);
+  initUserService();
   if (sceUserServiceInitialize(NULL) == 0) {
     if (sceUserServiceGetLoginUserIdList(userIdList) == 0) {
       sceUserServiceTerminate();
@@ -61,10 +77,7 @@ char *getUserName(int32_t userId) {
   if (retval == NULL) {
     return NULL;
   }
-  int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
-  RESOLVE(libSceUserService, sceUserServiceInitialize);
-  RESOLVE(libSceUserService, sceUserServiceGetUserName);
-  RESOLVE(libSceUserService, sceUserServiceTerminate);
+  initUserService();
   if (sceUserServiceInitialize(NULL) == 0) {
     char username[SCE_USER_SERVICE_MAX_USER_NAME_LENGTH + 1];
     if (sceUserServiceGetUserName(userId, username, sizeof(username)) == 0) {
@@ -79,10 +92,7 @@ char *getUserName(int32_t userId) {
 
 int32_t getInitialUser() {
   int32_t userId;
-  int libSceUserService = sceKernelLoadStartModule("/system/common/lib/libSceUserService.sprx", 0, NULL, 0, 0, 0);
-  RESOLVE(libSceUserService, sceUserServiceGetInitialUser);
-  RESOLVE(libSceUserService, sceUserServiceInitialize);
-  RESOLVE(libSceUserService, sceUserServiceTerminate);
+  initUserService();
   if (sceUserServiceInitialize(NULL) == 0) {
     if (sceUserServiceGetInitialUser(&userId) == 0) {
       sceUserServiceTerminate();
@@ -100,7 +110,7 @@ void shutdown() {
 }
 
 void reboot() {
-  int libkernel = sceKernelLoadStartModule("/system/common/lib/libkernel.sprx", 0, NULL, 0, 0, 0);
+  int libkernel = sceKernelLoadStartModule("/system/common/lib/libkernel.sprx", 0, 0, 0, NULL, NULL);
   RESOLVE(libkernel, sceKernelReboot);
   sceKernelReboot();
 }

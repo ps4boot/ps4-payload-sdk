@@ -3,6 +3,8 @@
 
 #include "camera.h"
 
+int libCamera;
+
 int (*sceCameraOpen)(int userid, int type, int index, void *);
 int (*sceCameraClose)(int handle);
 int (*sceCameraIsAttached)(int index);
@@ -15,7 +17,11 @@ int (*sceCameraGetConfig)(int handle, SceCameraConfig *config);
 int (*sceCameraSetConfig)(int handle, SceCameraConfig *config);
 
 void initCamera(void) {
-  int libCamera = sceKernelLoadStartModule("libSceCamera.sprx", 0, NULL, 0, 0, 0);
+  if (libCamera) {
+    return;
+  }
+
+  libCamera = sceKernelLoadStartModule("libSceCamera.sprx", 0, 0, 0, NULL, NULL);
 
   RESOLVE(libCamera, sceCameraOpen);
   RESOLVE(libCamera, sceCameraClose);

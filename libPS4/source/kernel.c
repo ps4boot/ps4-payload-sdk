@@ -60,6 +60,10 @@ SYSCALL(ioctl, 54);
 SYSCALL(kexec, 11);
 
 void initKernel(void) {
+  if (libKernelHandle) {
+    return;
+  }
+
   __error = NULL;
 
   if (loadModule("libkernel.sprx", &libKernelHandle)) {
