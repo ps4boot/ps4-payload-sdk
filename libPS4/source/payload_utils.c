@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "file.h"
 #include "fw_defines.h"
 #include "kernel.h"
@@ -16,8 +17,8 @@ int is_fw_spoofed() {
   uint16_t libc_fw = get_firmware();
   sceKernelGetSystemSwVersion(&ssv_fw);
 
-  char temp[0x1c];
-  snprintf(temp, 0x1c, "%s", ssv_fw.version_string);
+  char temp[0x1C];
+  snprintf(temp, 0x1C, "%s", ssv_fw.version_string);
 
   char *first = strtok(temp, ".");
   char *second = strtok(NULL, ".");
@@ -34,10 +35,14 @@ int is_fw_spoofed() {
 }
 
 int is_jailbroken() {
-  if (getuid() == 0) {
+  int fd = open("/user/.jailbreak", O_WRONLY, 0777);
+  if (fd >= 0) {
+    close(fd);
+    unlink("/user/.jailbreak");
+    return 1;
+  } else {
     return 0;
   }
-  return 1;
 }
 
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
@@ -277,14 +282,14 @@ uint16_t get_firmware() {
     return g_firmware;
   }
 
-  uint16_t ret;                    // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
-  uint32_t offset;                 // Offset for firmware's version location
-  uint16_t elf_header_size;        // ELF header size
-  uint16_t elf_header_entry_size;  // ELF header entry size
-  uint16_t num_of_elf_entries;     // Number of entries in the ELF header
-  char binary_fw[2] = {0};         // 0x0000
-  char string_fw[5] = {0};         // "0000\0"
-  char sandbox_path[33];           // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
+  uint16_t ret;                   // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
+  uint32_t offset;                // Offset for firmware's version location
+  uint16_t elf_header_size;       // ELF header size
+  uint16_t elf_header_entry_size; // ELF header entry size
+  uint16_t num_of_elf_entries;    // Number of entries in the ELF header
+  char binary_fw[2] = {0};        // 0x0000
+  char string_fw[5] = {0};        // "0000\0"
+  char sandbox_path[33];          // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
 
   snprintf_s(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
   int fd = open(sandbox_path, O_RDONLY, 0);
@@ -312,7 +317,7 @@ uint16_t get_firmware() {
   offset += 0x120 + 0x14;
 
   lseek(fd, offset, SEEK_SET);
-  read(fd, &binary_fw,  sizeof(binary_fw));
+  read(fd, &binary_fw, sizeof(binary_fw));
   close(fd);
 
   snprintf_s(string_fw, sizeof(string_fw), "%02x%02x", binary_fw[1], binary_fw[0]);
@@ -349,8 +354,11 @@ uint64_t get_kernel_base() {
   struct kpayload_kbase_info kpayload_kbase_info;
   kpayload_kbase_info.fw_version = get_firmware();
   kpayload_kbase_info.uaddr = (uint64_t)kernel_base_ptr;
-  kexec(&kpayload_kbase, &kpayload_kbase_info);
-  memcpy(&kernel_base, kernel_base_ptr, 8);
+  if (kexec(&kpayload_kbase, &kpayload_kbase_info) < 0) {
+    kernel_base = -1;
+  } else {
+    memcpy(&kernel_base, kernel_base_ptr, 8);
+  }
   munmap(kernel_base_ptr, 8);
   return kernel_base;
 }
@@ -361,8 +369,7 @@ int get_memory_dump(uint64_t kaddr, uint64_t *uaddr, size_t size) {
   kpayload_dump_info.kaddr = kaddr;
   kpayload_dump_info.uaddr = (uint64_t)uaddr;
   kpayload_dump_info.size = size;
-  kexec(&kpayload_dump, &kpayload_dump_info);
-  return 0;
+  return kexec(&kpayload_dump, &kpayload_dump_info);
 }
 
 int jailbreak() {
@@ -371,50 +378,43 @@ int jailbreak() {
   }
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_jailbreak, &kpayload_firmware_info);
-  return 0;
+  return kexec(&kpayload_jailbreak, &kpayload_firmware_info);
 }
 
 int mmap_patch() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_mmap, &kpayload_firmware_info);
-  return 0;
+  return kexec(&kpayload_mmap, &kpayload_firmware_info);
 }
 
 int disable_aslr() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_aslr, &kpayload_firmware_info);
-  return 0;
+  return kexec(&kpayload_aslr, &kpayload_firmware_info);
 }
 
 int kernel_clock(uint64_t set_time) {
   struct kpayload_kclock_info kpayload_kclock_info;
   kpayload_kclock_info.fw_version = get_firmware();
   kpayload_kclock_info.set_time = set_time;
-  kexec(&kpayload_kernel_clock, &kpayload_kclock_info);
-  return 0;
+  return kexec(&kpayload_kernel_clock, &kpayload_kclock_info);
 }
 
 int enable_browser() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_enable_browser, &kpayload_firmware_info);
-  return 0;
+  return kexec(&kpayload_enable_browser, &kpayload_firmware_info);
 }
 
 int spoof_target_id(uint8_t id) {
   struct kpayload_target_id_info kpayload_target_id_info;
   kpayload_target_id_info.fw_version = get_firmware();
   kpayload_target_id_info.spoof = id;
-  kexec(&kpayload_target_id, &kpayload_target_id_info);
-  return 0;
+  return kexec(&kpayload_target_id, &kpayload_target_id_info);
 }
 
 int enable_perm_uart() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
-  kexec(&kpayload_perm_uart, &kpayload_firmware_info);
-  return 0;
+  return kexec(&kpayload_perm_uart, &kpayload_firmware_info);
 }
