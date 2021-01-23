@@ -3,6 +3,9 @@
 #ifndef SYSUTIL_H
 #define SYSUTIL_H
 
+#include "debug.h"
+#include "libc.h"
+#include "network.h"
 #include "types.h"
 
 #define SCE_USER_SERVICE_MAX_LOGIN_USERS 4
@@ -24,11 +27,15 @@ int32_t getInitialUser();
 void reboot();
 void shutdown();
 
-#define printf_notification(...)                       \
-  do {                                                 \
-    char message[256];                                 \
-    snprintf(message, sizeof(message), ##__VA_ARGS__); \
-    systemMessage(message);                            \
+#define printf_notification(...)                                   \
+  do {                                                             \
+    char noti_message[512] = {0};                                  \
+    snprintf_s(noti_message, sizeof(noti_message), ##__VA_ARGS__); \
+    sceSysUtilSendSystemNotificationWithText(0xDE, noti_message);  \
+    if (DEBUG_SOCK >= 0) {                                         \
+      printf_socket("%s", noti_message);                           \
+      printf_socket("\n");                                         \
+    }                                                              \
   } while (0)
 
 #endif

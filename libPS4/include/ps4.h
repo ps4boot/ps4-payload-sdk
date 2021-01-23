@@ -7,6 +7,7 @@
 #include "base64.h"
 #include "camera.h"
 #include "cfg.h"
+#include "debug.h"
 #include "dump.h"
 #include "eventflag.h"
 #include "file.h"
