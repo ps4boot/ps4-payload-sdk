@@ -30,11 +30,8 @@ void shutdown();
   do {                                                             \
     char noti_message[512] = {0};                                  \
     snprintf_s(noti_message, sizeof(noti_message), ##__VA_ARGS__); \
+    printf_debug("[NOTIFICATION]: %s\n", noti_message);            \
     sceSysUtilSendSystemNotificationWithText(0xDE, noti_message);  \
-    if (DEBUG_SOCK >= 0) {                                         \
-      printf_socket("%s", noti_message);                           \
-      printf_socket("\n");                                         \
-    }                                                              \
   } while (0)
 
 #endif
