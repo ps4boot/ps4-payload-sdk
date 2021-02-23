@@ -1,5 +1,6 @@
 #include "elf64.h"
 #include "file.h"
+#include "kernel.h"
 #include "libc.h"
 #include "memory.h"
 
@@ -245,13 +246,26 @@ int wait_for_bdcopy(char *title_id) {
 }
 
 int wait_for_usb(char *usb_name, char *usb_path) {
-  int fd = open("/mnt/usb0/.probe", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-  if (fd < 0) {
-    return 0;
+  int row = 0;
+  char probefile[19];
+  int fd = -1;
+
+  while (fd == -1) {
+    sceKernelUsleep(100 * 1000);
+
+    if (row >= 80) { // 10 attempts at each USB #, reaching 8 resets to 0
+      row = 0;
+    } else {
+      row += 1;
+    }
+
+    snprintf_s(probefile, sizeof(probefile), "/mnt/usb%i/.probe", row / 10);
+    fd = open(probefile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
   }
   close(fd);
-  unlink("/mnt/usb0/.probe");
-  sprintf(usb_name, "%s", "USB0");
-  sprintf(usb_path, "%s", "/mnt/usb0");
+  unlink(probefile);
+  sprintf(usb_name, "USB%i", row / 10);
+  sprintf(usb_path, "/mnt/usb%i", row / 10);
+
   return 1;
 }
