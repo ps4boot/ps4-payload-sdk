@@ -51,6 +51,7 @@ int (*setgid)(int gid);
 int (*setreuid)(int ruid, int euid);
 int (*setregid)(int rgid, int egid);
 
+int (*sceKernelSendNotificationRequest)(int64_t unk1, char *Buffer, size_t size, int64_t unk2);
 const char *(*sceKernelGetFsSandboxRandomWord)();
 int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 
@@ -118,6 +119,7 @@ void initKernel(void) {
   RESOLVE(libKernelHandle, setreuid);
   RESOLVE(libKernelHandle, setregid);
 
+  RESOLVE(libKernelHandle, sceKernelSendNotificationRequest);
   RESOLVE(libKernelHandle, sceKernelGetFsSandboxRandomWord);
   RESOLVE(libKernelHandle, sceKernelGetSystemSwVersion);
 }

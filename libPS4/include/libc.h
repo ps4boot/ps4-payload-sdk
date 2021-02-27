@@ -24,6 +24,7 @@ extern void *(*memmove)(void *dst, const void *src, size_t len);
 extern errno_t (*memmove_s)(void *dest, rsize_t destsz, const void *src, rsize_t count);
 extern char *(*strcpy)(char *destination, const char *source);
 extern char *(*strncpy)(char *destination, const char *source, size_t num);
+extern errno_t *(*strncpy_s)(char *restrict dest, rsize_t destsz, const char *restrict src, rsize_t count);
 extern char *(*strcat)(char *dest, const char *src);
 extern char *(*strncat)(char *dest, const char *src, size_t n);
 extern size_t (*strlen)(const char *s);

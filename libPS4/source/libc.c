@@ -18,6 +18,7 @@ void *(*memmove)(void *dst, const void *src, size_t len);
 errno_t (*memmove_s)(void *dest, rsize_t destsz, const void *src, rsize_t count);
 char *(*strcpy)(char *destination, const char *source);
 char *(*strncpy)(char *destination, const char *source, size_t num);
+errno_t *(*strncpy_s)(char *restrict dest, rsize_t destsz, const char *restrict src, rsize_t count);
 char *(*strcat)(char *dest, const char *src);
 char *(*strncat)(char *dest, const char *src, size_t n);
 size_t (*strlen)(const char *s);
@@ -111,6 +112,7 @@ void initLibc(void) {
   RESOLVE(libc, memmove_s);
   RESOLVE(libc, strcpy);
   RESOLVE(libc, strncpy);
+  RESOLVE(libc, strncpy_s);
   RESOLVE(libc, strcat);
   RESOLVE(libc, strncat);
   RESOLVE(libc, strlen);
