@@ -27,7 +27,7 @@ typedef struct {
   char message[1024];      //0x2D
   char uri[1024];          //0x42D
   char unkstr[1024];       //0x82D
-} NotificationBuffer;      //Size = 0xC30
+} SceNotificationRequest;  //Size = 0xC30
 
 typedef struct timeval SceKernelTimeval;
 typedef uint64_t SceKernelEqueue;
@@ -82,7 +82,7 @@ extern int (*setgid)(int gid);
 extern int (*setreuid)(int ruid, int euid);
 extern int (*setregid)(int rgid, int egid);
 
-extern int (*sceKernelSendNotificationRequest)(int64_t unk1, char *Buffer, size_t size, int64_t unk2);
+extern int (*sceKernelSendNotificationRequest)(int device, SceNotificationRequest *req, size_t size, int blocking);
 extern const char *(*sceKernelGetFsSandboxRandomWord)();
 extern int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 
