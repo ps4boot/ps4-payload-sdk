@@ -83,7 +83,7 @@ static char *get_entry_name_by_type(uint32_t type) {
   } else if ((type >= 0x1600) && (type <= 0x1609)) {
     sprintf(entry_name, "keymap_rp/%03u.png", type - 0x1600);
   } else if ((type >= 0x1610) && (type <= 0x17F9)) {
-    sprintf(entry_name, "keymap_rp/%02u/%03u.png", (type - 0x1610) / 0x10, (type - 0x1610) % 0x10);
+    sprintf(entry_name, "keymap_rp/%02u/%03u.png", (type - 0x1610) / 0x10, (type - 0x1609) % 0x10);
   } else {
     free(entry_name);
     entry_name = NULL;
