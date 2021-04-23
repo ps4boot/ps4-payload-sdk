@@ -563,9 +563,9 @@
 #define K700_TARGET_ID             0x022FED8D
 #define K701_TARGET_ID             0x022FED8D
 #define K702_TARGET_ID             0x022FED8D
-#define K750_TARGET_ID             0x0
-#define K751_TARGET_ID             0x0
-#define K755_TARGET_ID             0x0
+#define K750_TARGET_ID             0x022287CD
+#define K751_TARGET_ID             0x022287CD
+#define K755_TARGET_ID             0x022287CD
 #define K800_TARGET_ID             0x0
 #define K801_TARGET_ID             0x0
 #define K803_TARGET_ID             0x0
