@@ -1,21 +1,10 @@
-#include "elf64.h"
+#include "elf.h"
 #include "file.h"
 #include "kernel.h"
 #include "libc.h"
 #include "memory.h"
 
 #include "dump.h"
-
-typedef struct {
-  int index;
-  uint64_t fileoff;
-  size_t bufsz;
-  size_t filesz;
-  int enc;
-} SegmentBufInfo;
-
-#define SELF_MAGIC 0x1D3D154F
-#define ELF_MAGIC 0x464C457F
 
 int is_self(const char *fn) {
   struct stat st;

@@ -9,6 +9,7 @@
 #include "cfg.h"
 #include "debug.h"
 #include "dump.h"
+#include "elf.h"
 #include "eventflag.h"
 #include "file.h"
 #include "fw_defines.h"

@@ -163,56 +163,63 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   kernel_ptr = (uint8_t *)kernel_base;                                      \
   tid_patch = &kernel_ptr[K##x##_TARGET_ID];
 
-#define perm_uart_macro(x)                                                  \
+#define icc_nvs_write_macro(x)                                              \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
   icc_nvs_write = (void *)(kernel_base + K##x##_ICC_NVS_WRITE);
+
+#define npdrm_macro(x)                                                      \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  npdrm_open = &kernel_ptr[K##x##_NPDRM_OPEN];                              \
+  npdrm_close = &kernel_ptr[K##x##_NPDRM_CLOSE];                            \
+  npdrm_ioctl = &kernel_ptr[K##x##_NPDRM_IOCTL];
 
 #define caseentry(id, macro) \
   case id:                   \
     macro(id);               \
     break;
 
-#define build_kpayload(id, macro)          \
-  switch (id) {                            \
-    caseentry(400, macro);                 \
-    caseentry(401, macro);                 \
-    caseentry(405, macro);                 \
-    caseentry(406, macro);                 \
-    caseentry(407, macro);                 \
-    caseentry(450, macro);                 \
-    caseentry(455, macro);                 \
-    caseentry(470, macro);                 \
-    caseentry(471, macro);                 \
-    caseentry(472, macro);                 \
-    caseentry(473, macro);                 \
-    caseentry(474, macro);                 \
-    caseentry(500, macro);                 \
-    caseentry(501, macro);                 \
-    caseentry(503, macro);                 \
-    caseentry(505, macro);                 \
-    caseentry(507, macro);                 \
-    caseentry(550, macro);                 \
-    caseentry(553, macro);                 \
-    caseentry(555, macro);                 \
-    caseentry(556, macro);                 \
-    caseentry(600, macro);                 \
-    caseentry(602, macro);                 \
-    caseentry(620, macro);                 \
-    caseentry(650, macro);                 \
-    caseentry(651, macro);                 \
-    caseentry(670, macro);                 \
-    caseentry(671, macro);                 \
-    caseentry(672, macro);                 \
-    caseentry(700, macro);                 \
-    caseentry(701, macro);                 \
-    caseentry(702, macro);                 \
-    caseentry(750, macro);                 \
-    caseentry(751, macro);                 \
-    caseentry(755, macro);                 \
-    caseentry(800, macro);                 \
-  default:                                 \
-    printf_debug("Unsupported firmware");  \
-    return -1;                             \
+#define build_kpayload(id, macro)         \
+  switch (id) {                           \
+    caseentry(400, macro);                \
+    caseentry(401, macro);                \
+    caseentry(405, macro);                \
+    caseentry(406, macro);                \
+    caseentry(407, macro);                \
+    caseentry(450, macro);                \
+    caseentry(455, macro);                \
+    caseentry(470, macro);                \
+    caseentry(471, macro);                \
+    caseentry(472, macro);                \
+    caseentry(473, macro);                \
+    caseentry(474, macro);                \
+    caseentry(500, macro);                \
+    caseentry(501, macro);                \
+    caseentry(503, macro);                \
+    caseentry(505, macro);                \
+    caseentry(507, macro);                \
+    caseentry(550, macro);                \
+    caseentry(553, macro);                \
+    caseentry(555, macro);                \
+    caseentry(556, macro);                \
+    caseentry(600, macro);                \
+    caseentry(602, macro);                \
+    caseentry(620, macro);                \
+    caseentry(650, macro);                \
+    caseentry(651, macro);                \
+    caseentry(670, macro);                \
+    caseentry(671, macro);                \
+    caseentry(672, macro);                \
+    caseentry(700, macro);                \
+    caseentry(701, macro);                \
+    caseentry(702, macro);                \
+    caseentry(750, macro);                \
+    caseentry(751, macro);                \
+    caseentry(755, macro);                \
+    caseentry(800, macro);                \
+  default:                                \
+    printf_debug("Unsupported firmware"); \
+    return -1;                            \
   }
 
 int is_fw_spoofed();
@@ -230,5 +237,7 @@ int kernel_clock(uint64_t value);
 int enable_browser();
 int spoof_target_id(uint8_t id);
 int enable_perm_uart();
+int exit_idu();
+int npdrm_patch();
 
 #endif

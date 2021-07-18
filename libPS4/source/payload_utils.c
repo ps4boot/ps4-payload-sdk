@@ -1,4 +1,5 @@
 #include "debug.h"
+#include "elf.h"
 #include "file.h"
 #include "fw_defines.h"
 #include "kernel.h"
@@ -269,7 +270,7 @@ int kpayload_perm_uart(struct thread *td, struct kpayload_firmware_args *args) {
   uint16_t fw_version = args->kpayload_firmware_info->fw_version;
 
   // NOTE: This is a C preprocessor macro
-  build_kpayload(fw_version, perm_uart_macro);
+  build_kpayload(fw_version, icc_nvs_write_macro);
 
   char uart = 1;
   icc_nvs_write(4, 0x31F, 1, &uart);
@@ -277,20 +278,68 @@ int kpayload_perm_uart(struct thread *td, struct kpayload_firmware_args *args) {
   return 0;
 }
 
+int kpayload_exit_idu(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+
+  uint64_t (*icc_nvs_write)(uint32_t block, uint32_t offset, uint32_t size, void *value);
+
+  uint16_t fw_version = args->kpayload_firmware_info->fw_version;
+
+  // NOTE: This is a C preprocessor macro
+  build_kpayload(fw_version, icc_nvs_write_macro);
+
+  char flag = 0;
+  icc_nvs_write(4, 0x1600, 1, &flag);
+
+  return 0;
+}
+
+int kpayload_npdrm_patch(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+  uint8_t *kernel_ptr;
+
+  uint8_t *kmem;
+  uint8_t *npdrm_close;
+  uint8_t *npdrm_open;
+  uint8_t *npdrm_ioctl;
+
+  uint16_t fw_version = args->kpayload_firmware_info->fw_version;
+
+  // NOTE: This is a C preprocessor macro
+  build_kpayload(fw_version, npdrm_macro);
+
+  uint64_t cr0 = readCr0();
+  writeCr0(cr0 & ~X86_CR0_WP);
+
+  kmem = (uint8_t *)npdrm_open;
+  kmem[0] = 0x31;
+  kmem[1] = 0xC0;
+  kmem[2] = 0xC3;
+
+  kmem = (uint8_t *)npdrm_close;
+  kmem[0] = 0x31;
+  kmem[1] = 0xC0;
+  kmem[2] = 0xC3;
+
+  // NOTE: This can change depending on FW
+  kmem = (uint8_t *)npdrm_ioctl;
+  kmem[0] = 0xEB;
+  kmem[1] = 0x00;
+
+  writeCr0(cr0);
+
+  return 0;
+}
+
 uint16_t get_firmware() {
+  // Return early if this has already been run
   if (g_firmware) {
     return g_firmware;
   }
 
-  uint16_t ret;                   // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
-  uint32_t offset;                // Offset for firmware's version location
-  uint16_t elf_header_size;       // ELF header size
-  uint16_t elf_header_entry_size; // ELF header entry size
-  uint16_t num_of_elf_entries;    // Number of entries in the ELF header
-  char binary_fw[2] = {0};        // 0x0000
-  char string_fw[5] = {0};        // "0000\0"
-  char sandbox_path[33];          // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
-
+  char sandbox_path[33]; // `/XXXXXXXXXX/common/lib/libc.sprx` [Char count of 32 + nullterm]
   snprintf_s(sandbox_path, sizeof(sandbox_path), "/%s/common/lib/libc.sprx", sceKernelGetFsSandboxRandomWord());
   int fd = open(sandbox_path, O_RDONLY, 0);
   if (fd < 0) {
@@ -302,27 +351,45 @@ uint16_t get_firmware() {
     }
   }
 
-  lseek(fd, 0x154, SEEK_SET);
-  read(fd, &elf_header_size, sizeof(elf_header_size));
-  read(fd, &elf_header_entry_size, sizeof(elf_header_entry_size));
-  read(fd, &num_of_elf_entries, sizeof(num_of_elf_entries));
-  offset = elf_header_size + num_of_elf_entries * elf_header_entry_size;
-
-  // Align
-  while (offset % 0x10 != 0) {
-    offset += 1;
+  // Read SELF header from file
+  lseek(fd, 0, SEEK_SET);
+  SelfHeader self_header;
+  if (read(fd, &self_header, sizeof(self_header)) != sizeof(self_header)) {
+    return -1;
   }
 
-  // 0x120 is the size of the header on encrypted ELFs, 0x14 is the location of the version after the ELF headers
-  offset += 0x120 + 0x14;
+  // Calculate ELF header offset from the number of SELF segments
+  uint64_t elf_header_offset = sizeof(self_header) + self_header.num_of_segments * sizeof(SelfEntry);
 
-  lseek(fd, offset, SEEK_SET);
-  read(fd, &binary_fw, sizeof(binary_fw));
+  // Read ELF header from file
+  lseek(fd, elf_header_offset, SEEK_SET);
+  Elf64_Ehdr elf_header;
+  if (read(fd, &elf_header, sizeof(elf_header)) != sizeof(elf_header)) {
+    return -1;
+  }
+
+  // Calculate SCE header offset from number of ELF entries
+  uint64_t sce_header_offset = elf_header_offset + elf_header.e_ehsize + elf_header.e_phnum * elf_header.e_phentsize;
+
+  // Align
+  while (sce_header_offset % 0x10 != 0) {
+    sce_header_offset++;
+  }
+
+  // Read SCE header
+  lseek(fd, sce_header_offset, SEEK_SET);
+  SceHeader sce_header;
+  if (read(fd, &sce_header, sizeof(sce_header)) != sizeof(sce_header)) {
+    return -1;
+  }
+
   close(fd);
 
-  snprintf_s(string_fw, sizeof(string_fw), "%02x%02x", binary_fw[1], binary_fw[0]);
+  // Format and return
+  char string_fw[5] = {0}; // "0000\0"
+  snprintf_s(string_fw, sizeof(string_fw), "%02lx%02lx", (sce_header.fw_version >> (5 * 8)) & 0xFF, (sce_header.fw_version >> (4 * 8)) & 0xFF);
 
-  ret = atoi(string_fw);
+  uint16_t ret = atoi(string_fw); // Numerical representation of the firmware version. ex: 505 for 5.05, 702 for 7.02, etc
 
   g_firmware = ret;
   return ret;
@@ -417,4 +484,16 @@ int enable_perm_uart() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
   return kexec(&kpayload_perm_uart, &kpayload_firmware_info);
+}
+
+int exit_idu() {
+  struct kpayload_firmware_info kpayload_firmware_info;
+  kpayload_firmware_info.fw_version = get_firmware();
+  return kexec(&kpayload_exit_idu, &kpayload_firmware_info);
+}
+
+int npdrm_patch() {
+  struct kpayload_firmware_info kpayload_firmware_info;
+  kpayload_firmware_info.fw_version = get_firmware();
+  return kexec(&kpayload_npdrm_patch, &kpayload_firmware_info);
 }

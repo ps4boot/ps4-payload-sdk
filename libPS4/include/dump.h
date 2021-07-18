@@ -5,6 +5,14 @@
 
 #include "types.h"
 
+typedef struct {
+  int index;
+  uint64_t fileoff;
+  size_t bufsz;
+  size_t filesz;
+  int enc;
+} SegmentBufInfo;
+
 int is_self(const char *fn);
 void decrypt_and_dump_self(char *selfFile, char *saveFile);
 void decrypt_dir(char *sourcedir, char *destdir);
