@@ -82,8 +82,12 @@ static char *get_entry_name_by_type(uint32_t type) {
     sprintf(entry_name, "trophy/trophy%02u.trp", type - 0x1400);
   } else if ((type >= 0x1600) && (type <= 0x1609)) {
     sprintf(entry_name, "keymap_rp/%03u.png", type - 0x15FF);
-  } else if ((type >= 0x1610) && (type <= 0x17F9)) {
-    sprintf(entry_name, "keymap_rp/%02u/%03u.png", (type - 0x1610) / 0x10, (type - 0x1609) % 0x10);
+  } else if ((type >= 0x1610) && (type <= 0x16F5)) {
+    uint64_t image = ((type - 0x160F) % 10);
+    if (image == 0) {
+      image = 10;
+    }
+    sprintf(entry_name, "keymap_rp/%02u/%03u.png", (type - 0x1610) / 10, image);
   } else {
     free(entry_name);
     entry_name = NULL;
