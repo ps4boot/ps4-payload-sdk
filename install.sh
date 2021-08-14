@@ -13,9 +13,9 @@ rm -rf /opt/ps4sdk || true
 mkdir -p /opt/ps4sdk
 
 # Build SDK
-pushd libPS4
+cd libPS4 || echo "Unable to enter subdirectory" && exit
 make
-popd
+cd ..
 
 # Copy compiled SDK
 cp -r libPS4 /opt/ps4sdk
