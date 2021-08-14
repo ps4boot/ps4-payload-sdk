@@ -13,7 +13,7 @@ rm -rf /opt/ps4sdk || true
 mkdir -p /opt/ps4sdk
 
 # Build SDK
-cd libPS4 || echo "Unable to enter subdirectory" && exit
+cd libPS4 || (echo "Unable to enter subdirectory" && exit)
 make
 cd ..
 
