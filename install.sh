@@ -9,20 +9,20 @@ else
 fi
 
 # Delete directory if it exists and make empty directory
-rm -rf ~/PS4SDK || true
-mkdir -p ~/PS4SDK
+rm -rf /opt/ps4sdk || true
+mkdir -p /opt/ps4sdk
 
 # Build SDK
-pushd libPS4
+cd libPS4 || echo "Unable to enter subdirectory" && exit
 make
-popd
+cd ..
 
-# Move compiled SDK
-mv libPS4 ~/PS4SDK
+# Copy compiled SDK
+cp -r libPS4 /opt/ps4sdk
 
 # Clear path from .bashrc if it's there
 sed -i "s/^\s*export PS4SDK=.*//gm" ~/.bashrc
 
 # Add to paths
-echo "export PS4SDK=~/PS4SDK" | tee -a ~/.bashrc
-export PS4SDK=~/PS4SDK
+echo "export PS4SDK=/opt/ps4sdk" | tee -a ~/.bashrc
+export PS4SDK=/opt/ps4sdk
