@@ -323,7 +323,7 @@ int kpayload_npdrm_patch(struct thread *td, struct kpayload_firmware_args *args)
   kmem[1] = 0xC0;
   kmem[2] = 0xC3;
 
-  // NOTE: This can change depending on FW
+  // This may change depending on new firmware's function structure
   kmem = (uint8_t *)npdrm_ioctl;
   kmem[0] = 0xEB;
   kmem[1] = 0x00;
