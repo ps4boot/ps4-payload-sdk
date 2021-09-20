@@ -162,9 +162,8 @@ int kpayload_mmap(struct thread *td, struct kpayload_firmware_args *args) {
   kmem = (uint8_t *)mmap_patch_3;
   kmem[0] = 0x31;
   kmem[1] = 0xC0;
-  kmem[2] = 0x90;
-  kmem[3] = 0x90;
-  kmem[4] = 0x90;
+  kmem[2] = 0xEB;
+  kmem[3] = 0x01;
 
   writeCr0(cr0);
 
@@ -189,11 +188,10 @@ int kpayload_aslr(struct thread *td, struct kpayload_firmware_args *args) {
 
   // This may change depending on new firmware's function structure
   kmem = (uint8_t *)aslr_patch;
+  kmem[0] = 0xEB;
   if (fw_version < 600 || fw_version > 755) {
-    kmem[0] = 0x90;
-    kmem[1] = 0x90;
-  } else {
-    kmem[0] = 0xEB;
+    // 3.50-5.56 and 8.00-9.00
+    kmem[1] = 0x00;
   }
 
   writeCr0(cr0);
@@ -326,7 +324,13 @@ int kpayload_npdrm_patch(struct thread *td, struct kpayload_firmware_args *args)
   // This may change depending on new firmware's function structure
   kmem = (uint8_t *)npdrm_ioctl;
   kmem[0] = 0xEB;
-  kmem[1] = 0x00;
+  if (fw_version < 500) {
+    // 3.50-4.74
+    kmem[1] = 0x04;
+  } else {
+    // 5.00-9.00
+    kmem[1] = 0x00;
+  }
 
   writeCr0(cr0);
 

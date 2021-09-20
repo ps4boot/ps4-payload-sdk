@@ -181,6 +181,10 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 
 #define build_kpayload(id, macro)         \
   switch (id) {                           \
+    caseentry(350, macro);                \
+    caseentry(350, macro);                \
+    caseentry(355, macro);                \
+    caseentry(370, macro);                \
     caseentry(400, macro);                \
     caseentry(401, macro);                \
     caseentry(405, macro);                \
