@@ -13,7 +13,6 @@ PHDRS
 
 SECTIONS
 {
-	. = 0x926200000;
 	.text : {
 		*(.text.start)
 		*(.text*)
