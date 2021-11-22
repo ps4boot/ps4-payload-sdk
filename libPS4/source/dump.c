@@ -183,7 +183,7 @@ int wait_for_app(char *title_id) {
   }
 
   while ((dp = readdir(dir)) != NULL) {
-    if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..")) {
+    if (!strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") || !strncmp(dp->d_name, "AZIF00003", 9)) {
       // Do Nothing
     } else {
       if (strstr(dp->d_name, "-app0") != NULL) {
