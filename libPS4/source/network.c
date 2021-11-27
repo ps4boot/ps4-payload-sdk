@@ -8,6 +8,8 @@
 int libNet;
 int libNetCtl;
 
+int *(*sceNetErrnoLoc)(void);
+
 int (*sceNetSocket)(const char *, int, int, int);
 int (*sceNetSocketClose)(int);
 int (*sceNetConnect)(int, struct sockaddr *, int);
@@ -39,6 +41,8 @@ int (*sceNetCtlGetInfo)(int code, SceNetCtlInfo *info);
 void initNetwork(void) {
   if (!libNet) {
     libNet = sceKernelLoadStartModule("libSceNet.sprx", 0, 0, 0, NULL, NULL);
+
+    RESOLVE(libNet, sceNetErrnoLoc);
 
     RESOLVE(libNet, sceNetSocket);
     RESOLVE(libNet, sceNetSocketClose);

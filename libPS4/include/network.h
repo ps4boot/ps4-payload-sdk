@@ -127,6 +127,9 @@ typedef union SceNetCtlInfo {
   uint16_t http_proxy_port;
 } SceNetCtlInfo;
 
+extern int *(*sceNetErrnoLoc)(void);
+#define sce_net_errno (*sceNetErrnoLoc())
+
 extern int (*sceNetSocket)(const char *, int, int, int);
 extern int (*sceNetSocketClose)(int);
 extern int (*sceNetConnect)(int, struct sockaddr *, int);
