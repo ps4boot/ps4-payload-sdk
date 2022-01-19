@@ -27,8 +27,8 @@ if [ "$PWD" != "/opt/ps4sdk" ]; then
 fi
 
 # Clear path from .bashrc if it's there
-sed -i "s/^\s*export PS4SDK=.*//gm" ~/.bashrc
+sed -i "s/^\s*export PS4SDK=.*//gm" /etc/profile
 
 # Add to paths
-echo "export PS4SDK=/opt/ps4sdk" | tee -a ~/.bashrc
+echo "export PS4SDK=/opt/ps4sdk" | tee -a /etc/profile
 export PS4SDK=/opt/ps4sdk
