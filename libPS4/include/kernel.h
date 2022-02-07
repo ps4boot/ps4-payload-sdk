@@ -86,6 +86,8 @@ extern int (*sceKernelSendNotificationRequest)(int device, SceNotificationReques
 extern const char *(*sceKernelGetFsSandboxRandomWord)();
 extern int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 
+extern uint32_t (*sceKernelGetCpuTemperature)(uint32_t *);
+
 int kill(int pid, int signum);
 
 void initKernel(void);
