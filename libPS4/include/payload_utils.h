@@ -148,7 +148,7 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
 
 #define kclock_macro(x)                                                                   \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL];               \
-  if (atoi(#x) >= 450) {                                                                  \
+  if (atoi(#x) > 407) {                                                                   \
     sceSblSrtcClearTimeDifference = (void *)(kernel_base + K##x##_CLEAR_TIME_DIFFERENCE); \
     sceSblSrtcClearTimeDifference(15);                                                    \
   }                                                                                       \
@@ -225,6 +225,11 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(850, macro);                \
     caseentry(852, macro);                \
     caseentry(900, macro);                \
+    caseentry(903, macro);                \
+    caseentry(904, macro);                \
+    caseentry(950, macro);                \
+    caseentry(951, macro);                \
+    caseentry(960, macro);                \
   default:                                \
     printf_debug("Unsupported firmware"); \
     return -1;                            \

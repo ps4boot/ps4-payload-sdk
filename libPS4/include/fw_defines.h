@@ -54,6 +54,11 @@
 #define K850_XFAST_SYSCALL         0x000001C0
 #define K852_XFAST_SYSCALL         0x000001C0
 #define K900_XFAST_SYSCALL         0x000001C0
+#define K903_XFAST_SYSCALL         0x000001C0
+#define K904_XFAST_SYSCALL         0x000001C0
+#define K950_XFAST_SYSCALL         0x000001C0
+#define K951_XFAST_SYSCALL         0x000001C0
+#define K960_XFAST_SYSCALL         0x000001C0
 
 // Used in every payload that uses jailbreak();
 #define K300_PRISON_0              0x0
@@ -104,6 +109,11 @@
 #define K850_PRISON_0              0x0111A8F0
 #define K852_PRISON_0              0x0111A8F0
 #define K900_PRISON_0              0x0111F870
+#define K903_PRISON_0              0x0111B840
+#define K904_PRISON_0              0x0111B840
+#define K950_PRISON_0              0x011137D0
+#define K951_PRISON_0              0x011137D0
+#define K960_PRISON_0              0x011137D0
 
 // Used in every payload that uses jailbreak();
 #define K300_ROOTVNODE             0x0
@@ -154,6 +164,11 @@
 #define K850_ROOTVNODE             0x01C66150
 #define K852_ROOTVNODE             0x01C66150
 #define K900_ROOTVNODE             0x021EFF20
+#define K903_ROOTVNODE             0x021EBF20
+#define K904_ROOTVNODE             0x021EBF20
+#define K950_ROOTVNODE             0x021A6C30
+#define K951_ROOTVNODE             0x021A6C30
+#define K960_ROOTVNODE             0x021A6C30
 
 // Used in Kernel Dumper
 #define K300_COPYOUT               0x0
@@ -204,6 +219,11 @@
 #define K850_COPYOUT               0x003A41F0
 #define K852_COPYOUT               0x003A41F0
 #define K900_COPYOUT               0x002715B0
+#define K903_COPYOUT               0x00271230
+#define K904_COPYOUT               0x00271230
+#define K950_COPYOUT               0x00201DC0
+#define K951_COPYOUT               0x00201DC0
+#define K960_COPYOUT               0x00201DC0
 
 // Used in Dumper, FTP, and Module Dumper
 #define K300_MMAP_SELF_1           0x0
@@ -254,6 +274,11 @@
 #define K850_MMAP_SELF_1           0x00293650
 #define K852_MMAP_SELF_1           0x00293650
 #define K900_MMAP_SELF_1           0x0008BC90
+#define K903_MMAP_SELF_1           0x0008BC90
+#define K904_MMAP_SELF_1           0x0008BC90
+#define K950_MMAP_SELF_1           0x00032600
+#define K951_MMAP_SELF_1           0x00032600
+#define K960_MMAP_SELF_1           0x00032600
 
 // Used in Dumper, FTP, and Module Dumper
 #define K300_MMAP_SELF_2           0x0
@@ -304,6 +329,11 @@
 #define K850_MMAP_SELF_2           0x00293670
 #define K852_MMAP_SELF_2           0x00293670
 #define K900_MMAP_SELF_2           0x0008BCB0
+#define K903_MMAP_SELF_2           0x0008BCB0
+#define K904_MMAP_SELF_2           0x0008BCB0
+#define K950_MMAP_SELF_2           0x00032620
+#define K951_MMAP_SELF_2           0x00032620
+#define K960_MMAP_SELF_2           0x00032620
 
 // Used in Module Dumper, App Dumper, and FTP
 #define K300_MMAP_SELF_3           0x0
@@ -354,6 +384,11 @@
 #define K850_MMAP_SELF_3           0x00084411
 #define K852_MMAP_SELF_3           0x00084411
 #define K900_MMAP_SELF_3           0x00168051
+#define K903_MMAP_SELF_3           0x00168001
+#define K904_MMAP_SELF_3           0x00168001
+#define K950_MMAP_SELF_3           0x00124AA1
+#define K951_MMAP_SELF_3           0x00124AA1
+#define K960_MMAP_SELF_3           0x00124AA1
 
 // Used in Disable ASLR
 // May also require changes to the `kpayload_aslr` function in `payload_utils.c`
@@ -405,6 +440,11 @@
 #define K850_DISABLE_ASLR          0x00215154
 #define K852_DISABLE_ASLR          0x00215154
 #define K900_DISABLE_ASLR          0x0005F824
+#define K903_DISABLE_ASLR          0x0005F824
+#define K904_DISABLE_ASLR          0x0005F824
+#define K950_DISABLE_ASLR          0x0029AE74
+#define K951_DISABLE_ASLR          0x0029AE74
+#define K960_DISABLE_ASLR          0x0029AE74
 
 // Used in Enable Browser
 #define K300_REG_MGR_SET_INT       0x0
@@ -455,6 +495,11 @@
 #define K850_REG_MGR_SET_INT       0x004E9DC0
 #define K852_REG_MGR_SET_INT       0x004E9DC0
 #define K900_REG_MGR_SET_INT       0x004E8B10
+#define K903_REG_MGR_SET_INT       0x004E6A10
+#define K904_REG_MGR_SET_INT       0x004E6A10
+#define K950_REG_MGR_SET_INT       0x004E8D70
+#define K951_REG_MGR_SET_INT       0x004E8D70
+#define K960_REG_MGR_SET_INT       0x004E8D70
 
 // Used in Kernel Clock
 #define K300_SET_TIME              0x0
@@ -505,6 +550,11 @@
 #define K850_SET_TIME              0x006320C0 // Needs Verified
 #define K852_SET_TIME              0x006320C0 // Needs Verified
 #define K900_SET_TIME              0x00634450 // Needs Verified
+#define K903_SET_TIME              0x00632410 // Needs Verified
+#define K904_SET_TIME              0x00632410 // Needs Verified
+#define K950_SET_TIME              0x0062B1B0 // Needs Verified
+#define K951_SET_TIME              0x0062B1B0 // Needs Verified
+#define K960_SET_TIME              0x0062B1B0 // Needs Verified
 
 // Used in Kernel Clock
 #define K300_CLEAR_TIME_DIFFERENCE 0x00000000 // Needs Verified
@@ -555,6 +605,11 @@
 #define K850_CLEAR_TIME_DIFFERENCE 0x006315A0
 #define K852_CLEAR_TIME_DIFFERENCE 0x006315A0
 #define K900_CLEAR_TIME_DIFFERENCE 0x00633930
+#define K903_CLEAR_TIME_DIFFERENCE 0x006318F0
+#define K904_CLEAR_TIME_DIFFERENCE 0x006318F0
+#define K950_CLEAR_TIME_DIFFERENCE 0x0062A690
+#define K951_CLEAR_TIME_DIFFERENCE 0x0062A690
+#define K960_CLEAR_TIME_DIFFERENCE 0x0062A690
 
 // Used in ToDex
 #define K300_TARGET_ID             0x0
@@ -605,6 +660,11 @@
 #define K850_TARGET_ID             0x01C8338D
 #define K852_TARGET_ID             0x01C8338D
 #define K900_TARGET_ID             0x0221688D
+#define K903_TARGET_ID             0x0221288D
+#define K904_TARGET_ID             0x0221288D
+#define K950_TARGET_ID             0x0221A40D
+#define K951_TARGET_ID             0x0221A40D
+#define K960_TARGET_ID             0x0221A40D
 
 // Used in Perm UART
 #define K300_ICC_NVS_WRITE         0x0
@@ -655,6 +715,11 @@
 #define K850_ICC_NVS_WRITE         0x00393B20
 #define K852_ICC_NVS_WRITE         0x00393B20
 #define K900_ICC_NVS_WRITE         0x0010B150
+#define K903_ICC_NVS_WRITE         0x0010B100
+#define K904_ICC_NVS_WRITE         0x0010B100
+#define K950_ICC_NVS_WRITE         0x000405F0
+#define K951_ICC_NVS_WRITE         0x000405F0
+#define K960_ICC_NVS_WRITE         0x000405F0
 
 #define K300_NPDRM_OPEN            0x0
 #define K310_NPDRM_OPEN            0x0
@@ -704,6 +769,11 @@
 #define K850_NPDRM_OPEN            0x0064D3E0
 #define K852_NPDRM_OPEN            0x0064D3E0
 #define K900_NPDRM_OPEN            0x0064F160
+#define K903_NPDRM_OPEN            0x0064D120
+#define K904_NPDRM_OPEN            0x0064D120
+#define K950_NPDRM_OPEN            0x00646EC0
+#define K951_NPDRM_OPEN            0x00646EC0
+#define K960_NPDRM_OPEN            0x00646EC0
 
 #define K300_NPDRM_CLOSE           0x0
 #define K310_NPDRM_CLOSE           0x0
@@ -753,6 +823,11 @@
 #define K850_NPDRM_CLOSE           0x0064D400
 #define K852_NPDRM_CLOSE           0x0064D400
 #define K900_NPDRM_CLOSE           0x0064F180
+#define K903_NPDRM_CLOSE           0x0064D140
+#define K904_NPDRM_CLOSE           0x0064D140
+#define K950_NPDRM_CLOSE           0x00646EE0
+#define K951_NPDRM_CLOSE           0x00646EE0
+#define K960_NPDRM_CLOSE           0x00646EE0
 
 #define K300_NPDRM_IOCTL           0x0
 #define K310_NPDRM_IOCTL           0x0
@@ -802,6 +877,11 @@
 #define K850_NPDRM_IOCTL           0x0064D457
 #define K852_NPDRM_IOCTL           0x0064D457
 #define K900_NPDRM_IOCTL           0x0064F1D7
+#define K903_NPDRM_IOCTL           0x0064D197
+#define K904_NPDRM_IOCTL           0x0064D197
+#define K950_NPDRM_IOCTL           0x00646F37
+#define K951_NPDRM_IOCTL           0x00646F37
+#define K960_NPDRM_IOCTL           0x00646F37
 
 // clang-format on
 
