@@ -230,6 +230,8 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
     caseentry(950, macro);                \
     caseentry(951, macro);                \
     caseentry(960, macro);                \
+    caseentry(1000, macro);               \
+    caseentry(1001, macro);               \
   default:                                \
     printf_debug("Unsupported firmware"); \
     return -1;                            \
