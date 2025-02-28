@@ -89,6 +89,7 @@ extern int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 extern uint32_t (*sceKernelGetCpuTemperature)(uint32_t *);
 
 extern uint32_t (*sceKernelGetIdPs)(void *);
+extern uint32_t (*sceKernelGetOpenPsId)(void *);
 extern uint32_t (*sceKernelGetOpenPsIdForSystem)(void *);
 
 int kill(int pid, int signum);
