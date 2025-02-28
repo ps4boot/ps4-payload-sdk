@@ -58,6 +58,7 @@ int (*sceKernelGetSystemSwVersion)(SceFwInfo *fw_info);
 uint32_t (*sceKernelGetCpuTemperature)(uint32_t *);
 
 uint32_t (*sceKernelGetIdPs)(void *);
+uint32_t (*sceKernelGetOpenPsId)(void *);
 uint32_t (*sceKernelGetOpenPsIdForSystem)(void *);
 
 SYSCALL(kill, 37);
@@ -131,5 +132,6 @@ void initKernel(void) {
   RESOLVE(libKernelHandle, sceKernelGetCpuTemperature);
   
   RESOLVE(libKernelHandle, sceKernelGetIdPs);
+  RESOLVE(libKernelHandle, sceKernelGetOpenPsId);
   RESOLVE(libKernelHandle, sceKernelGetOpenPsIdForSystem);
 }
