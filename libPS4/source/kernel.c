@@ -25,6 +25,7 @@ int (*sceKernelClose)(int fd);
 
 unsigned int (*sceKernelSleep)(unsigned int seconds);
 int (*sceKernelUsleep)(unsigned int microseconds);
+int (*usleep)(unsigned int microseconds);
 int (*sceKernelGettimeofday)(SceKernelTimeval *tp);
 uint64_t (*sceKernelGetProcessTime)(void);
 int (*sceKernelGetCurrentCpu)(void);
@@ -99,6 +100,7 @@ void initKernel(void) {
 
   RESOLVE(libKernelHandle, sceKernelSleep);
   RESOLVE(libKernelHandle, sceKernelUsleep);
+  RESOLVE(libKernelHandle, usleep);
   RESOLVE(libKernelHandle, sceKernelGettimeofday);
   RESOLVE(libKernelHandle, sceKernelGetProcessTime);
   RESOLVE(libKernelHandle, sceKernelGetCurrentCpu);
@@ -130,7 +132,7 @@ void initKernel(void) {
   RESOLVE(libKernelHandle, sceKernelGetSystemSwVersion);
 
   RESOLVE(libKernelHandle, sceKernelGetCpuTemperature);
-  
+
   RESOLVE(libKernelHandle, sceKernelGetIdPs);
   RESOLVE(libKernelHandle, sceKernelGetOpenPsId);
   RESOLVE(libKernelHandle, sceKernelGetOpenPsIdForSystem);
