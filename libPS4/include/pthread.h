@@ -11,6 +11,9 @@ typedef void *ScePthreadAttr;
 typedef void *ScePthreadMutex;
 typedef void *ScePthreadMutexattr;
 
+typedef void *ScePthreadBarrier;
+typedef void *ScePthreadBarrierattr;
+
 extern int (*scePthreadCreate)(ScePthread *thread, const ScePthreadAttr *attr, void *(*entry)(void *), void *arg, const char *name);
 extern void (*scePthreadExit)(void *value);
 extern int (*scePthreadDetach)(ScePthread thread);
@@ -25,6 +28,9 @@ extern int (*scePthreadMutexLock)(ScePthreadMutex *mutex);
 extern int (*scePthreadMutexTrylock)(ScePthreadMutex *mutex);
 extern int (*scePthreadMutexTimedlock)(ScePthreadMutex *mutex, SceKernelUseconds usec);
 extern int (*scePthreadMutexUnlock)(ScePthreadMutex *mutex);
+
+extern int (*scePthreadBarrierInit)(ScePthreadBarrier *barrier, const ScePthreadBarrierattr *attr, unsigned int count);
+extern int (*scePthreadBarrierWait)(ScePthreadBarrier *barrier);
 
 void initPthread(void);
 
