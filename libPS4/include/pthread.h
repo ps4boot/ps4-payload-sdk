@@ -31,6 +31,7 @@ extern int (*scePthreadMutexUnlock)(ScePthreadMutex *mutex);
 
 extern int (*scePthreadBarrierInit)(ScePthreadBarrier *barrier, const ScePthreadBarrierattr *attr, unsigned int count);
 extern int (*scePthreadBarrierWait)(ScePthreadBarrier *barrier);
+extern int (*scePthreadBarrierDestroy)(ScePthreadBarrier *barrier);
 
 void initPthread(void);
 

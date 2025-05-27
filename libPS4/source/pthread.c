@@ -22,6 +22,7 @@ int (*scePthreadMutexUnlock)(ScePthreadMutex *mutex);
 
 int (*scePthreadBarrierInit)(ScePthreadBarrier *barrier, const ScePthreadBarrierattr *attr, unsigned int count);
 int (*scePthreadBarrierWait)(ScePthreadBarrier *barrier);
+int (*scePthreadBarrierDestroy)(ScePthreadBarrier *barrier);
 
 void initPthread(void) {
   if (libPthread) {
@@ -45,6 +46,7 @@ void initPthread(void) {
 
   RESOLVE(libKernelHandle, scePthreadBarrierInit);
   RESOLVE(libKernelHandle, scePthreadBarrierWait);
+  RESOLVE(libKernelHandle, scePthreadBarrierDestroy);
 
   libPthread = 1;
 }
