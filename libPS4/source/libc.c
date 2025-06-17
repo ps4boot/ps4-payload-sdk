@@ -38,6 +38,7 @@ char *(*strtok)(char *str, const char *sep);
 char *(*index)(const char *s, int c);
 char *(*rindex)(const char *s, int c);
 int (*isdigit)(int c);
+int (*isxdigit)(int c);
 int (*atoi)(const char *s);
 double (*atof)(const char *s);
 size_t (*strlcpy)(char *dst, const char *src, size_t size);
@@ -135,6 +136,7 @@ void initLibc(void) {
   RESOLVE(libc, index);
   RESOLVE(libc, rindex);
   RESOLVE(libc, isdigit);
+  RESOLVE(libc, isxdigit);
   RESOLVE(libc, atoi);
   RESOLVE(libc, atof);
   RESOLVE(libc, strlcpy);

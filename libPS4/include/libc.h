@@ -45,6 +45,7 @@ extern char *(*index)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
 extern int (*isdigit)(int c);
+extern int (*isxdigit)(int c);
 extern int (*atoi)(const char *s);
 extern double (*atof)(const char *s);
 extern size_t (*strlcpy)(char *dst, const char *src, size_t size);
