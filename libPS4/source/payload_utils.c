@@ -337,6 +337,45 @@ int kpayload_npdrm_patch(struct thread *td, struct kpayload_firmware_args *args)
   return 0;
 }
 
+int kpayload_no_bd(struct thread *td, struct kpayload_firmware_args *args) {
+  UNUSED(td);
+  void *kernel_base;
+  uint8_t *kernel_ptr;
+
+  // Use "kmem" for all patches
+  uint8_t *kmem;
+
+  // Pointers to be assigned in build_kpayload macro
+  uint8_t *no_bd_patch;
+
+  uint16_t fw_version = args->kpayload_firmware_info->fw_version;
+
+  // NOTE: This is a C preprocessor macro
+  build_kpayload(fw_version, no_bd_macro);
+
+  // Disable write protection
+  uint64_t cr0 = readCr0();
+  writeCr0(cr0 & ~X86_CR0_WP);
+
+  kmem = (uint8_t *)no_bd_patch;
+  kmem[0] = 0xC7;
+  kmem[1] = 0x02;
+  kmem[2] = 0x03;
+  kmem[3] = 0x00;
+  kmem[4] = 0x00;
+  kmem[5] = 0x00;
+  kmem[6] = 0x48;
+  kmem[7] = 0x31;
+  kmem[8] = 0xC0;
+  kmem[9] = 0xEB;
+  kmem[10] = 0x00;
+
+  // Restore write protection
+  writeCr0(cr0);
+
+  return 0;
+}
+
 uint16_t get_firmware() {
   // Return early if this has already been run
   if (g_firmware) {
@@ -500,4 +539,10 @@ int npdrm_patch() {
   struct kpayload_firmware_info kpayload_firmware_info;
   kpayload_firmware_info.fw_version = get_firmware();
   return kexec(&kpayload_npdrm_patch, &kpayload_firmware_info);
+}
+
+int no_bd_patch() {
+  struct kpayload_firmware_info kpayload_firmware_info;
+  kpayload_firmware_info.fw_version = get_firmware();
+  return kexec(&kpayload_no_bd, &kpayload_firmware_info);
 }

@@ -174,6 +174,11 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
   npdrm_close = &kernel_ptr[K##x##_NPDRM_CLOSE];                            \
   npdrm_ioctl = &kernel_ptr[K##x##_NPDRM_IOCTL];
 
+#define no_bd_macro(x)                                                      \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;                                      \
+  no_bd_patch = &kernel_ptr[K##x##_NO_BD_PATCH];
+
 #define caseentry(id, macro) \
   case id:                   \
     macro(id);               \
@@ -264,5 +269,6 @@ int spoof_target_id(uint8_t id);
 int enable_perm_uart();
 int exit_idu();
 int npdrm_patch();
+int no_bd_patch();
 
 #endif
