@@ -44,6 +44,7 @@ extern char *(*strtok)(char *str, const char *sep);
 extern char *(*index)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
 extern char *(*rindex)(const char *s, int c);
+extern int (*isspace)(int c);
 extern int (*isdigit)(int c);
 extern int (*isxdigit)(int c);
 extern int (*atoi)(const char *s);
@@ -86,6 +87,7 @@ extern int (*fseek)(FILE *stream, long int offset, int origin);
 extern long int (*ftell)(FILE *stream);
 extern int (*fclose)(FILE *stream);
 extern int (*fprintf)(FILE *stream, const char *format, ...);
+extern char *(*fgets)(char *str, int size, FILE *stream);
 
 int memset_s(void *s, rsize_t smax, int c, rsize_t n);
 

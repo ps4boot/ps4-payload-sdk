@@ -22,31 +22,6 @@ static inline int fgetc_file(FILE *fp) {
   return (c);
 }
 
-static char *fgets(char *dst, int max, FILE *fp) {
-  int c = EOF;
-  char *p;
-
-  /* get max bytes or upto a newline */
-  for (p = dst, max--; max > 0; max--) {
-    if ((c = fgetc_file(fp)) == EOF) {
-      break;
-    }
-    *p++ = c;
-    if (c == '\n') {
-      break;
-    }
-  }
-  *p = 0;
-  if (p == dst || c == EOF) {
-    return NULL;
-  }
-  return (p);
-}
-
-bool isspace(int c) {
-  return c == ' ' || c == '\t';
-}
-
 /* Used by cfg_parse_string() to keep track of string parsing state. */
 typedef struct {
   const char *ptr;

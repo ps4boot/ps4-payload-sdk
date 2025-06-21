@@ -37,6 +37,7 @@ char *(*strdup)(const char *s);
 char *(*strtok)(char *str, const char *sep);
 char *(*index)(const char *s, int c);
 char *(*rindex)(const char *s, int c);
+int (*isspace)(int c);
 int (*isdigit)(int c);
 int (*isxdigit)(int c);
 int (*atoi)(const char *s);
@@ -79,6 +80,7 @@ int (*fseek)(FILE *stream, long int offset, int origin);
 long int (*ftell)(FILE *stream);
 int (*fclose)(FILE *stream);
 int (*fprintf)(FILE *stream, const char *format, ...);
+char *(*fgets)(char *str, int size, FILE *stream);
 
 int memset_s(void *s, rsize_t smax, int c, rsize_t n) {
   bool violation = (s == NULL) || (smax > RSIZE_MAX) || (n > RSIZE_MAX) || (n > smax);
@@ -135,6 +137,7 @@ void initLibc(void) {
   RESOLVE(libc, strtok);
   RESOLVE(libc, index);
   RESOLVE(libc, rindex);
+  RESOLVE(libc, isspace);
   RESOLVE(libc, isdigit);
   RESOLVE(libc, isxdigit);
   RESOLVE(libc, atoi);
@@ -178,4 +181,5 @@ void initLibc(void) {
   RESOLVE(libc, ftell);
   RESOLVE(libc, fclose);
   RESOLVE(libc, fprintf);
+  RESOLVE(libc, fgets);
 }
