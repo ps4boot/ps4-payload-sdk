@@ -56,6 +56,9 @@ extern unsigned long (*_Stoul)(const char *, char **, int);
 extern void (*bcopy)(const void *s1, void *s2, size_t n);
 extern double (*ceil)(double x);
 
+extern int (*tolower)(int c);
+extern int (*toupper)(int c);
+
 extern void (*srand)(unsigned int seed);
 extern int (*rand)(void);
 

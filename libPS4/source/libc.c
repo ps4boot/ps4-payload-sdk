@@ -49,6 +49,9 @@ unsigned long (*_Stoul)(const char *, char **, int);
 void (*bcopy)(const void *s1, void *s2, size_t n);
 double (*ceil)(double x);
 
+int (*tolower)(int c);
+int (*toupper)(int c);
+
 void (*srand)(unsigned int seed);
 int (*rand)(void);
 
@@ -148,6 +151,9 @@ void initLibc(void) {
   RESOLVE(libc, _Stoul);
   RESOLVE(libc, bcopy);
   RESOLVE(libc, ceil);
+
+  RESOLVE(libc, tolower);
+  RESOLVE(libc, toupper);
 
   RESOLVE(libc, srand);
   RESOLVE(libc, rand);
