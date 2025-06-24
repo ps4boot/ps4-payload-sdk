@@ -25,15 +25,6 @@ jobs:
         run: docker cp ps4sdk_container:/lib/ps4-payload-sdk/libPS4/libPS4.a ./libPS4/libPS4.a
       - name: Remove container
         run: docker rm ps4sdk_container
-      # - name: Upload SDK artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: ps4-payload-sdk
-      #     path: |
-      #       ./libPS4
-      #       README.md
-      #       Dockerfile
-      #       entrypoint.sh
       - name: Create SDK zip archive
         run: |
           zip -r ps4-payload-sdk.zip libPS4 README.md Dockerfile entrypoint.sh

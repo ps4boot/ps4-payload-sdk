@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Build with PS4 Payload SDK
-        uses: Scene-Collective/ps4-payload-sdk@v0.9.0
+        uses: Scene-Collective/ps4-payload-sdk@v1
         with:
           app_path: path/to/your/app
           build_command: sh build.sh
