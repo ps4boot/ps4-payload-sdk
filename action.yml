@@ -1,0 +1,24 @@
+name: 'Build with PS4 Payload SDK'
+description: 'Builds a project using the PS4 Payload SDK Docker image'
+inputs:
+  app_path:
+    description: 'Relative path to the application to build'
+    required: true
+  build_command:
+    description: 'Build command to run inside the container'
+    required: false
+    default: 'make'
+runs:
+  using: 'composite'
+  steps:
+    - name: Build Docker image for SDK
+      run: docker build -t ps4sdk -f ${{ github.action_path }}/Dockerfile ${{ github.action_path }}
+      shell: bash
+
+    - name: Build application inside SDK container
+      run: |
+        docker run --rm \
+          -v "$GITHUB_WORKSPACE/${{ inputs.app_path }}":/app \
+          -w /app \
+          ps4sdk ${{ inputs.build_command }}
+      shell: bash
