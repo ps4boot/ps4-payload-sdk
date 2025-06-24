@@ -1,20 +1,19 @@
-name: Build PS4 Payload SDK
+---
+name: "Sanity Check"
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
   build:
+    if: github.ref_type != 'tag'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Build Docker image
         run: docker build -t ps4sdk .
-
       - name: List build output
-        run: docker run --rm --entrypoint "" ps4sdk ls -l /lib/ps4sdk/libPS4
+        run: docker run --rm --entrypoint "" ps4sdk ls -l /lib/ps4-payload-sdk/libPS4

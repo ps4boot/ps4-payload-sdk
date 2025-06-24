@@ -13,16 +13,16 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Set the working directory for the SDK
-WORKDIR /lib/ps4sdk
+WORKDIR /lib/ps4-payload-sdk
 
 # Copy the PS4 SDK source code into the container
-COPY libPS4 /lib/ps4sdk/libPS4
+COPY libPS4 /lib/ps4-payload-sdk/libPS4
 
 # Build the PS4 SDK using make
-RUN make -C /lib/ps4sdk/libPS4
+RUN make -C /lib/ps4-payload-sdk/libPS4
 
 # Set environment variable for the SDK path
-ENV PS4SDK=/lib/ps4sdk
+ENV PS4SDK=/lib/ps4-payload-sdk
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
