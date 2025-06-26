@@ -32,7 +32,7 @@ void shutdown();
 #define printf_notification(...)                                                                             \
   do {                                                                                                       \
     SceNotificationRequest noti_buffer = {};                                                                 \
-    static const char icon_uri[38] = "cxml://psnotification/tex_icon_system";                                \
+    static const char icon_uri[] = "cxml://psnotification/tex_icon_system";                                  \
     noti_buffer.use_icon_image_uri = 1;                                                                      \
     noti_buffer.target_id = -1;                                                                              \
     memcpy(noti_buffer.uri, icon_uri, sizeof(icon_uri));                                                     \
