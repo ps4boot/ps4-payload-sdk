@@ -35,7 +35,7 @@ void shutdown();
     static const char icon_uri[38] = "cxml://psnotification/tex_icon_system";                                \
     noti_buffer.use_icon_image_uri = 1;                                                                      \
     noti_buffer.target_id = -1;                                                                              \
-    snprintf_s(noti_buffer.uri, sizeof(noti_buffer.uri), "%s", icon_uri);                                    \
+    memcpy(noti_buffer.uri, icon_uri, sizeof(icon_uri));                                                     \
     const int len = snprintf_s(noti_buffer.message, sizeof(noti_buffer.message), ##__VA_ARGS__);             \
     const int len2 = len - 1;                                                                                \
     if (len > 0 && noti_buffer.message[len2] == '\n') {                                                      \
