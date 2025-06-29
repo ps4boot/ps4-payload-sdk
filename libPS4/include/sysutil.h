@@ -41,7 +41,7 @@ void shutdown();
     if (len > 0 && noti_buffer.message[len2] == '\n') {                                                      \
       noti_buffer.message[len2] = 0;                                                                         \
     }                                                                                                        \
-    printf_debug("[NOTIFICATION: %s (%s:%d)]: %s\n", __FILE__, __FUNCTION__, __LINE__, noti_buffer.message); \
+    printf_debug("[NOTIFICATION]: %s\n", noti_buffer.message);                                               \
     sceKernelSendNotificationRequest(0, (SceNotificationRequest *)&noti_buffer, sizeof(noti_buffer), 0);     \
   } while (0)
 
