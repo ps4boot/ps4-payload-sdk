@@ -80,13 +80,13 @@ struct ptrace_io_desc {
   size_t piod_len; /* request length */
 };
 
-int findProcess(char *procName);
+int findProcess(const char *procName);
 
 void procAttach(int pid);
 void procDetach(int pid);
 void procReadBytes(int pid, void *offset, void *buffer, size_t len);
 void procWriteBytes(int pid, void *offset, void *buffer, size_t len);
-void closeProcess(char *procname);
-void killProcess(char *procname);
+void closeProcess(const char *procname);
+void killProcess(const char *procname);
 
 #endif

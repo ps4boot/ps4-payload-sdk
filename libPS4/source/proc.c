@@ -4,7 +4,7 @@
 
 #include "proc.h"
 
-int findProcess(char *procName) {
+int findProcess(const char *procName) {
   int procPID = 0;
   while (!procPID) {
     int mib[3];
@@ -38,12 +38,12 @@ int findProcess(char *procName) {
   return procPID;
 }
 
-void closeProcess(char *procname) {
+void closeProcess(const char *procname) {
   int pid = findProcess(procname);
   syscall(37, pid, SIGTERM);
 }
 
-void killProcess(char *procname) {
+void killProcess(const char *procname) {
   int pid = findProcess(procname);
   syscall(37, pid, SIGKILL);
 }
