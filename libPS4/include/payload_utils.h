@@ -124,6 +124,13 @@ static inline __attribute__((always_inline)) void writeCr0(uint64_t cr0) {
                    : "memory");
 }
 
+#define kernel_base_macro(x)                                                \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL];
+
+#define kernel_ptr_macro(x)                                                 \
+  kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
+  kernel_ptr = (uint8_t *)kernel_base;
+
 #define copyout_macro(x)                                                    \
   kernel_base = &((uint8_t *)__readmsr(0xC0000082))[-K##x##_XFAST_SYSCALL]; \
   copyout = (void *)(kernel_base + K##x##_COPYOUT);
