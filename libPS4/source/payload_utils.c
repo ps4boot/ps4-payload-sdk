@@ -36,14 +36,7 @@ int is_fw_spoofed() {
 }
 
 int is_jailbroken() {
-  int fd = open("/user/.jailbreak", O_WRONLY, 0777);
-  if (fd >= 0) {
-    close(fd);
-    unlink("/user/.jailbreak");
-    return 1;
-  } else {
-    return 0;
-  }
+  return file_exists("/system/vsh/SceShellCore.elf");
 }
 
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {
