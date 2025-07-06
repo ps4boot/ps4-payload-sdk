@@ -35,5 +35,6 @@
 #include "types.h"
 #include "unknown.h"
 #include "usb.h"
+#include "zlib.h"
 
 #endif
