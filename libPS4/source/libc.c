@@ -23,6 +23,7 @@ char *(*strcat)(char *dest, const char *src);
 char *(*strncat)(char *dest, const char *src, size_t n);
 size_t (*strlen)(const char *s);
 int (*strcmp)(const char *s1, const char *s2);
+int (*strcasecmp)(const	char *s1, const	char *s2);
 int (*strncmp)(const char *s1, const char *s2, size_t n);
 int (*sprintf)(char *str, const char *format, ...);
 int (*snprintf)(char *str, size_t size, const char *format, ...);
@@ -126,6 +127,7 @@ void initLibc(void) {
   RESOLVE(libc, strncat);
   RESOLVE(libc, strlen);
   RESOLVE(libc, strcmp);
+  RESOLVE(libc, strcasecmp);
   RESOLVE(libc, strncmp);
   RESOLVE(libc, sprintf);
   RESOLVE(libc, snprintf);
