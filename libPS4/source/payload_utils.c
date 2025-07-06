@@ -36,7 +36,10 @@ int is_fw_spoofed() {
 }
 
 int is_jailbroken() {
-  return file_exists("/system/vsh/SceShellCore.elf");
+  if (getuid() == 0 && is_in_sandbox() == 0) {
+    return 1;
+  }
+  return 0;
 }
 
 int kpayload_kbase(struct thread *td, struct kpayload_kbase_args *args) {

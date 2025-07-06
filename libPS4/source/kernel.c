@@ -67,6 +67,8 @@ SYSCALL(ioctl, 54);
 
 SYSCALL(kexec, 11);
 
+SYSCALL(is_in_sandbox, 585);
+
 void initKernel(void) {
   if (libKernelHandle) {
     return;
