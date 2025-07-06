@@ -11,4 +11,6 @@ extern int (*sceZlibWaitForDone)(uint64_t *reqId, uint32_t *timeout);
 extern int (*sceZlibGetResult)(uint64_t reqtId, uint32_t *dstLen, int *status);
 extern int (*sceZlibFinalize)(void);
 
+void initZlib(void);
+
 #endif
