@@ -71,6 +71,7 @@
 #define K1200_XFAST_SYSCALL        0x000001C0
 #define K1202_XFAST_SYSCALL        0x000001C0
 #define K1250_XFAST_SYSCALL        0x000001C0
+#define K1252_XFAST_SYSCALL        0x000001C0
 
 // Used in every payload that uses jailbreak();
 #define K300_PRISON_0              0x0
@@ -138,6 +139,7 @@
 #define K1200_PRISON_0             0x0111FA18
 #define K1202_PRISON_0             0x0111FA18
 #define K1250_PRISON_0             0x0111FA18
+#define K1252_PRISON_0             0x0111FA18
 
 // Used in every payload that uses jailbreak();
 #define K300_ROOTVNODE             0x0
@@ -205,6 +207,7 @@
 #define K1200_ROOTVNODE            0x02136E90
 #define K1202_ROOTVNODE            0x02136E90
 #define K1250_ROOTVNODE            0x02136E90
+#define K1252_ROOTVNODE            0x02136E90
 
 // Used in Kernel Dumper
 #define K300_COPYOUT               0x0
@@ -272,6 +275,7 @@
 #define K1200_COPYOUT              0x002BD580
 #define K1202_COPYOUT              0x002BD580
 #define K1250_COPYOUT              0x002BD5C0
+#define K1252_COPYOUT              0x002BD5C0
 
 // Used in Dumper, FTP, and Module Dumper
 #define K300_MMAP_SELF_1           0x0
@@ -339,6 +343,7 @@
 #define K1200_MMAP_SELF_1          0x003B2D40
 #define K1202_MMAP_SELF_1          0x003B2D40
 #define K1250_MMAP_SELF_1          0x003B2D80
+#define K1252_MMAP_SELF_1          0x003B2D80
 
 // Used in Dumper, FTP, and Module Dumper
 #define K300_MMAP_SELF_2           0x0
@@ -406,6 +411,7 @@
 #define K1200_MMAP_SELF_2          0x003B2D60
 #define K1202_MMAP_SELF_2          0x003B2D60
 #define K1250_MMAP_SELF_2          0x003B2DA0
+#define K1252_MMAP_SELF_2          0x003B2DA0
 
 // Used in Module Dumper, App Dumper, and FTP
 #define K300_MMAP_SELF_3           0x0
@@ -473,6 +479,7 @@
 #define K1200_MMAP_SELF_3          0x001FC441
 #define K1202_MMAP_SELF_3          0x001FC441
 #define K1250_MMAP_SELF_3          0x001FC481
+#define K1252_MMAP_SELF_3          0x001FC481
 
 // Used in Disable ASLR
 // May also require changes to the `kpayload_aslr` function in `payload_utils.c`
@@ -541,6 +548,7 @@
 #define K1200_DISABLE_ASLR         0x00477C54
 #define K1202_DISABLE_ASLR         0x00477C54
 #define K1250_DISABLE_ASLR         0x00477C94
+#define K1252_DISABLE_ASLR         0x00477C94
 
 // Used in Enable Browser
 #define K300_REG_MGR_SET_INT       0x0
@@ -608,6 +616,7 @@
 #define K1200_REG_MGR_SET_INT      0x004E8410
 #define K1202_REG_MGR_SET_INT      0x004E8410
 #define K1250_REG_MGR_SET_INT      0x004E8450
+#define K1252_REG_MGR_SET_INT      0x004E8450
 
 // Used in Kernel Clock
 #define K300_SET_TIME              0x0
@@ -675,6 +684,7 @@
 #define K1200_SET_TIME             0x00634950 // Needs Verified
 #define K1202_SET_TIME             0x00634950 // Needs Verified
 #define K1250_SET_TIME             0x00634990 // Needs Verified
+#define K1252_SET_TIME             0x00634990 // Needs Verified
 
 // Used in Kernel Clock
 #define K300_CLEAR_TIME_DIFFERENCE  0x00000000 // Needs Verified
@@ -742,6 +752,7 @@
 #define K1200_CLEAR_TIME_DIFFERENCE 0x00633E30
 #define K1202_CLEAR_TIME_DIFFERENCE 0x00633E30
 #define K1250_CLEAR_TIME_DIFFERENCE 0x00633E70
+#define K1252_CLEAR_TIME_DIFFERENCE 0x00633E70
 
 // Used in ToDex
 #define K300_TARGET_ID             0x0
@@ -809,6 +820,7 @@
 #define K1200_TARGET_ID            0x021CC60D
 #define K1202_TARGET_ID            0x021CC60D
 #define K1250_TARGET_ID            0x021CC60D
+#define K1252_TARGET_ID            0x021CC60D
 
 // Used in Perm UART
 #define K300_ICC_NVS_WRITE         0x0
@@ -876,6 +888,7 @@
 #define K1200_ICC_NVS_WRITE        0x000A5A10
 #define K1202_ICC_NVS_WRITE        0x000A5A10
 #define K1250_ICC_NVS_WRITE        0x000A5A10
+#define K1252_ICC_NVS_WRITE        0x000A5A10
 
 #define K300_NPDRM_OPEN            0x0
 #define K310_NPDRM_OPEN            0x0
@@ -942,6 +955,7 @@
 #define K1200_NPDRM_OPEN           0x0064D5D0
 #define K1202_NPDRM_OPEN           0x0064D5D0
 #define K1250_NPDRM_OPEN           0x0064D670
+#define K1252_NPDRM_OPEN           0x0064D670
 
 #define K300_NPDRM_CLOSE           0x0
 #define K310_NPDRM_CLOSE           0x0
@@ -1008,6 +1022,7 @@
 #define K1200_NPDRM_CLOSE          0x0064D5F0
 #define K1202_NPDRM_CLOSE          0x0064D5F0
 #define K1250_NPDRM_CLOSE          0x0064D690
+#define K1252_NPDRM_CLOSE          0x0064D690
 
 #define K300_NPDRM_IOCTL           0x0
 #define K310_NPDRM_IOCTL           0x0
@@ -1074,6 +1089,7 @@
 #define K1200_NPDRM_IOCTL          0x0064D647
 #define K1202_NPDRM_IOCTL          0x0064D647
 #define K1250_NPDRM_IOCTL          0x0064D6E7
+#define K1252_NPDRM_IOCTL          0x0064D6E7
 
 #define K300_NO_BD_PATCH  0x0
 #define K310_NO_BD_PATCH  0x0
@@ -1140,6 +1156,7 @@
 #define K1200_NO_BD_PATCH 0x001D5D83
 #define K1202_NO_BD_PATCH 0x001D5D83
 #define K1250_NO_BD_PATCH 0x001D5DC3
+#define K1252_NO_BD_PATCH 0x001D5DC3
 
 // clang-format on
 
