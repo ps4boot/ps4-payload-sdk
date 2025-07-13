@@ -15,6 +15,11 @@ void initZlib(void) {
   if (libZlib) {
     return;
   }
+  initModule();
+  const int ORBIS_SYSMODULE_ZLIB = 0x00C5;
+  if (sceSysmoduleLoadModule(ORBIS_SYSMODULE_ZLIB) < 0) {
+    return;
+  }
 
   libZlib = sceKernelLoadStartModule("libSceZlib.sprx", 0, 0, 0, NULL, NULL);
 
