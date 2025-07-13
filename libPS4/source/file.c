@@ -30,7 +30,7 @@ int getSandboxDirectory(char *destination, int *length) {
   return syscall(602, 0, destination, length);
 }
 
-int file_exists(char *fname) {
+int file_exists(const char *fname) {
   int file = open(fname, O_RDONLY, 0);
   if (file != -1) {
     close(file);

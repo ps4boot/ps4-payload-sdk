@@ -87,7 +87,7 @@ int lstat(const char *path, struct stat *buf);
 int getdents(int fd, char *buf, int count);
 off_t lseek(int fildes, off_t offset, int whence);
 int getSandboxDirectory(char *destination, int *length);
-int file_exists(char *fname);
+int file_exists(const char *fname);
 int dir_exists(char *dname);
 int symlink_exists(const char *fname);
 void touch_file(char *destfile);
