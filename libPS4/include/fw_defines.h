@@ -270,8 +270,8 @@
 #define K1071_COPYOUT              0x000D7470
 #define K1100_COPYOUT              0x002DDEF0
 #define K1102_COPYOUT              0x002DDF10
-#define K1150_COPYOUT              0x002BD580
-#define K1152_COPYOUT              0x002BD580
+#define K1150_COPYOUT              0x002BD4A0
+#define K1152_COPYOUT              0x002BD4A0
 #define K1200_COPYOUT              0x002BD580
 #define K1202_COPYOUT              0x002BD580
 #define K1250_COPYOUT              0x002BD5C0
